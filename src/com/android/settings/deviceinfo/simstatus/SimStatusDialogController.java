@@ -565,7 +565,7 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
     }
 
     private void updateRoamingStatus(ServiceState serviceState) {
-        if (serviceState.getRoaming()) {
+        if ((serviceState != null) && serviceState.getRoaming()) {
             mDialog.setText(ROAMING_INFO_VALUE_ID, mRes.getString(R.string.radioInfo_roaming_in));
         } else {
             mDialog.setText(ROAMING_INFO_VALUE_ID, mRes.getString(R.string.radioInfo_roaming_not));
