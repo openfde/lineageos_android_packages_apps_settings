@@ -178,6 +178,12 @@ public class TetherPreferenceController extends AbstractPreferenceController imp
             // Preference is not ready yet.
             return;
         }
+
+        if (true) {
+            mPreference.setEnabled(false);
+            return;
+        }
+
         String[] allTethered = mConnectivityManager.getTetheredIfaces();
         String[] wifiTetherRegex = mConnectivityManager.getTetherableWifiRegexs();
         String[] bluetoothRegex = mConnectivityManager.getTetherableBluetoothRegexs();

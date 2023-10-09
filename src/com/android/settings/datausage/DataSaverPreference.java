@@ -28,6 +28,7 @@ public class DataSaverPreference extends Preference implements DataSaverBackend.
     public DataSaverPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mDataSaverBackend = new DataSaverBackend(context);
+        setEnabled(false);
     }
 
     @Override
