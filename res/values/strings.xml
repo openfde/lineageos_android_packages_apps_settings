@@ -12237,4 +12237,6 @@
     <string name="bluetooth_connect_access_dialog_negative">Don\u2019t connect</string>
     <!-- Strings for Dialog connect button -->
     <string name="bluetooth_connect_access_dialog_positive">Connect</string>
+    <string name="set_net_from_host_all_interfaces">Interfaces</string>
+    <string name="set_net_from_host_net_set">"Network"</string>
 </resources>
