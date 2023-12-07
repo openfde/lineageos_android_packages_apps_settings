@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.EditText;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -36,7 +38,7 @@ import lineageos.waydroid.Net;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import android.content.Context;
-
+import android.util.Log;
 public class SetWifiFromHostFragment extends InstrumentedFragment implements FdeWifiConfigUiBase,
         View.OnClickListener {
 
@@ -49,6 +51,10 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
     private ConnectWifiController mUIController;
     private Button mSubmitBtn;
     private Button mCancelBtn;
+
+    private Spinner security;
+
+    private EditText passwd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,8 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
         mSubmitBtn = rootView.findViewById(SUBMIT_BUTTON_ID);
         mCancelBtn = rootView.findViewById(CANCEL_BUTTON_ID);
+        passwd = rootView.findViewById(R.id.passwd);
+        security = rootView.findViewById(R.id.security);
 
         mSubmitBtn.setOnClickListener(this);
         mCancelBtn.setOnClickListener(this);
@@ -148,7 +156,7 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         successfullyFinish(mUIController.getConfig());
     }
-	public static class NetTask extends AsyncTask<Void, Void, Exception> {
+	public  class NetTask extends AsyncTask<Void, Void, Exception> {
 	    private final NetConfiguration mConfig;
 		private final Context mContext;
         public NetTask(Context context, NetConfiguration config) {
@@ -160,12 +168,17 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
         protected Exception doInBackground(Void... params) {
         try {
 		    Net net = Net.getInstance(mContext);
-        	if (mConfig.ipType == 0) {
-        	    net.setDHCP(mConfig.interfaceName);
-        	} else {
-                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength, 
-        			mConfig.gateway, mConfig.dns1, mConfig.dns2);
-        	}
+            String wifiName = security.getSelectedItem().toString();
+            String password = passwd.getText().toString();
+            Log.i("MYLOG","wifiName "+wifiName +" , password: "+password);
+            net.connectSsid(wifiName,password);
+//        	if (mConfig.ipType == 0) {
+//        	    net.setDHCP(mConfig.interfaceName);
+//        	} else {
+////                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength,
+////        			mConfig.gateway, mConfig.dns1, mConfig.dns2);
+//
+//        	}
           return null;
         } catch (Exception e) {
           return e;

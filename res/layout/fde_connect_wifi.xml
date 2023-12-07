@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:minEms="16"
                         style="@style/wifi_item_label"
-                        android:text="可用热点" />
+                        android:text="@string/fde_wifi_name" />
                 <Spinner android:id="@+id/security"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -58,14 +58,14 @@
                         android:layout_height="wrap_content"
                         android:minEms="16"
                         style="@style/wifi_item_label"
-                        android:text="密码" />
+                        android:text="@string/fde_wifi_password" />
                 <EditText android:id="@+id/passwd"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/wifi_item_edit_content"
                             android:singleLine="true"
-                            android:hint="@string/wifi_dns1_hint"
-                            android:inputType="textNoSuggestions" />
+                            android:hint="@string/fde_enter_wifi_password"
+                            android:inputType="textPassword" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

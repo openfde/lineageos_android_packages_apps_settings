@@ -31,7 +31,7 @@
         android:key="wifi_setting"
         android:title="WIFI"
         android:summary="set wifi"
-        android:icon="@drawable/ic_settings_language"
+        android:icon="@drawable/ic_settings_wireless"
         android:order="2"
         android:fragment="com.android.settings.network_fde.SetWifiFromHostFragment"/>
 </PreferenceScreen>

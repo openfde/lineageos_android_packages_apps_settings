@@ -267,14 +267,28 @@ public class ConnectWifiController implements TextWatcher,
 		android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
 			+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
 			+ " ,AllSsid: " + str);
-
 		
-        spinnerAdapter.add("wifi1");
-	    mInterfacesInPosition.add("wifi1");
-		spinnerAdapter.add("wifi2");
-	    mInterfacesInPosition.add("wifi2");
-		spinnerAdapter.add("wifi3");
-	    mInterfacesInPosition.add("wifi3");
+
+        try {
+            if(str != null ){
+                String[] arrWifis	= str.split("\n");
+                for (String wi : arrWifis) {
+                    spinnerAdapter.add(wi);
+                    mInterfacesInPosition.add(wi);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+				
+		//		  spinnerAdapter.add("wifi1");
+		//		mInterfacesInPosition.add("wifi1");
+		//		spinnerAdapter.add("wifi2");
+		//		mInterfacesInPosition.add("wifi2");
+		//		spinnerAdapter.add("wifi3");
+		//		mInterfacesInPosition.add("wifi3");
+
 		
         spinnerAdapter.notifyDataSetChanged();
 

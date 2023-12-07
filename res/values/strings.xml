@@ -12239,4 +12239,10 @@
     <string name="bluetooth_connect_access_dialog_positive">Connect</string>
     <string name="set_net_from_host_all_interfaces">Interfaces</string>
     <string name="set_net_from_host_net_set">"Network"</string>
+
+    <!-- fde net text  -->
+    <string name="fde_wifi_name">"Network SSID"</string>
+    <string name="fde_wifi_password">"password"</string>
+    <string name="fde_enter_wifi_name">"Enter Network SSID"</string>
+    <string name="fde_enter_wifi_password">"Enter password"</string>
 </resources>
