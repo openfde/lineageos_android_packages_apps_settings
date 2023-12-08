@@ -21,6 +21,8 @@ import android.content.res.Resources;
 import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.StaticIpConfiguration;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -68,12 +70,14 @@ public class ConnectWifiController implements TextWatcher,
     private Spinner mSecuritySpinner;
     private TextView mPasswdView;
 
+    ArrayAdapter<String> spinnerAdapter;
+
     private NetConfiguration mNetConfiguration = null;
 
     private Context mContext;
-	ArrayList<String> mInterfacesInPosition = new ArrayList<>();
-	int mInterfaceNamePosition;
-	int mIPTypePosition;
+    ArrayList<String> mInterfacesInPosition = new ArrayList<>();
+    int mInterfaceNamePosition;
+    int mIPTypePosition;
 
     public ConnectWifiController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
         mConfigUi = parent;
@@ -88,8 +92,8 @@ public class ConnectWifiController implements TextWatcher,
         final Resources res = mContext.getResources();
 
         mDialogContainer = mView.findViewById(R.id.dialog_scrollview);
-		mPasswdView = (TextView) mView.findViewById(R.id.passwd);
-		mPasswdView.addTextChangedListener(this);
+        mPasswdView = (TextView) mView.findViewById(R.id.passwd);
+        mPasswdView.addTextChangedListener(this);
 
         if (mFde == null) {
             configureInterfaceSpinner();
@@ -101,9 +105,9 @@ public class ConnectWifiController implements TextWatcher,
         }
 
         // After done view show and hide, request focus from parent view
-        mView.findViewById(R.id.l_wifidialog).requestFocus();
+        mView.findViewById(R.id.dialog_scrollview).requestFocus();
     }
-	
+
     void hideSubmitButton() {
         Button submit = mConfigUi.getSubmitButton();
         if (submit == null) return;
@@ -126,8 +130,8 @@ public class ConnectWifiController implements TextWatcher,
 
     public NetConfiguration getConfig() {
         NetConfiguration config = new NetConfiguration();
-		config.interfaceName = mInterfacesInPosition.get(mInterfaceNamePosition);
-    	config.ipAddress = mPasswdView.getText().toString();
+        config.interfaceName = mInterfacesInPosition.get(mInterfaceNamePosition);
+        config.ipAddress = mPasswdView.getText().toString();
         return config;
     }
 
@@ -141,7 +145,7 @@ public class ConnectWifiController implements TextWatcher,
         }
         return true;
     }
-	
+
     private int validatePasswd(NetConfiguration staticIpConfiguration) {
         if (mSecuritySpinner == null) return 0;
 
@@ -155,13 +159,13 @@ public class ConnectWifiController implements TextWatcher,
             v.setVisibility(visibility);
         }
     }
-	
+
     @Override
     public void afterTextChanged(Editable s) {
         ThreadUtils.postOnMainThread(() -> {
             //showWarningMessagesIfAppropriate();
-            
-			android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
             enableSubmitIfAppropriate();
         });
     }
@@ -169,61 +173,61 @@ public class ConnectWifiController implements TextWatcher,
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         // work done in afterTextChanged
-        
-		android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // work done in afterTextChanged
-        
-		android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         return false;
     }
 
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         return false;
     }
 
     @Override
     public void onCheckedChanged(CompoundButton view, boolean isChecked) {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         //
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent == mSecuritySpinner) {
-			
-		android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
-			+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-			+ " ,position: " + position);
-		mInterfaceNamePosition = position;
-    		//showSecurityFields(/* refreshEapMethods */ true, /* refreshCertificates */ true);
-    	} else {
-    		//showIpConfigFields();
+
+            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+                    + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
+                    + " ,position: " + position);
+            mInterfaceNamePosition = position;
+            //showSecurityFields(/* refreshEapMethods */ true, /* refreshCertificates */ true);
+        } else {
+            //showIpConfigFields();
             //enableSubmitIfAppropriate();
-            
-			android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
-			+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-			+ " ,position: " + position);
-    	}  
+
+            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+                    + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
+                    + " ,position: " + position);
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         //
     }
 
@@ -238,7 +242,7 @@ public class ConnectWifiController implements TextWatcher,
         mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
         mSecuritySpinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(mContext,
+        spinnerAdapter = new ArrayAdapter<String>(mContext,
                 android.R.layout.simple_spinner_item, android.R.id.text1);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSecuritySpinner.setAdapter(spinnerAdapter);
@@ -260,38 +264,53 @@ public class ConnectWifiController implements TextWatcher,
 			e.printStackTrace();
 		}
 		*/
-		Net net = Net.getInstance(mContext);
-        
-        String str = net.getAllSsid();
 
-		android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
-			+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-			+ " ,AllSsid: " + str);
-		
+        new Thread(new SearchThread()).start();
 
-        try {
-            if(str != null ){
-                String[] arrWifis	= str.split("\n");
-                for (String wi : arrWifis) {
-                    spinnerAdapter.add(wi);
-                    mInterfacesInPosition.add(wi);
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-				
-		//		  spinnerAdapter.add("wifi1");
-		//		mInterfacesInPosition.add("wifi1");
-		//		spinnerAdapter.add("wifi2");
-		//		mInterfacesInPosition.add("wifi2");
-		//		spinnerAdapter.add("wifi3");
-		//		mInterfacesInPosition.add("wifi3");
+        //		  spinnerAdapter.add("wifi1");
+        //		mInterfacesInPosition.add("wifi1");
+        //		spinnerAdapter.add("wifi2");
+        //		mInterfacesInPosition.add("wifi2");
+        //		spinnerAdapter.add("wifi3");
+        //		mInterfacesInPosition.add("wifi3");
 
-		
-        spinnerAdapter.notifyDataSetChanged();
 
-        mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
+
     }
+
+    class SearchThread implements  Runnable{
+        @Override
+        public void run() {
+            Net net = Net.getInstance(mContext);
+            String str = net.getAllSsid();
+            Log.i("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+                    + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
+                    + " ,AllSsid: " + str);
+            Message msg = new Message();
+            msg.obj = str ;
+            handler.sendMessage(msg);
+        }
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String str = msg.obj.toString() ;
+            try {
+                if(str != null ){
+                    String[] arrWifis	= str.split("\n");
+                    for (String wi : arrWifis) {
+                        spinnerAdapter.add(wi);
+                        mInterfacesInPosition.add(wi);
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            spinnerAdapter.notifyDataSetChanged();
+            mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
+        }
+    };
 }

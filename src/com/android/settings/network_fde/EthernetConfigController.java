@@ -50,6 +50,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -397,8 +399,10 @@ public class EthernetConfigController implements TextWatcher,
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				spinnerAdapter.add(line);
-				mInterfacesInPosition.add(line);
+                if(isEthernet(line)){
+                    spinnerAdapter.add(line);
+                    mInterfacesInPosition.add(line);
+                }
 			}
 
 			int exitCode = process.waitFor();
@@ -413,5 +417,17 @@ public class EthernetConfigController implements TextWatcher,
 
         showIpConfigFields();
 		mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 检测是否是以太网
+     * @param param
+     * @return
+     */
+    public  boolean isEthernet(String param) {
+        String check = "en.+|usb\\\\d";
+        Pattern regex = Pattern.compile(check);
+        Matcher matcher = regex.matcher(param);
+        return matcher.matches();
     }
 }
