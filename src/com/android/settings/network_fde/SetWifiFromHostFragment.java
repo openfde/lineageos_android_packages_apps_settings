@@ -43,18 +43,19 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
         View.OnClickListener {
 
     final static String WIFI_CONFIG_KEY = "fde_net_config_key";
-    @VisibleForTesting
-    final static int SUBMIT_BUTTON_ID = android.R.id.button1;
-    @VisibleForTesting
-    final static int CANCEL_BUTTON_ID = android.R.id.button2;
+    // @VisibleForTesting
+    // final static int SUBMIT_BUTTON_ID = android.R.id.button1;
+    // @VisibleForTesting
+    // final static int CANCEL_BUTTON_ID = android.R.id.button2;
 
     private ConnectWifiController mUIController;
-    private Button mSubmitBtn;
-    private Button mCancelBtn;
+    // private Button mSubmitBtn;
+    // private Button mCancelBtn;
 
-    private Spinner security;
+    // private Spinner security;
 
-    private EditText passwd;
+    // private EditText passwd;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,18 +72,21 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
             Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fde_connect_wifi_view, container, false);
 
-        final Button neutral = rootView.findViewById(android.R.id.button3);
-        if (neutral != null) {
-            neutral.setVisibility(View.GONE);
-        }
+        // final Button neutral = rootView.findViewById(android.R.id.button3);
+        // if (neutral != null) {
+        //     neutral.setVisibility(View.GONE);
+        // }
 
-        mSubmitBtn = rootView.findViewById(SUBMIT_BUTTON_ID);
-        mCancelBtn = rootView.findViewById(CANCEL_BUTTON_ID);
-        passwd = rootView.findViewById(R.id.passwd);
-        security = rootView.findViewById(R.id.security);
+        // mSubmitBtn = rootView.findViewById(SUBMIT_BUTTON_ID);
+        // mCancelBtn = rootView.findViewById(CANCEL_BUTTON_ID);
+        // passwd = rootView.findViewById(R.id.passwd);
+        // security = rootView.findViewById(R.id.security);
 
-        mSubmitBtn.setOnClickListener(this);
-        mCancelBtn.setOnClickListener(this);
+        
+        // mSubmitBtn.setOnClickListener(this);
+        // mCancelBtn.setOnClickListener(this);
+
+
 
         mUIController = new ConnectWifiController(this, rootView, null);
 
@@ -97,12 +101,19 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case SUBMIT_BUTTON_ID:
-                handleSubmitAction();
-                break;
-            case CANCEL_BUTTON_ID:
-                handleCancelAction();
-                break;
+            // case SUBMIT_BUTTON_ID:
+            //     handleSubmitAction();
+            //     break;
+            // case CANCEL_BUTTON_ID:
+            //     handleCancelAction();
+            //     break;
+            // case  R.id.imgRefresh:
+
+            //     break;
+
+            // case R.id.txtAddWifi:
+
+            //     break;       
         }
     }
 
@@ -133,75 +144,75 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
     @Override
     public void setSubmitButton(CharSequence text) {
-        mSubmitBtn.setText(text);
+        // mSubmitBtn.setText(text);
     }
 
     @Override
     public void setCancelButton(CharSequence text) {
-        mCancelBtn.setText(text);
+        // mCancelBtn.setText(text);
     }
 
     @Override
     public Button getSubmitButton() {
-        return mSubmitBtn;
+        return null;//mSubmitBtn;
     }
 
     @Override
     public Button getCancelButton() {
-        return mCancelBtn;
+        return null;//mCancelBtn;
     }
 
     @VisibleForTesting
     void handleSubmitAction() {
 	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-        successfullyFinish(mUIController.getConfig());
+        // successfullyFinish(mUIController.getConfig());
     }
-	public  class NetTask extends AsyncTask<Void, Void, Exception> {
-	    private final NetConfiguration mConfig;
-		private final Context mContext;
-        public NetTask(Context context, NetConfiguration config) {
-			mContext = context;
-            mConfig = config;
-        }
+// 	public  class NetTask extends AsyncTask<Void, Void, Exception> {
+// 	    private final NetConfiguration mConfig;
+// 		private final Context mContext;
+//         public NetTask(Context context, NetConfiguration config) {
+// 			mContext = context;
+//             mConfig = config;
+//         }
         
-        @Override
-        protected Exception doInBackground(Void... params) {
-        try {
-		    Net net = Net.getInstance(mContext);
-            String wifiName = security.getSelectedItem().toString();
-            String password = passwd.getText().toString();
-            Log.i("MYLOG","wifiName "+wifiName +" , password: "+password);
-            net.connectSsid(wifiName,password);
-//        	if (mConfig.ipType == 0) {
-//        	    net.setDHCP(mConfig.interfaceName);
-//        	} else {
-////                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength,
-////        			mConfig.gateway, mConfig.dns1, mConfig.dns2);
-//
-//        	}
-          return null;
-        } catch (Exception e) {
-          return e;
-        }
-	  }
+//         @Override
+//         protected Exception doInBackground(Void... params) {
+//         try {
+// 		    Net net = Net.getInstance(mContext);
+//             String wifiName = security.getSelectedItem().toString();
+//             String password = passwd.getText().toString();
+//             Log.i("MYLOG","wifiName "+wifiName +" , password: "+password);
+//             net.connectSsid(wifiName,password);
+// //        	if (mConfig.ipType == 0) {
+// //        	    net.setDHCP(mConfig.interfaceName);
+// //        	} else {
+// ////                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength,
+// ////        			mConfig.gateway, mConfig.dns1, mConfig.dns2);
+// //
+// //        	}
+//           return null;
+//         } catch (Exception e) {
+//           return e;
+//         }
+// 	  }
 
-	  @Override
-	  protected void onPostExecute(Exception e) {
-		  if (e == null) {
-			  Toast.makeText(mContext, "net set success!!", Toast.LENGTH_SHORT).show();
-		  } else {
-			  android.util.Log.e("MYLOG", "Failed to set: " + mConfig, e);
-			  Toast.makeText(mContext, "net set fail!!", Toast.LENGTH_SHORT).show();
-		  }
-	  }
-	}
+	//   @Override
+	//   protected void onPostExecute(Exception e) {
+	// 	  if (e == null) {
+	// 		  Toast.makeText(mContext, "net set success!!", Toast.LENGTH_SHORT).show();
+	// 	  } else {
+	// 		  android.util.Log.e("MYLOG", "Failed to set: " + mConfig, e);
+	// 		  Toast.makeText(mContext, "net set fail!!", Toast.LENGTH_SHORT).show();
+	// 	  }
+	//   }
+	// }
 
     private void successfullyFinish(NetConfiguration config) {
     
 	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
 		+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
 		+ " ," + config);
-	    new NetTask(getContext(), config).execute();
+	    // new NetTask(getContext(), config).execute();
         //final Intent intent = new Intent();
         final Activity activity = getActivity();
         //intent.putExtra(WIFI_CONFIG_KEY, config);

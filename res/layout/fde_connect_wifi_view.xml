@@ -24,14 +24,25 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_above="@id/fde_add_network_button_bar"
             android:layout_alignParentTop="true"
             layout="@layout/fde_connect_wifi"/>
+
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/fde_add_network_button_bar"
+            android:layout_alignParentTop="true"
+            layout="@layout/layout_fde_wifi_info"/>
+
 
         <include
             android:id="@+id/fde_add_network_button_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             layout="@*android:layout/alert_dialog_button_bar_material"/>
 </RelativeLayout>

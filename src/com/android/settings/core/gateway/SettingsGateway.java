@@ -112,6 +112,9 @@ import com.android.settings.network.ApnEditor;
 import com.android.settings.network.ApnSettings;
 import com.android.settings.network.MobileNetworkListFragment;
 import com.android.settings.network.NetworkDashboardFragment;
+import com.android.settings.network_fde.SetWifiFromHostFragment;
+import com.android.settings.network_fde.SetEthernetFromHostFragment;
+import com.android.settings.network_fde.SetNetworkFromHostFragment;
 import com.android.settings.nfc.AndroidBeam;
 import com.android.settings.nfc.PaymentSettings;
 import com.android.settings.notification.ConfigureNotificationSettings;
@@ -285,6 +288,9 @@ public class SettingsGateway {
             StorageDashboardFragment.class.getName(),
             SystemDashboardFragment.class.getName(),
             NetworkDashboardFragment.class.getName(),
+            SetWifiFromHostFragment.class.getName(),
+            SetNetworkFromHostFragment.class.getName(),
+            SetEthernetFromHostFragment.class.getName(),
             ConnectedDeviceDashboardFragment.class.getName(),
             UsbDetailsFragment.class.getName(),
             AppAndNotificationDashboardFragment.class.getName(),
@@ -327,6 +333,9 @@ public class SettingsGateway {
             SupportDashboardActivity.class.getName(),
             // Home page > Network & Internet
             Settings.WifiSettingsActivity.class.getName(),
+            Settings.SetWifiFromHostActivity.class.getName(),
+            Settings.SetNetworkFromHostActivity.class.getName(),
+            Settings.SetEthernetFromHostActivity.class.getName(),
             Settings.WifiSettings2Activity.class.getName(),
             Settings.DataUsageSummaryActivity.class.getName(),
             // Home page > Connected devices

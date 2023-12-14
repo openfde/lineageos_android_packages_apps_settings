@@ -625,6 +625,18 @@ public class SettingsActivity extends SettingsBaseActivity
                 isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
+                        Settings.SetWifiFromHostActivity.class.getName()),
+                mBatteryPresent, isAdmin) || somethingChanged;
+
+        somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
+                        Settings.SetNetworkFromHostActivity.class.getName()),
+                mBatteryPresent, isAdmin) || somethingChanged;
+
+        somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
+                        Settings.SetEthernetFromHostActivity.class.getName()),
+                mBatteryPresent, isAdmin) || somethingChanged;
+
+        somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
                         Settings.PowerUsageSummaryActivity.class.getName()),
                 mBatteryPresent, isAdmin) || somethingChanged;
 

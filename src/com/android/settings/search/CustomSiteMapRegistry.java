@@ -29,6 +29,9 @@ import com.android.settings.gestures.SystemNavigationGestureSettings;
 import com.android.settings.location.LocationSettings;
 import com.android.settings.location.RecentLocationRequestSeeAllFragment;
 import com.android.settings.network.NetworkDashboardFragment;
+import com.android.settings.network_fde.SetWifiFromHostFragment;
+import com.android.settings.network_fde.SetNetworkFromHostFragment;
+import com.android.settings.network_fde.SetEthernetFromHostFragment;
 import com.android.settings.notification.zen.ZenModeBlockedEffectsSettings;
 import com.android.settings.notification.zen.ZenModeRestrictNotificationsSettings;
 import com.android.settings.security.SecuritySettings;
@@ -56,6 +59,12 @@ public class CustomSiteMapRegistry {
                 WallpaperSuggestionActivity.class.getName(), DisplaySettings.class.getName());
         CUSTOM_SITE_MAP.put(
                 WifiSettings2.class.getName(), NetworkDashboardFragment.class.getName());
+        CUSTOM_SITE_MAP.put(
+                WifiSettings2.class.getName(), SetWifiFromHostFragment.class.getName());
+        CUSTOM_SITE_MAP.put(
+                WifiSettings2.class.getName(), SetNetworkFromHostFragment.class.getName());
+        CUSTOM_SITE_MAP.put(
+                WifiSettings2.class.getName(), SetEthernetFromHostFragment.class.getName());   
         CUSTOM_SITE_MAP.put(PowerUsageAdvanced.class.getName(), PowerUsageSummary.class.getName());
         CUSTOM_SITE_MAP.put(RecentLocationRequestSeeAllFragment.class.getName(),
                 LocationSettings.class.getName());

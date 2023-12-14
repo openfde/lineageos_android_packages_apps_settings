@@ -874,7 +874,7 @@
     <string name="rx_wifi_speed" msgid="5167966079215111232">"接收链接速度"</string>
     <string name="wifi_speed" msgid="6562147734565434513">"连接速度"</string>
     <string name="wifi_frequency" msgid="3120998420184702834">"频率"</string>
-    <string name="wifi_ip_address" msgid="8903577251845268209">"IP 地址"</string>
+    <string name="wifi_ip_address" msgid="8903577251845268209">"IP  地址"</string>
     <string name="passpoint_label" msgid="6513669696739302866">"保存方式："</string>
     <string name="passpoint_content" msgid="5219226173518418335">"<xliff:g id="NAME">%1$s</xliff:g>凭据"</string>
     <string name="wifi_eap_method" msgid="3776009521349381742">"EAP 方法"</string>
@@ -1014,10 +1014,10 @@
     <string name="wifi_ip_settings_invalid_gateway" msgid="1174931247370931239">"请键入有效的网关地址。"</string>
     <string name="wifi_ip_settings_invalid_dns" msgid="1757402215999845975">"请输入有效的DNS地址。"</string>
     <string name="wifi_ip_settings_invalid_network_prefix_length" msgid="5980808986926987299">"键入长度在 0 到 32 之间的网络前缀。"</string>
-    <string name="wifi_dns1" msgid="6462967242512284778">"DNS 1"</string>
-    <string name="wifi_dns2" msgid="8494337355389723965">"DNS 2"</string>
-    <string name="wifi_gateway" msgid="3699227808616416759">"网关"</string>
-    <string name="wifi_network_prefix_length" msgid="1003365439352276622">"网络前缀长度"</string>
+    <string name="wifi_dns1" msgid="6462967242512284778">"首选DNS"</string>
+    <string name="wifi_dns2" msgid="8494337355389723965">"备选DNS"</string>
+    <string name="wifi_gateway" msgid="3699227808616416759">"默认网关"</string>
+    <string name="wifi_network_prefix_length" msgid="1003365439352276622">"前缀长度"</string>
     <string name="wifi_p2p_settings_title" msgid="1689918226469221870">"WLAN 直连"</string>
     <string name="wifi_p2p_device_info" msgid="4304362679971797283">"设备信息"</string>
     <string name="wifi_p2p_persist_network" msgid="7942929491568227945">"记住该连接"</string>
@@ -4987,4 +4987,13 @@
     <string name="fde_wifi_password">"密码"</string>
     <string name="fde_enter_wifi_name">"请输入网络名称"</string>
     <string name="fde_enter_wifi_password">"请输入密码"</string>
+    <string name="fde_wifi">WIFI</string>
+	  <string name="fde_add_wifi">添加网络</string>
+    <string name="fde_manuals_add_wifi">手动添加网络</string>
+    <string name="fde_choose_nearby_wifi">请选择附近的WIFI</string>
+    <string name="fde_btn_cancel">取消</string>
+    <string name="fde_btn_confirm">确定</string>
+	  <string name="fde_btn_operating_error">您操作太快</string>
+    <string name="fde_scanning">正在扫描...</string>
+    <string name="fde_connecting">正在连接...</string>
 </resources>

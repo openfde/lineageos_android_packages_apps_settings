@@ -52,32 +52,79 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.ImageView;
+import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.android.settings.network_fde.adapter.FdeWifiAdapter;
+import com.android.settings.network_fde.dialog.AddWlanDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.android.settings.network_fde.dialog.SelectWlanDialog;
+import android.app.ProgressDialog;
+import com.android.settings.utils.LogTools;
 
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
  * share the logic for controlling buttons, text fields, etc.
  */
-public class ConnectWifiController implements TextWatcher,
-        AdapterView.OnItemSelectedListener, OnCheckedChangeListener,
-        TextView.OnEditorActionListener, View.OnKeyListener {
-    private static final String TAG = "FdeWifiConfigController";
+public class ConnectWifiController implements 
+        // TextWatcher
+        // ,AdapterView.OnItemSelectedListener
+        // , OnCheckedChangeListener
+        // ,TextView.OnEditorActionListener
+        //  View.OnKeyListener,
+         AdapterItem {
+    // private static final String TAG = "FdeWifiConfigController";
 
     private final FdeWifiConfigUiBase mConfigUi;
     private final View mView;
     private final Fde mFde;
 
-    private ScrollView mDialogContainer;
-    private Spinner mSecuritySpinner;
-    private TextView mPasswdView;
 
-    ArrayAdapter<String> spinnerAdapter;
+    // private ScrollView mDialogContainer;
+    // private Spinner mSecuritySpinner;
+    // private TextView mPasswdView;
+    private RecyclerView recyclerView;
+    private RelativeLayout layoutRefresh;
+    private ImageView imgRefresh;
+    private TextView switchWifi ;
+    private TextView txtAddWifi ;
 
-    private NetConfiguration mNetConfiguration = null;
+    // ArrayAdapter<String> spinnerAdapter;
+
+    // private NetConfiguration mNetConfiguration = null;
 
     private Context mContext;
     ArrayList<String> mInterfacesInPosition = new ArrayList<>();
-    int mInterfaceNamePosition;
-    int mIPTypePosition;
+    // int mInterfaceNamePosition;
+    // int mIPTypePosition;
+    long lastSwitchTime = 0;
+    int clickCount = 0;
+    boolean isSwitchOpen = false ;
+
+    FdeWifiAdapter fdeWifiAdapter ;
+    List<Map<String,Object>> list ;
+    List<Map<String,Object>> allSavelist ;
+    ProgressDialog progressDialog ;
+
+    private String isOpenWifi = "1" ;
+    private String curWifiName = "";
+
+    public static final int UPDATE_LIST = 1001 ;
+    public static final int ENABLE_WIFI = 1002 ;
+    public static final int QUERY_WIFI_STATUS = 1003 ;
+    public static final int QUERY_WIFI_INFO = 1004 ;
+    public static final int CONNECT_WIFI = 1005 ;
+    public static final int GET_ALL_SAVED_LIST = 1006 ;
+    public static final int GET_ACTIVED = 1007;
+    
 
     public ConnectWifiController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
         mConfigUi = parent;
@@ -91,205 +138,491 @@ public class ConnectWifiController implements TextWatcher,
 
         final Resources res = mContext.getResources();
 
-        mDialogContainer = mView.findViewById(R.id.dialog_scrollview);
-        mPasswdView = (TextView) mView.findViewById(R.id.passwd);
-        mPasswdView.addTextChangedListener(this);
+        // mDialogContainer = mView.findViewById(R.id.dialog_scrollview);
+        // mPasswdView = (TextView) mView.findViewById(R.id.passwd);
+        // mPasswdView.addTextChangedListener(this);
 
-        if (mFde == null) {
-            configureInterfaceSpinner();
-            mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
-        }
-        mConfigUi.setCancelButton(res.getString(R.string.wifi_cancel));
-        if (mConfigUi.getSubmitButton() != null) {
-            enableSubmitIfAppropriate();
-        }
+        // if (mFde == null) {
+        //     configureInterfaceSpinner();
+        //     mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
+        // }
+        // mConfigUi.setCancelButton(res.getString(R.string.wifi_cancel));
+        // if (mConfigUi.getSubmitButton() != null) {
+        //     enableSubmitIfAppropriate();
+        // }
 
         // After done view show and hide, request focus from parent view
         mView.findViewById(R.id.dialog_scrollview).requestFocus();
-    }
-
-    void hideSubmitButton() {
-        Button submit = mConfigUi.getSubmitButton();
-        if (submit == null) return;
-
-        submit.setVisibility(View.GONE);
-    }
-
-    /* show submit button if password, ip and proxy settings are valid */
-    void enableSubmitIfAppropriate() {
-        Button submit = mConfigUi.getSubmitButton();
-        if (submit == null) return;
-
-        submit.setEnabled(isSubmittable());
-    }
 
 
-    boolean isSubmittable() {
-        return passswdValid();
-    }
+        layoutRefresh = (RelativeLayout)mView.findViewById(R.id.layoutRefresh);
+        recyclerView =(RecyclerView) mView.findViewById(R.id.recyclerView);
+        switchWifi = (TextView)mView.findViewById(R.id.switchWifi);
+        imgRefresh = (ImageView)mView.findViewById(R.id.imgRefresh);
+        txtAddWifi = (TextView)mView.findViewById(R.id.txtAddWifi);
+        list = new ArrayList<>();
+        allSavelist = new ArrayList<>();
+        fdeWifiAdapter = new FdeWifiAdapter(mContext,list,this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-    public NetConfiguration getConfig() {
-        NetConfiguration config = new NetConfiguration();
-        config.interfaceName = mInterfacesInPosition.get(mInterfaceNamePosition);
-        config.ipAddress = mPasswdView.getText().toString();
-        return config;
-    }
+ 
 
-    private boolean passswdValid() {
-        if (mSecuritySpinner != null) {
-            mNetConfiguration = new NetConfiguration();
-            int result = validatePasswd(mNetConfiguration);
-            if (result != 0) {
-                return false;
+        recyclerView.setAdapter(fdeWifiAdapter);
+
+    //    for(int i=0 ;i < 30;i++){
+    //         Map<String,Object> mp = new HashMap<>();
+    //         mp.put("name","wifi"+i);
+    //         mp.put("isEncrypted", (i%5 !=0)?"加密":"开放");
+    //         list.add(mp);
+    //     }
+    //     fdeWifiAdapter.notifyDataSetChanged();
+
+        // txtAddWifi.setOnClickListener(this);
+        // imgRefresh.setOnClickListener(this);
+
+        new Thread(new QueryWifiStatus()).start();
+      
+        switchWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(System.currentTimeMillis() - lastSwitchTime < 2 *1000){
+                    Toast.makeText(mContext,mContext.getString(R.string.fde_btn_operating_error),Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                isSwitchOpen = !isSwitchOpen ;
+                if(isSwitchOpen){
+                    new Thread(new OpenAndCloseWifiThread(1)).start();
+                    openWifiView();
+                }else{
+                    new Thread(new OpenAndCloseWifiThread(0)).start();
+                    closeWifiView();
+                }
+                lastSwitchTime = System.currentTimeMillis();
             }
-        }
-        return true;
-    }
+        });
 
-    private int validatePasswd(NetConfiguration staticIpConfiguration) {
-        if (mSecuritySpinner == null) return 0;
+        // switchWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //     @Override
+        //     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        //         // if(System.currentTimeMillis() - lastSwitchTime < 1 *1000 ){
+        //         //     return ;
+        //         // }
+        //         if(b){
+        //            new Thread(new OpenAndCloseWifiThread(1)).start();
+        //            openWifiView();
+        //         }else{
+        //            new Thread(new OpenAndCloseWifiThread(0)).start();
+        //            closeWifiView();
+        //         }
+                
+        //     }
+        // });
 
-        String passwd = mPasswdView.getText().toString();
-        if (TextUtils.isEmpty(passwd)) return R.string.wifi_ip_settings_invalid_ip_address;
-        return 0;
-    }
-    private void setVisibility(int id, int visibility) {
-        final View v = mView.findViewById(id);
-        if (v != null) {
-            v.setVisibility(visibility);
-        }
-    }
+        txtAddWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddWlanDialog addWlanDialog = new AddWlanDialog(mContext,ConnectWifiController.this);
+                if(addWlanDialog !=null && !addWlanDialog.isShowing()){
+                    addWlanDialog.show();
+                }
+                // clickCount++;
+                // if(clickCount % 3 == 1){
+                //     new Thread(new GetAllSavedWifiThread()).start();
+                // }else if(clickCount % 3 == 2){
+                //     new Thread(new GetActivedWifiThread()).start();
+                // }else{
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        ThreadUtils.postOnMainThread(() -> {
-            //showWarningMessagesIfAppropriate();
+                // }
+            }
+        });
 
-            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-            enableSubmitIfAppropriate();
+        imgRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScanWifi();
+            }
         });
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // work done in afterTextChanged
-
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    void closeWifiView(){
+        //如果关闭WiFi
+        txtAddWifi.setVisibility(View.GONE);
+        layoutRefresh.setVisibility(View.VISIBLE);
+        if(list !=null){
+            list.clear();
+            fdeWifiAdapter.notifyDataSetChanged();
+        }    
+        switchWifi.setBackgroundDrawable(mContext.getDrawable(R.mipmap.icon_switch_close));
     }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // work done in afterTextChanged
-
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    void openWifiView(){
+        //如果开启WiFi
+        switchWifi.setBackgroundDrawable(mContext.getDrawable(R.mipmap.icon_switch_open));
+        txtAddWifi.setVisibility(View.VISIBLE);
+        layoutRefresh.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+    // void hideSubmitButton() {
+    //     Button submit = mConfigUi.getSubmitButton();
+    //     if (submit == null) return;
 
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-        return false;
-    }
+    //     submit.setVisibility(View.GONE);
+    // }
 
-    @Override
-    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+    /* show submit button if password, ip and proxy settings are valid */
+    // void enableSubmitIfAppropriate() {
+    //     Button submit = mConfigUi.getSubmitButton();
+    //     if (submit == null) return;
 
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-        return false;
-    }
+    //     submit.setEnabled(isSubmittable());
+    // }
 
-    @Override
-    public void onCheckedChanged(CompoundButton view, boolean isChecked) {
 
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-        //
-    }
+    // boolean isSubmittable() {
+    //     return passswdValid();
+    // }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == mSecuritySpinner) {
+    // public NetConfiguration getConfig() {
+    //     NetConfiguration config = new NetConfiguration();
+    //     config.interfaceName = mInterfacesInPosition.get(mInterfaceNamePosition);
+    //     config.ipAddress = mPasswdView.getText().toString();
+    //     return config;
+    // }
 
-            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
-                    + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-                    + " ,position: " + position);
-            mInterfaceNamePosition = position;
-            //showSecurityFields(/* refreshEapMethods */ true, /* refreshCertificates */ true);
-        } else {
-            //showIpConfigFields();
-            //enableSubmitIfAppropriate();
+    // private boolean passswdValid() {
+    //     if (mSecuritySpinner != null) {
+    //         mNetConfiguration = new NetConfiguration();
+    //         int result = validatePasswd(mNetConfiguration);
+    //         if (result != 0) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
-            android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
-                    + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-                    + " ,position: " + position);
-        }
-    }
+    // private int validatePasswd(NetConfiguration staticIpConfiguration) {
+    //     if (mSecuritySpinner == null) return 0;
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    //     String passwd = mPasswdView.getText().toString();
+    //     if (TextUtils.isEmpty(passwd)) return R.string.wifi_ip_settings_invalid_ip_address;
+    //     return 0;
+    // }
+    // private void setVisibility(int id, int visibility) {
+    //     final View v = mView.findViewById(id);
+    //     if (v != null) {
+    //         v.setVisibility(visibility);
+    //     }
+    // }
 
-        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
-        //
-    }
+    // @Override
+    // public void afterTextChanged(Editable s) {
+    //     ThreadUtils.postOnMainThread(() -> {
+    //         //showWarningMessagesIfAppropriate();
+
+    //         LogTools.i("file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    //         enableSubmitIfAppropriate();
+    //     });
+    // }
+
+    // @Override
+    // public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    //     // work done in afterTextChanged
+
+    //     LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    // }
+
+    // @Override
+    // public void onTextChanged(CharSequence s, int start, int before, int count) {
+    //     // work done in afterTextChanged
+
+    //     LogTools.i("file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    // }
+
+    // @Override
+    // public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+
+    //     LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    //     return false;
+    // }
+
+    // @Override
+    // public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+
+    //     LogTools.i("file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    //     return false;
+    // }
+
+    // @Override
+    // public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+
+    //     LogTools.i("file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    //     //
+    // }
+
+    // @Override
+    // public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    //     if (parent == mSecuritySpinner) {
+
+    //         LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+    //                 + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
+    //                 + " ,position: " + position);
+    //         mInterfaceNamePosition = position;
+    //         //showSecurityFields(/* refreshEapMethods */ true, /* refreshCertificates */ true);
+    //     } else {
+    //         //showIpConfigFields();
+    //         //enableSubmitIfAppropriate();
+
+    //         LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+    //                 + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
+    //                 + " ,position: " + position);
+    //     }
+    // }
+
+    // @Override
+    // public void onNothingSelected(AdapterView<?> parent) {
+
+    //    LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+    //     //
+    // }
 
 
     public Fde getAccessPoint() {
         return mFde;
     }
 
-    private void configureInterfaceSpinner() {
-        mConfigUi.setTitle(R.string.set_net_from_host_net_set);
+//     private void configureInterfaceSpinner() {
+//         mConfigUi.setTitle(R.string.set_net_from_host_net_set);
 
-        mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
-        mSecuritySpinner.setOnItemSelectedListener(this);
+//         mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
+//         mSecuritySpinner.setOnItemSelectedListener(this);
 
-        spinnerAdapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, android.R.id.text1);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSecuritySpinner.setAdapter(spinnerAdapter);
-/*
-		try {
-			ProcessBuilder processBuilder = new ProcessBuilder("ls", "/sys/class/net");
-			Process process = processBuilder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				spinnerAdapter.add(line);
-				mInterfacesInPosition.add(line);
-			}
+//         spinnerAdapter = new ArrayAdapter<String>(mContext,
+//                 android.R.layout.simple_spinner_item, android.R.id.text1);
+//         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//         mSecuritySpinner.setAdapter(spinnerAdapter);
+// /*
+// 		try {
+// 			ProcessBuilder processBuilder = new ProcessBuilder("ls", "/sys/class/net");
+// 			Process process = processBuilder.start();
+// 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+// 			String line;
+// 			while ((line = reader.readLine()) != null) {
+// 				spinnerAdapter.add(line);
+// 				mInterfacesInPosition.add(line);
+// 			}
 
-			int exitCode = process.waitFor();
-			android.util.Log.e(TAG, "Exit code: " + exitCode);
+// 			int exitCode = process.waitFor();
+// 			android.util.Log.e(TAG, "Exit code: " + exitCode);
 
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
+// 		} catch (IOException | InterruptedException e) {
+// 			e.printStackTrace();
+// 		}
+// 		*/
 
-        new Thread(new SearchThread()).start();
-
-
-        //		  spinnerAdapter.add("wifi1");
-        //		mInterfacesInPosition.add("wifi1");
-        //		spinnerAdapter.add("wifi2");
-        //		mInterfacesInPosition.add("wifi2");
-        //		spinnerAdapter.add("wifi3");
-        //		mInterfacesInPosition.add("wifi3");
+//         // ScanWifi();
 
 
+//         //		  spinnerAdapter.add("wifi1");
+//         //		mInterfacesInPosition.add("wifi1");
+//         //		spinnerAdapter.add("wifi2");
+//         //		mInterfacesInPosition.add("wifi2");
+//         //		spinnerAdapter.add("wifi3");
+//         //		mInterfacesInPosition.add("wifi3");
+//     }
+
+      @Override
+    public void onDialogClick(int type,String ssid,String password){
+        showProgressDialog(mContext.getString(R.string.fde_connecting));
+        if(type == 1){
+            new Thread(new ConnectHideWifiThread(ssid,password)).start();
+        }else{
+            new Thread(new ConnectWifiByPasswordThread(ssid,password)).start();
+        }
 
     }
 
+    @Override
+    public void onItemClick(int pos,String content){
+        LogTools.i("onItemClick "+pos + " , content "+content);
+        Map<String,Object> mp = list.get(pos);
+        if(content.equals(curWifiName)){
+            //如果是当前WiFi
+            new Thread(new GetWifiInfo(content)).start();
+        }else{
+            String isSaved = mp.get("isSaved").toString();
+            if("1".equals(isSaved)){
+                showProgressDialog(mContext.getString(R.string.fde_connecting));
+                new Thread(new ConnectWifiThread(content,1)).start();
+            }else{
+            //如果没保存则输入密码
+                SelectWlanDialog selectWlanDialog = new SelectWlanDialog(mContext,content,ConnectWifiController.this);
+                if(selectWlanDialog !=null && !selectWlanDialog.isShowing()){
+                    selectWlanDialog.show();
+                }
+            }
+        }
+        
+    }
+
+
+    private void ScanWifi(){
+        if(!isSwitchOpen){
+            return ;
+        }
+        showProgressDialog(mContext.getString(R.string.fde_scanning));
+        new Thread(new SearchThread()).start();
+    }
+
+    class OpenAndCloseWifiThread implements  Runnable{
+        private int enable;
+
+        public OpenAndCloseWifiThread( int enable){
+            this.enable = enable;
+        }
+
+        @Override
+        public void run() {
+            Net net = Net.getInstance(mContext);
+            int status = net.enableWifi(enable);
+            LogTools.i("status "+status + ",enable "+enable);    
+            lastSwitchTime = System.currentTimeMillis();
+            sendMsgDelayed(ENABLE_WIFI,status,enable,null,3* 1000);
+            
+        }
+    }
+
+    class QueryWifiStatus implements  Runnable{
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                int status = net.isWifiEnable();
+                LogTools.i("isWifiEnable  "+status);    
+                sendMsg(QUERY_WIFI_STATUS,status);
+            }
+    }
+
+   class GetWifiInfo implements  Runnable{
+        String ssid;
+        
+        public GetWifiInfo (String ssid){
+            this.ssid = ssid;
+        }
+
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                String wifiInfo = net.getSignalAndSecurity(ssid);
+                LogTools.i("wifiInfo "+wifiInfo);    
+                sendMsg(QUERY_WIFI_INFO,wifiInfo);
+            }
+    }
+
+    class  ConnectWifiThread implements  Runnable{
+        String ssid;
+        int connect ;
+        
+        public ConnectWifiThread (String ssid,int connect){
+            this.ssid = ssid;
+            this.connect = connect;
+        }
+
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                int status = net.connectActivedWifi(ssid,connect);
+                LogTools.i("connectActivedWifi status "+status);    
+                sendMsg(CONNECT_WIFI,status);
+            }
+    }
+
+    class ConnectWifiByPasswordThread implements Runnable{
+        private String wifiName ;
+        private String password ;
+
+        public ConnectWifiByPasswordThread(String wifiName,String password ){
+            this.wifiName = wifiName;
+            this.password = password ;
+        }
+
+         @Override
+        public void run() {
+            Net net = Net.getInstance(mContext);
+            int status = net.connectSsid(wifiName,password);
+            LogTools.i("connectSsid--wifiName "+wifiName +" , password: "+password + ",status "+status);
+            new Thread(new GetActivedWifiThread()).start();
+        }
+   } 
+
+
+    /**
+     * 添加隐藏的WiFi
+     */
+    class ConnectHideWifiThread implements Runnable{
+        private String wifiName ;
+        private String password ;
+
+        public ConnectHideWifiThread(String wifiName,String password ){
+            this.wifiName = wifiName;
+            this.password = password ;
+        }
+
+         @Override
+        public void run() {
+            Net net = Net.getInstance(mContext);
+            LogTools.i("wifiName "+wifiName +" , password: "+password);
+            int status = net.connectHidedWifi(wifiName,password);
+            LogTools.i("connectHidedWifi--wifiName "+wifiName +" , password: "+password + ",status "+status);
+            new Thread(new GetActivedWifiThread()).start();
+        }
+   } 
+
+    /**
+     * 获取所有已保存的列表
+     */
+    class GetAllSavedWifiThread implements  Runnable{
+
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                String allSavelist = net.connectedWifiList();  
+                LogTools.i("connectedWifiList allSavelist "+allSavelist + "\n");  
+                sendMsg(GET_ALL_SAVED_LIST,allSavelist);  
+            }
+    }
+
+    /**
+     * 获取当前WiFi
+     */
+    class GetActivedWifiThread implements  Runnable{
+
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                String curNet = net.getActivedWifi();        
+                LogTools.i("GetActivedWifiThread curNet "+curNet);    
+                if(curNet == null || "".equals(curNet)){
+                    curWifiName = "";
+                }else{
+                    curWifiName = curNet ;
+                }
+                sendMsg(GET_ACTIVED,curNet);
+            }
+    }
+
+    /**
+     * 扫描所有列表
+     */
     class SearchThread implements  Runnable{
         @Override
         public void run() {
             Net net = Net.getInstance(mContext);
             String str = net.getAllSsid();
-            Log.i("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
+            LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
                     + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-                    + " ,AllSsid: " + str);
-            Message msg = new Message();
-            msg.obj = str ;
-            handler.sendMessage(msg);
+                    + " ,AllSsid: " + str + "\n");
+        
+            sendMsg(UPDATE_LIST,str);
         }
     }
 
@@ -297,20 +630,156 @@ public class ConnectWifiController implements TextWatcher,
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String str = msg.obj.toString() ;
-            try {
-                if(str != null ){
-                    String[] arrWifis	= str.split("\n");
-                    for (String wi : arrWifis) {
-                        spinnerAdapter.add(wi);
-                        mInterfacesInPosition.add(wi);
+            switch(msg.what){
+                case UPDATE_LIST:
+                    hideProgressDialog();
+                    if(msg.obj == null){
+                        msg.obj  = "";
                     }
-                }
-            }catch (Exception e){
-                e.printStackTrace();
+                    String str = msg.obj.toString() ;
+                    try {
+                        if(str != null ){
+                            if(list !=null){
+                                list.clear();
+                            }
+                            String[] arrWifis	= str.split("\n");
+                            for (String wi : arrWifis) {
+                                // spinnerAdapter.add(wi);
+                                // mInterfacesInPosition.add(wi);
+                                Map<String,Object> mp = new HashMap<>();
+                                mp.put("name",wi);
+                                mp.put("isEncrypted","");
+                                mp.put("isSaved","0");
+                                mp.put("curNet",-1);
+                                list.add(mp);
+                            }
+                        }
+                        fdeWifiAdapter.notifyDataSetChanged();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                     new Thread(new GetAllSavedWifiThread()).start();
+                break;
+
+                case QUERY_WIFI_STATUS:
+                    if(msg.obj == null){
+                        msg.obj  = "0";
+                    }
+                    isOpenWifi =msg.obj.toString() ;
+                    //如果WiFi打开了
+                    if("1".equals(isOpenWifi)){
+                        isSwitchOpen = true ; 
+                        openWifiView();
+                        ScanWifi();
+                    }else {
+                        isSwitchOpen = false ; 
+                        closeWifiView();
+                    }
+                break;
+
+                case ENABLE_WIFI:
+                    int enable = msg.arg2;
+                    int status = msg.arg1 ;
+                    LogTools.i("------ENABLE_WIFI-----enable "+enable + ",status  "+status);
+                    if(enable == 1 && status == 0){
+                        //如果打开WiFi成功则扫码列表
+                        ScanWifi();
+                    }
+                break;
+
+                case GET_ALL_SAVED_LIST:
+                    if(msg.obj == null){
+                     msg.obj  = "";
+                    }
+                    String strSaved = msg.obj.toString() ;
+                    try {
+                        if(strSaved != null ){
+                            if(allSavelist !=null){
+                                allSavelist.clear();
+                            }
+                            String[] arrWifis	= strSaved.split("\n");
+                            for (String wi : arrWifis) {
+                                Map<String,Object> mp = new HashMap<>();
+                                mp.put("name",wi);
+                                allSavelist.add(mp);
+                            }
+
+                            for(int i =0 ; i < list.size();i++){
+                               Map<String,Object> mpScan = list.get(i);
+                               for(Map<String,Object> mm :allSavelist ){
+                                    if(mpScan.get("name").toString().equals(mm.get("name"))){
+                                        mpScan.put("isSaved","1");
+                                    }
+                               }
+                               list.set(i,mpScan);
+                            }
+                            fdeWifiAdapter.notifyDataSetChanged();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    new Thread(new GetActivedWifiThread()).start();
+                    break;
+
+                 case GET_ACTIVED:
+                    hideProgressDialog();
+                    if(msg.obj == null){
+                     msg.obj  = "";
+                    }
+                    String strAc = msg.obj.toString() ;
+                    for(int i= 0 ; i < list.size();i++ ){
+                        Map<String,Object> mAc = list.get(i);
+                        if(!"".equals(strAc) && strAc.equals(mAc.get("name").toString())){
+                            mAc.put("curNet",i);
+                            list.set(i,mAc);
+                        }else{
+                            mAc.put("curNet",-1);
+                            list.set(i,mAc);
+                        }
+                        fdeWifiAdapter.notifyDataSetChanged();
+                    }
+                    break ;   
+
+                case CONNECT_WIFI:
+                    new Thread(new GetActivedWifiThread()).start();
+                    break;    
+
             }
-            spinnerAdapter.notifyDataSetChanged();
+            // spinnerAdapter.notifyDataSetChanged();
+
+                //    for(int i=0 ;i < 30;i++){
+    //         Map<String,Object> mp = new HashMap<>();
+    //         mp.put("name","wifi"+i);
+    //         mp.put("isEncrypted", (i%5 !=0)?"加密":"开放");
+    //         list.add(mp);
+    //     }
+    //     fdeWifiAdapter.notifyDataSetChanged();
             mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
         }
     };
+
+    private void sendMsg(int what ,Object obj){
+        Message msg = new Message();
+        msg.what = what;
+        msg.obj = obj;
+        handler.sendMessage(msg);
+    }
+
+    private void sendMsgDelayed(int what ,int arg1,int arg2,Object obj,long time){
+        LogTools.i("------sendMsgDelayed-----");
+        Message msg = new Message();
+        msg.what = what;
+        msg.arg1 = arg1;
+        msg.arg2 = arg2;
+        msg.obj = obj;
+        handler.sendMessageDelayed(msg,time);
+    }
+
+    private void showProgressDialog(String content){
+        progressDialog = ProgressDialog.show(mContext, "", content, true);
+    }
+
+    private void hideProgressDialog(){
+        progressDialog.dismiss();
+    }
 }

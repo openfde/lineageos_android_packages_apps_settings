@@ -87,6 +87,9 @@ public class EthernetConfigController implements TextWatcher,
 	int mInterfaceNamePosition;
 	int mIPTypePosition;
 
+  
+
+
     public EthernetConfigController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
         mConfigUi = parent;
 
@@ -430,4 +433,6 @@ public class EthernetConfigController implements TextWatcher,
         Matcher matcher = regex.matcher(param);
         return matcher.matches();
     }
+
+
 }

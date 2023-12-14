@@ -43,12 +43,12 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/wifi_item" >
+                    style="@style/wifi_item_ethernet" >
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minEms="16"
-                        style="@style/wifi_item_label"
+                        style="@style/ethernet_item_sp_label"
                         android:text="@string/set_net_from_host_all_interfaces" />
 
                 <!-- Entries are added dynamically to this spinner -->
@@ -70,13 +70,13 @@
             <LinearLayout android:id="@+id/ip_fields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/wifi_item"
+                    style="@style/wifi_item_ethernet"
                     android:visibility="gone">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item_label"
+                        style="@style/ethernet_item_sp_label"
                         android:text="@string/wifi_ip_settings" />
 
                 <Spinner android:id="@+id/ip_settings"
@@ -97,17 +97,17 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item" >
+                        style="@style/wifi_item_ethernet" >
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_label"
+                            style="@style/ethernet_item_label"
                             android:text="@string/wifi_ip_address" />
 
                     <EditText android:id="@+id/ipaddress"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_edit_content"
+                            style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
                             android:hint="@string/wifi_ip_address_hint"
                             android:inputType="textNoSuggestions" />
@@ -116,17 +116,17 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item" >
+                        style="@style/wifi_item_ethernet" >
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_label"
+                            style="@style/ethernet_item_label"
                             android:text="@string/wifi_gateway" />
 
                     <EditText android:id="@+id/gateway"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_edit_content"
+                            style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
                             android:hint="@string/wifi_gateway_hint"
                             android:inputType="textNoSuggestions" />
@@ -135,17 +135,17 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item" >
+                        style="@style/wifi_item_ethernet" >
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_label"
+                            style="@style/ethernet_item_label"
                             android:text="@string/wifi_network_prefix_length" />
 
                     <EditText android:id="@+id/network_prefix_length"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_edit_content"
+                            style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
                             android:hint="@string/wifi_network_prefix_length_hint"
                             android:inputType="number" />
@@ -153,17 +153,17 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item" >
+                        style="@style/wifi_item_ethernet" >
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_label"
+                            style="@style/ethernet_item_label"
                             android:text="@string/wifi_dns1" />
 
                     <EditText android:id="@+id/dns1"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_edit_content"
+                            style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
                             android:hint="@string/wifi_dns1_hint"
                             android:inputType="textNoSuggestions" />
@@ -172,17 +172,17 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item" >
+                        style="@style/wifi_item_ethernet" >
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_label"
+                            style="@style/ethernet_item_label"
                             android:text="@string/wifi_dns2" />
 
                     <EditText android:id="@+id/dns2"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            style="@style/wifi_item_edit_content"
+                            style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
                             android:hint="@string/wifi_dns2_hint"
                             android:inputType="textNoSuggestions" />

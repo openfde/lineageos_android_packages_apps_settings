@@ -81,6 +81,9 @@ public class Settings extends SettingsActivity {
     public static class PrivateVolumeSettingsActivity extends SettingsActivity { /* empty */ }
     public static class PublicVolumeSettingsActivity extends SettingsActivity { /* empty */ }
     public static class WifiSettingsActivity extends SettingsActivity { /* empty */ }
+    public static class SetWifiFromHostActivity extends SettingsActivity{ /* empty */ }
+    public static class SetNetworkFromHostActivity extends SettingsActivity{ /* empty */ }
+    public static class SetEthernetFromHostActivity extends SettingsActivity{ /* empty */ }
     public static class WifiSettings2Activity extends SettingsActivity { /* empty */ }
     public static class WifiP2pSettingsActivity extends SettingsActivity { /* empty */ }
     public static class AvailableVirtualKeyboardActivity extends SettingsActivity { /* empty */ }
