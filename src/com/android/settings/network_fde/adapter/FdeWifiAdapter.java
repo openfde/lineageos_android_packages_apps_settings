@@ -22,12 +22,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.settings.R;
 import com.android.settings.network_fde.AdapterItem;
+
+import com.android.settings.utils.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -59,9 +62,19 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
         String wifiName = list.get(position).get("name").toString();
         holder.txtWifiName.setText(wifiName);
         // holder.txtEncrypted.setText(list.get(position).get("isEncrypted").toString());
-        String isSaved = list.get(position).get("isSaved").toString();
-        int curNet = Integer.valueOf(list.get(position).get("curNet").toString());
- 
+        String isSaved = StringUtils.ToString(list.get(position).get("isSaved"));
+        int curNet = StringUtils.ToInt(list.get(position).get("curNet")); // Integer.valueOf(list.get(position).get("curNet").toString());
+        int signal = StringUtils.ToInt(list.get(position).get("signal"));
+        if(signal >= 80){
+            holder.imgWifi.setImageResource(R.mipmap.icon_wifi);
+        }else if(signal >= 50){
+            holder.imgWifi.setImageResource(R.mipmap.icon_wifi_high);
+        }else if(signal > 20 ){
+            holder.imgWifi.setImageResource(R.mipmap.icon_wifi_half); 
+        }else {
+            holder.imgWifi.setImageResource(R.mipmap.icon_wifi_lower);
+        }
+
         if(curNet == position){
             holder.txtEncrypted.setText("已连接");
             holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
@@ -69,7 +82,7 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
             if("1".equals(isSaved)){
                 holder.txtEncrypted.setText("已保存");
             }else{
-                holder.txtEncrypted.setText("");
+                holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("encryption")));
             }
             holder.txtWifiName.setTextColor(R.color.black);
         }
@@ -99,12 +112,14 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
         TextView txtWifiName ;
         TextView txtEncrypted;
         LinearLayout layoutWifiInfo;
+        ImageView imgWifi;
 
         public FdeWifiHolder(@NonNull View itemView) {
             super(itemView);
             txtWifiName = itemView.findViewById(R.id.txtWifiName);
             txtEncrypted = itemView.findViewById(R.id.txtEncrypted);
             layoutWifiInfo = itemView.findViewById(R.id.layoutWifiInfo);
+            imgWifi = itemView.findViewById(R.id.imgWifi);
         }
     }
 

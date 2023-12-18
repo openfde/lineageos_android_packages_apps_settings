@@ -694,12 +694,17 @@ public class ConnectWifiController implements
                             for (String wi : arrWifis) {
                                 // spinnerAdapter.add(wi);
                                 // mInterfacesInPosition.add(wi);
-                                Map<String,Object> mp = new HashMap<>();
-                                mp.put("name",wi);
-                                mp.put("isEncrypted","");
-                                mp.put("isSaved","0");
-                                mp.put("curNet",-1);
-                                list.add(mp);
+                                  if(!wi.startsWith(":")){
+                                      String[] arrInfo = wi.split(":");
+                                      Map<String,Object> mp = new HashMap<>();
+                                      mp.put("name",arrInfo[0]);
+                                      mp.put("isEncrypted","");
+                                      mp.put("isSaved","0");
+                                      mp.put("signal",arrInfo[1]);
+                                      mp.put("encryption",arrInfo[2]);
+                                      mp.put("curNet",-1);
+                                      list.add(mp);
+                                    }  
                             }
                         }
                         fdeWifiAdapter.notifyDataSetChanged();
