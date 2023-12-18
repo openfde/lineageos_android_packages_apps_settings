@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import lineageos.waydroid.Net;
 import androidx.annotation.NonNull;
 import com.android.settings.network_fde.AdapterItem;
 import com.android.settings.R;
@@ -89,7 +88,6 @@ public class SelectWlanDialog extends Dialog implements View.OnClickListener {
        if(view.getId() == R.id.txtCancel){
             dismiss();
         }else if(view.getId() == R.id.txtConfirm){
-            Net net = Net.getInstance(context);
             String wifiName = txtWifiName.getText().toString();
             String password = editPassword.getText().toString();
             dialogClick.onDialogClick(2,wifiName,password);

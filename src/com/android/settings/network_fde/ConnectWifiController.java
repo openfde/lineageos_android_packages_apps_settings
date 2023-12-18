@@ -67,8 +67,10 @@ import com.android.settings.network_fde.adapter.FdeWifiAdapter;
 import com.android.settings.network_fde.dialog.AddWlanDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.android.settings.network_fde.dialog.SelectWlanDialog;
+import com.android.settings.network_fde.dialog.WifiInfoDialog;
 import android.app.ProgressDialog;
 import com.android.settings.utils.LogTools;
+import com.android.settings.utils.StringUtils;
 
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
@@ -124,6 +126,7 @@ public class ConnectWifiController implements
     public static final int CONNECT_WIFI = 1005 ;
     public static final int GET_ALL_SAVED_LIST = 1006 ;
     public static final int GET_ACTIVED = 1007;
+    public static final int FORGET_WIFI = 1008 ;
     
 
     public ConnectWifiController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
@@ -436,10 +439,32 @@ public class ConnectWifiController implements
         showProgressDialog(mContext.getString(R.string.fde_connecting));
         if(type == 1){
             new Thread(new ConnectHideWifiThread(ssid,password)).start();
-        }else{
+        }else if(type == 2){
             new Thread(new ConnectWifiByPasswordThread(ssid,password)).start();
+        }else if(type == 3){
+            new Thread(new ConnectWifiThread(ssid,0)).start();     
+        }else if(type == 4){
+            new Thread(new ForgetWifiThread(ssid )).start();
         }
+    }
 
+    @Override
+    public void onContextClick(int pos,String content){
+        //右键弹窗
+        if(curWifiName.equals(content)){
+            new Thread(new GetWifiInfo(content,"1")).start();
+        }else{
+             String isSaved = list.get(pos).get("isSaved").toString();
+             if("1".equals(isSaved)){
+                new Thread(new GetWifiInfo(content,"0")).start();
+             }else{
+                //未保存的网络
+                SelectWlanDialog selectWlanDialog = new SelectWlanDialog(mContext,content,ConnectWifiController.this);
+                if(selectWlanDialog !=null && !selectWlanDialog.isShowing()){
+                    selectWlanDialog.show();
+                }
+             }  
+        }
     }
 
     @Override
@@ -448,7 +473,7 @@ public class ConnectWifiController implements
         Map<String,Object> mp = list.get(pos);
         if(content.equals(curWifiName)){
             //如果是当前WiFi
-            new Thread(new GetWifiInfo(content)).start();
+            new Thread(new GetWifiInfo(content,"1")).start();
         }else{
             String isSaved = mp.get("isSaved").toString();
             if("1".equals(isSaved)){
@@ -487,7 +512,7 @@ public class ConnectWifiController implements
             int status = net.enableWifi(enable);
             LogTools.i("status "+status + ",enable "+enable);    
             lastSwitchTime = System.currentTimeMillis();
-            sendMsgDelayed(ENABLE_WIFI,status,enable,null,3* 1000);
+            sendMsgDelayed(ENABLE_WIFI,String.valueOf(status),String.valueOf(enable),null,3* 1000);
             
         }
     }
@@ -504,9 +529,12 @@ public class ConnectWifiController implements
 
    class GetWifiInfo implements  Runnable{
         String ssid;
+        String status ;
         
-        public GetWifiInfo (String ssid){
+        
+        public GetWifiInfo (String ssid,String status){
             this.ssid = ssid;
+            this.status = status;
         }
 
         @Override
@@ -514,7 +542,7 @@ public class ConnectWifiController implements
                 Net net = Net.getInstance(mContext);
                 String wifiInfo = net.getSignalAndSecurity(ssid);
                 LogTools.i("wifiInfo "+wifiInfo);    
-                sendMsg(QUERY_WIFI_INFO,wifiInfo);
+                sendMsgDelayed(QUERY_WIFI_INFO,status,ssid,wifiInfo,50 );
             }
     }
 
@@ -588,6 +616,26 @@ public class ConnectWifiController implements
                 String allSavelist = net.connectedWifiList();  
                 LogTools.i("connectedWifiList allSavelist "+allSavelist + "\n");  
                 sendMsg(GET_ALL_SAVED_LIST,allSavelist);  
+            }
+    }
+
+     /**
+     * 取消保存
+     */
+    class ForgetWifiThread implements  Runnable{
+        private String wifiName ;
+
+        public ForgetWifiThread(String wifiName){
+            this.wifiName = wifiName;
+        }
+
+        @Override
+            public void run() {
+                Net net = Net.getInstance(mContext);
+                int status = net.forgetWifi(wifiName);  
+                LogTools.i("forgetWifi status "+status + " ,wifiName "+wifiName);  
+                new Thread(new SearchThread()).start();
+                sendMsg(FORGET_WIFI,status);  
             }
     }
 
@@ -678,8 +726,9 @@ public class ConnectWifiController implements
                 break;
 
                 case ENABLE_WIFI:
-                    int enable = msg.arg2;
-                    int status = msg.arg1 ;
+                    Map<String,Object> mapEnable = (Map<String,Object> )msg.obj ; 
+                    int enable =  StringUtils.ToInt(mapEnable.get("arg2")); 
+                    int status = StringUtils.ToInt(mapEnable.get("arg1")); 
                     LogTools.i("------ENABLE_WIFI-----enable "+enable + ",status  "+status);
                     if(enable == 1 && status == 0){
                         //如果打开WiFi成功则扫码列表
@@ -744,6 +793,17 @@ public class ConnectWifiController implements
                     new Thread(new GetActivedWifiThread()).start();
                     break;    
 
+                case QUERY_WIFI_INFO:
+                    Map<String,Object> mapInfo = (Map<String,Object>)msg.obj ;
+                    WifiInfoDialog wifiInfoDialog = new WifiInfoDialog(mContext,ConnectWifiController.this,mapInfo.get("arg1").toString(),mapInfo.get("arg2").toString(),mapInfo.get("obj").toString());
+                    if(wifiInfoDialog !=null && !wifiInfoDialog.isShowing()){
+                        wifiInfoDialog.show();
+                    }
+                    break;     
+                case FORGET_WIFI:
+
+                    break;    
+
             }
             // spinnerAdapter.notifyDataSetChanged();
 
@@ -758,6 +818,9 @@ public class ConnectWifiController implements
         }
     };
 
+    /**
+     *  send message 
+     */
     private void sendMsg(int what ,Object obj){
         Message msg = new Message();
         msg.what = what;
@@ -765,18 +828,26 @@ public class ConnectWifiController implements
         handler.sendMessage(msg);
     }
 
-    private void sendMsgDelayed(int what ,int arg1,int arg2,Object obj,long time){
+
+    /**
+     * delayed send message 
+     */
+    private void sendMsgDelayed(int what ,String arg1,String arg2,Object obj,long time){
         LogTools.i("------sendMsgDelayed-----");
         Message msg = new Message();
+        Map<String ,Object> mp = new HashMap<>();
+        mp.put("arg1",arg1);
+        mp.put("arg2",arg2);
+        mp.put("obj",obj);
         msg.what = what;
-        msg.arg1 = arg1;
-        msg.arg2 = arg2;
-        msg.obj = obj;
+        msg.arg1 = 0;
+        msg.arg2 = 0;
+        msg.obj = mp;
         handler.sendMessageDelayed(msg,time);
     }
 
     private void showProgressDialog(String content){
-        progressDialog = ProgressDialog.show(mContext, "", content, true);
+        progressDialog = ProgressDialog.show(mContext, "", content, true,true);
     }
 
     private void hideProgressDialog(){

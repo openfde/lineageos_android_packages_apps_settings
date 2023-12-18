@@ -80,6 +80,14 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
                 aditem.onItemClick(position,wifiName);    
             }
         });
+
+        holder.layoutWifiInfo.setOnContextClickListener(new View.OnContextClickListener() {
+            @Override
+            public boolean onContextClick(View view) {
+                aditem.onContextClick(position,wifiName);    
+                return false;
+            }
+        });
     }
 
     @Override

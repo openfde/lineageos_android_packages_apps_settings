@@ -13,7 +13,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
-	 list wifi item info by xudq
+	 item_fde_wifi_info list wifi item info by xudq
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -23,31 +23,50 @@
     android:id="@+id/layoutWifiInfo"
     >
 
-    <LinearLayout
+      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="6dp"
         android:paddingHorizontal="16dp"
-        android:layout_gravity="left|center"
-        android:orientation="vertical">
+        android:layout_gravity="left|center">
+
+        <ImageView
+            android:id="@+id/imgWifi"
+            android:src="@mipmap/icon_wifi"
+            android:layout_width="36dp"
+            android:paddingRight="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_height="36dp"/>
 
         <TextView
             android:id="@+id/txtWifiName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="wifi1"
+            android:layout_toRightOf="@id/imgWifi"
+            android:drawablePadding="16dp"
             android:textColor="#000"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtEncrypted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="wifi1"
+            android:layout_alignLeft="@id/txtWifiName"
+            android:layout_below="@id/txtWifiName"
             android:textColor="#999"
             android:textSize="10sp" />
 
-    </LinearLayout>
+        <ImageView
+            android:src="@mipmap/icon_fde_right"
+            android:layout_width="36dp"
+            android:paddingLeft="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="36dp"/>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

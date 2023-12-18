@@ -12254,4 +12254,10 @@
 	<string name="fde_btn_operating_error">You are operating too fast</string>
     <string name="fde_scanning">Scanning</string>
     <string name="fde_connecting">Connecting</string>
+    <string name="fde_forget">忘记</string>
+    <string name="fde_del_network">删除网络</string>
+    <string name="fde_unconnect">断开连接</string>
+    <string name="fde_no_save">不保存</string>
+	<string name="fde_has_connected">已连接</string>
+	<string name="fde_has_saved">已保存</string>
 </resources>
