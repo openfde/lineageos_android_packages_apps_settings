@@ -12,6 +12,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+     fde_set_ethernet
 -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,45 +28,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="8dip">
-
-        <LinearLayout android:id="@+id/info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/wifi_section" />
-
-        <LinearLayout android:id="@+id/type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/wifi_section"
-                android:visibility="gone">
-
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/wifi_item_ethernet" >
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minEms="16"
-                        style="@style/ethernet_item_sp_label"
-                        android:text="@string/set_net_from_host_all_interfaces" />
-
-                <!-- Entries are added dynamically to this spinner -->
-                <!-- See WifiConfigController.configureSecuritySpinner -->
-                <Spinner android:id="@+id/security"
+     
+           <LinearLayout android:id="@+id/type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/wifi_item_spinner"
-                        android:prompt="@string/set_net_from_host_all_interfaces" />
-            </LinearLayout>
-        </LinearLayout>
+                        style="@style/wifi_item_ethernet"
+                        android:visibility="gone">
 
-        <LinearLayout android:id="@+id/wifi_advanced_fields"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:minEms="16"
+                                style="@style/ethernet_item_sp_label"
+                                android:text="@string/set_net_from_host_all_interfaces" />
+
+                        <Spinner android:id="@+id/security"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                style="@style/wifi_item_spinner"
+                                android:prompt="@string/set_net_from_host_all_interfaces" />
+           </LinearLayout>
+
+
 
             <LinearLayout android:id="@+id/ip_fields"
                     android:layout_width="match_parent"
@@ -74,13 +58,13 @@
                     android:visibility="gone">
 
                 <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/ethernet_item_sp_label"
                         android:text="@string/wifi_ip_settings" />
 
                 <Spinner android:id="@+id/ip_settings"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/wifi_item_spinner"
                         android:prompt="@string/wifi_ip_settings"
@@ -94,10 +78,12 @@
                     android:layout_height="wrap_content"
                     style="@style/wifi_section"
                     android:visibility="gone">
+
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/wifi_item_ethernet" >
+
                     <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -117,6 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/wifi_item_ethernet" >
+                        
                     <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -188,6 +175,5 @@
                             android:inputType="textNoSuggestions" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

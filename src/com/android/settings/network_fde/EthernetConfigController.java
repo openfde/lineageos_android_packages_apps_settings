@@ -52,7 +52,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import com.android.settings.network_fde.api.NetApi;
+import android.os.Handler;
+import android.os.Message;
+import com.android.settings.utils.LogTools;
+import com.android.settings.utils.StringUtils;
 
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
@@ -364,6 +368,10 @@ public class EthernetConfigController implements TextWatcher,
 			+ " ,position: " + position);
 			showIpConfigFields();
             enableSubmitIfAppropriate();
+
+            if(position == 1){
+                new Thread(new GetStaticIpConfThread(mSecuritySpinner.getSelectedItem().toString())).start();
+            }
     	} else {
     		//showIpConfigFields();
             //enableSubmitIfAppropriate();
@@ -373,6 +381,54 @@ public class EthernetConfigController implements TextWatcher,
 			+ " ,position: " + position);
     	}  
     }
+
+     /**
+     * 取消保存
+     */
+    class GetStaticIpConfThread implements  Runnable{
+        private String staticIpConf ;
+
+        public GetStaticIpConfThread(String staticIpConf){
+            this.staticIpConf = staticIpConf;
+        }
+
+        @Override
+            public void run() {
+                String info = NetApi.getStaticIpConf(mContext,staticIpConf);  
+                LogTools.i("getStaticIpConf info "+info + " ,staticIpConf "+staticIpConf);  
+                Message msg = new Message();
+                msg.what = 1;
+                msg.obj = info;
+                handler.sendMessage(msg);
+            }
+    }
+
+      Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+                if(msg.obj !=null){
+                    try{
+                         String info = msg.obj.toString();
+                        String[] arrInfo = info.split("\n");
+                        String strGateway = arrInfo[1].replace("ipv4.gateway:","");
+                        mGatewayView.setText(strGateway);
+                        String strDns = arrInfo[2].replace("ipv4.dns:","");
+                        String[] arrDns = strDns.split(",");
+                        mDns1View.setText(arrDns[0]);
+                        mDns2View.setText(arrDns[1]);
+                        String strIp = arrInfo[0].replace("ipv4.addresses:","");
+                        String[] arrIp = strIp.split("/");
+                        mIpAddressView.setText(arrIp[0]);
+                        mNetworkPrefixLengthView.setText(arrIp[1]);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+      };      
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -387,7 +443,7 @@ public class EthernetConfigController implements TextWatcher,
     }
 
     private void configureInterfaceSpinner() {
-        mConfigUi.setTitle(R.string.set_net_from_host_net_set);
+        mConfigUi.setTitle(R.string.fde_ethernet);
 
         mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
         mSecuritySpinner.setOnItemSelectedListener(this);
@@ -419,7 +475,7 @@ public class EthernetConfigController implements TextWatcher,
         mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
 
         showIpConfigFields();
-		mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
+		// mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
     }
 
     /**

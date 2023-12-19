@@ -12,24 +12,25 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+     fde_network_settings
 -->
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:key="ethernet_wifi_settings_screen"
-    android:title="以太网和WIFI">
+    android:title="@string/fde_ethernet_and_wifi">
 
     <Preference
         android:key="ethernet_setting"
-        android:title="以太网"
+        android:title="@string/fde_ethernet"
         android:summary="set ethernet"
         android:icon="@drawable/ic_settings_language"
         android:order="1"
         android:fragment="com.android.settings.network_fde.SetEthernetFromHostFragment"/>
     <Preference
         android:key="wifi_setting"
-        android:title="WIFI"
+        android:title="@string/fde_wifi"
         android:summary="set wifi"
         android:icon="@drawable/ic_settings_wireless"
         android:order="2"

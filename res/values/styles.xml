@@ -106,7 +106,6 @@
     </style>
 
         <style name="wifi_item_ethernet">
-         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginVertical">8dip</item>
          <item name="android:layout_marginLeft">8dip</item>
         <item name="android:layout_marginStart">8dip</item>
@@ -126,6 +125,7 @@
     </style>
 
     <style name="ethernet_item_sp_label">
+        <item name="android:layout_weight">2</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingVertical">8dp</item>
         <item name="android:textSize">14sp</item>

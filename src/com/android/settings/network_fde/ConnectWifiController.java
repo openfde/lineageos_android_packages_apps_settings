@@ -44,8 +44,7 @@ import android.widget.TextView;
 import com.android.settings.R;
 import com.android.settingslib.Utils;
 import com.android.settingslib.utils.ThreadUtils;
-import lineageos.waydroid.Net;
-
+import com.android.settings.network_fde.api.NetApi;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -395,7 +394,7 @@ public class ConnectWifiController implements
     }
 
 //     private void configureInterfaceSpinner() {
-//         mConfigUi.setTitle(R.string.set_net_from_host_net_set);
+//         mConfigUi.setTitle(R.string.fde_ethernet);
 
 //         mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
 //         mSecuritySpinner.setOnItemSelectedListener(this);
@@ -508,8 +507,7 @@ public class ConnectWifiController implements
 
         @Override
         public void run() {
-            Net net = Net.getInstance(mContext);
-            int status = net.enableWifi(enable);
+            int status = NetApi.enableWifi(mContext,enable);
             LogTools.i("status "+status + ",enable "+enable);    
             lastSwitchTime = System.currentTimeMillis();
             sendMsgDelayed(ENABLE_WIFI,String.valueOf(status),String.valueOf(enable),null,3* 1000);
@@ -520,8 +518,7 @@ public class ConnectWifiController implements
     class QueryWifiStatus implements  Runnable{
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                int status = net.isWifiEnable();
+                int status = NetApi.isWifiEnable(mContext);
                 LogTools.i("isWifiEnable  "+status);    
                 sendMsg(QUERY_WIFI_STATUS,status);
             }
@@ -539,8 +536,7 @@ public class ConnectWifiController implements
 
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                String wifiInfo = net.getSignalAndSecurity(ssid);
+                String wifiInfo = NetApi.getSignalAndSecurity(mContext,ssid);
                 LogTools.i("wifiInfo "+wifiInfo);    
                 sendMsgDelayed(QUERY_WIFI_INFO,status,ssid,wifiInfo,50 );
             }
@@ -557,8 +553,7 @@ public class ConnectWifiController implements
 
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                int status = net.connectActivedWifi(ssid,connect);
+                int status = NetApi.connectActivedWifi(mContext,ssid,connect);
                 LogTools.i("connectActivedWifi status "+status);    
                 sendMsg(CONNECT_WIFI,status);
             }
@@ -575,8 +570,7 @@ public class ConnectWifiController implements
 
          @Override
         public void run() {
-            Net net = Net.getInstance(mContext);
-            int status = net.connectSsid(wifiName,password);
+            int status = NetApi.connectSsid(mContext,wifiName,password);
             LogTools.i("connectSsid--wifiName "+wifiName +" , password: "+password + ",status "+status);
             new Thread(new GetActivedWifiThread()).start();
         }
@@ -597,9 +591,8 @@ public class ConnectWifiController implements
 
          @Override
         public void run() {
-            Net net = Net.getInstance(mContext);
             LogTools.i("wifiName "+wifiName +" , password: "+password);
-            int status = net.connectHidedWifi(wifiName,password);
+            int status = NetApi.connectHidedWifi(mContext,wifiName,password);
             LogTools.i("connectHidedWifi--wifiName "+wifiName +" , password: "+password + ",status "+status);
             new Thread(new GetActivedWifiThread()).start();
         }
@@ -612,8 +605,7 @@ public class ConnectWifiController implements
 
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                String allSavelist = net.connectedWifiList();  
+                String allSavelist = NetApi.connectedWifiList(mContext);  
                 LogTools.i("connectedWifiList allSavelist "+allSavelist + "\n");  
                 sendMsg(GET_ALL_SAVED_LIST,allSavelist);  
             }
@@ -631,8 +623,7 @@ public class ConnectWifiController implements
 
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                int status = net.forgetWifi(wifiName);  
+                int status = NetApi.forgetWifi(mContext,wifiName);  
                 LogTools.i("forgetWifi status "+status + " ,wifiName "+wifiName);  
                 new Thread(new SearchThread()).start();
                 sendMsg(FORGET_WIFI,status);  
@@ -646,8 +637,7 @@ public class ConnectWifiController implements
 
         @Override
             public void run() {
-                Net net = Net.getInstance(mContext);
-                String curNet = net.getActivedWifi();        
+                String curNet = NetApi.getActivedWifi(mContext);        
                 LogTools.i("GetActivedWifiThread curNet "+curNet);    
                 if(curNet == null || "".equals(curNet)){
                     curWifiName = "";
@@ -664,8 +654,7 @@ public class ConnectWifiController implements
     class SearchThread implements  Runnable{
         @Override
         public void run() {
-            Net net = Net.getInstance(mContext);
-            String str = net.getAllSsid();
+            String str = NetApi.getAllSsid(mContext);
             LogTools.i( "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName()
                     + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
                     + " ,AllSsid: " + str + "\n");
@@ -721,10 +710,18 @@ public class ConnectWifiController implements
                     isOpenWifi =msg.obj.toString() ;
                     //如果WiFi打开了
                     if("1".equals(isOpenWifi)){
+                        switchWifi.setEnabled(true);
                         isSwitchOpen = true ; 
                         openWifiView();
                         ScanWifi();
+                    }else if("0".equals(isOpenWifi)){
+                        switchWifi.setEnabled(true);
+                        isSwitchOpen = false ; 
+                        closeWifiView();
                     }else {
+                         Toast.makeText(mContext, "无网卡，无法操作", Toast.LENGTH_SHORT)
+                        .show();
+                        switchWifi.setEnabled(false);
                         isSwitchOpen = false ; 
                         closeWifiView();
                     }

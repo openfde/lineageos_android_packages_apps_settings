@@ -36,6 +36,7 @@ import lineageos.waydroid.Net;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import android.content.Context;
+import com.android.settings.utils.LogTools;
 
 public class SetEthernetFromHostFragment extends InstrumentedFragment implements FdeWifiConfigUiBase,
         View.OnClickListener {
@@ -161,10 +162,12 @@ public class SetEthernetFromHostFragment extends InstrumentedFragment implements
         try {
 		    Net net = Net.getInstance(mContext);
         	if (mConfig.ipType == 0) {
-        	    net.setDHCP(mConfig.interfaceName);
+        	    int status = net.setDHCP(mConfig.interfaceName);
+                LogTools.i("setDHCP "+mConfig.interfaceName + " , status "+status)  ;  
         	} else {
-                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength, 
+                int status = net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength, 
         			mConfig.gateway, mConfig.dns1, mConfig.dns2);
+                LogTools.i("setStaticIp "+mConfig.toString() + " , status "+status)  ;      
         	}
           return null;
         } catch (Exception e) {
