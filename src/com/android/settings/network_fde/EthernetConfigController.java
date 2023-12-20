@@ -383,7 +383,7 @@ public class EthernetConfigController implements TextWatcher,
     }
 
      /**
-     * 取消保存
+     * get static IP config
      */
     class GetStaticIpConfThread implements  Runnable{
         private String staticIpConf ;
@@ -479,7 +479,7 @@ public class EthernetConfigController implements TextWatcher,
     }
 
     /**
-     * 检测是否是以太网
+     * is ethernet
      * @param param
      * @return
      */

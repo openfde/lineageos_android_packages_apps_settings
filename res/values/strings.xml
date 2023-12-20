@@ -12262,4 +12262,5 @@
     <string name="fde_no_save">Do not save</string>
 	<string name="fde_has_connected">connected</string>
 	<string name="fde_has_saved">saved</string>
+	<string name="fde_no_wifi_module">no wifi module</string>
 </resources>

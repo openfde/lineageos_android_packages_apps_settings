@@ -449,7 +449,7 @@ public class ConnectWifiController implements
 
     @Override
     public void onContextClick(int pos,String content){
-        //右键弹窗
+        //mouse Right click
         if(curWifiName.equals(content)){
             new Thread(new GetWifiInfo(content,"1")).start();
         }else{
@@ -457,7 +457,7 @@ public class ConnectWifiController implements
              if("1".equals(isSaved)){
                 new Thread(new GetWifiInfo(content,"0")).start();
              }else{
-                //未保存的网络
+                //not saved network
                 SelectWlanDialog selectWlanDialog = new SelectWlanDialog(mContext,content,ConnectWifiController.this);
                 if(selectWlanDialog !=null && !selectWlanDialog.isShowing()){
                     selectWlanDialog.show();
@@ -471,7 +471,7 @@ public class ConnectWifiController implements
         LogTools.i("onItemClick "+pos + " , content "+content);
         Map<String,Object> mp = list.get(pos);
         if(content.equals(curWifiName)){
-            //如果是当前WiFi
+            //if cur network
             new Thread(new GetWifiInfo(content,"1")).start();
         }else{
             String isSaved = mp.get("isSaved").toString();
@@ -479,7 +479,7 @@ public class ConnectWifiController implements
                 showProgressDialog(mContext.getString(R.string.fde_connecting));
                 new Thread(new ConnectWifiThread(content,1)).start();
             }else{
-            //如果没保存则输入密码
+            //if not saved ,enter password
                 SelectWlanDialog selectWlanDialog = new SelectWlanDialog(mContext,content,ConnectWifiController.this);
                 if(selectWlanDialog !=null && !selectWlanDialog.isShowing()){
                     selectWlanDialog.show();
@@ -578,7 +578,7 @@ public class ConnectWifiController implements
 
 
     /**
-     * 添加隐藏的WiFi
+     * add hide wifi
      */
     class ConnectHideWifiThread implements Runnable{
         private String wifiName ;
@@ -599,7 +599,7 @@ public class ConnectWifiController implements
    } 
 
     /**
-     * 获取所有已保存的列表
+     * get all saved wifi list
      */
     class GetAllSavedWifiThread implements  Runnable{
 
@@ -612,7 +612,7 @@ public class ConnectWifiController implements
     }
 
      /**
-     * 取消保存
+     * delete wifi password
      */
     class ForgetWifiThread implements  Runnable{
         private String wifiName ;
@@ -631,7 +631,7 @@ public class ConnectWifiController implements
     }
 
     /**
-     * 获取当前WiFi
+     * get actived wifi
      */
     class GetActivedWifiThread implements  Runnable{
 
@@ -649,7 +649,7 @@ public class ConnectWifiController implements
     }
 
     /**
-     * 扫描所有列表
+     * scan all wifi list
      */
     class SearchThread implements  Runnable{
         @Override
@@ -708,7 +708,7 @@ public class ConnectWifiController implements
                         msg.obj  = "0";
                     }
                     isOpenWifi =msg.obj.toString() ;
-                    //如果WiFi打开了
+                    //if wifi enable
                     if("1".equals(isOpenWifi)){
                         switchWifi.setEnabled(true);
                         isSwitchOpen = true ; 
@@ -719,7 +719,7 @@ public class ConnectWifiController implements
                         isSwitchOpen = false ; 
                         closeWifiView();
                     }else {
-                         Toast.makeText(mContext, "无网卡，无法操作", Toast.LENGTH_SHORT)
+                         Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
                         .show();
                         switchWifi.setEnabled(false);
                         isSwitchOpen = false ; 
@@ -733,7 +733,7 @@ public class ConnectWifiController implements
                     int status = StringUtils.ToInt(mapEnable.get("arg1")); 
                     LogTools.i("------ENABLE_WIFI-----enable "+enable + ",status  "+status);
                     if(enable == 1 && status == 0){
-                        //如果打开WiFi成功则扫码列表
+                        //if wifi able,scan wifi list
                         ScanWifi();
                     }
                 break;

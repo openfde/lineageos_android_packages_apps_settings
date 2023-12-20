@@ -96,10 +96,10 @@ public class WifiInfoDialog extends Dialog implements View.OnClickListener {
         }    
 
         if("1".equals(status)){
-            //如果已连接
+            //if saved
             txtConfirm.setText(context.getString(R.string.fde_unconnect)); 
         }else {
-            //如果已保存
+            //if connected
             txtConfirm.setText(context.getString(R.string.fde_del_network));
         }
     }

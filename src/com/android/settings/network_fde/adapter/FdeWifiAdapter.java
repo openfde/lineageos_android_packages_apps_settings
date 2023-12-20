@@ -38,7 +38,7 @@ import java.util.Map;
 public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWifiHolder>{
      Context context ;
      List<Map<String,Object>> list ;
-     LayoutInflater layoutInflater; //声明布局填充器
+     LayoutInflater layoutInflater; //
      AdapterItem aditem;
 
 
@@ -76,11 +76,11 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
         }
 
         if(curNet == position){
-            holder.txtEncrypted.setText("已连接");
+            holder.txtEncrypted.setText(context.getString(R.string.fde_has_connected));
             holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
         }else{
             if("1".equals(isSaved)){
-                holder.txtEncrypted.setText("已保存");
+                holder.txtEncrypted.setText(context.getString(R.string.fde_has_saved));
             }else{
                 holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("encryption")));
             }

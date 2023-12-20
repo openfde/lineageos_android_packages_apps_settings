@@ -5004,4 +5004,6 @@
     <string name="fde_no_save">不保存</string>
 	<string name="fde_has_connected">已连接</string>
 	<string name="fde_has_saved">已保存</string>
+	<string name="fde_no_wifi_module">无网卡，无法操作</string>
+	
 </resources>
