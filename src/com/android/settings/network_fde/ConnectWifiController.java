@@ -183,7 +183,7 @@ public class ConnectWifiController implements
         // txtAddWifi.setOnClickListener(this);
         // imgRefresh.setOnClickListener(this);
 
-        new Thread(new QueryWifiStatus()).start();
+        new Thread(new QueryWifiStatus(0)).start();
       
         switchWifi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,14 +192,8 @@ public class ConnectWifiController implements
                     Toast.makeText(mContext,mContext.getString(R.string.fde_btn_operating_error),Toast.LENGTH_SHORT).show();
                     return ;
                 }
-                isSwitchOpen = !isSwitchOpen ;
-                if(isSwitchOpen){
-                    new Thread(new OpenAndCloseWifiThread(1)).start();
-                    openWifiView();
-                }else{
-                    new Thread(new OpenAndCloseWifiThread(0)).start();
-                    closeWifiView();
-                }
+                new Thread(new QueryWifiStatus(1)).start();
+                
                 lastSwitchTime = System.currentTimeMillis();
             }
         });
@@ -516,11 +510,20 @@ public class ConnectWifiController implements
     }
 
     class QueryWifiStatus implements  Runnable{
+        int type ;
+
+        public QueryWifiStatus(int type){
+            this.type = type ;
+        }
+
         @Override
             public void run() {
                 int status = NetApi.isWifiEnable(mContext);
                 LogTools.i("isWifiEnable  "+status);    
-                sendMsg(QUERY_WIFI_STATUS,status);
+                Map<String,Object> mp = new HashMap<>();
+                mp.put("status",status);
+                mp.put("type",type);
+                sendMsg(QUERY_WIFI_STATUS,mp);
             }
     }
 
@@ -705,26 +708,72 @@ public class ConnectWifiController implements
 
                 case QUERY_WIFI_STATUS:
                     if(msg.obj == null){
-                        msg.obj  = "0";
+                        msg.obj  = new HashMap<>();
                     }
-                    isOpenWifi =msg.obj.toString() ;
-                    //if wifi enable
-                    if("1".equals(isOpenWifi)){
-                        switchWifi.setEnabled(true);
-                        isSwitchOpen = true ; 
-                        openWifiView();
-                        ScanWifi();
-                    }else if("0".equals(isOpenWifi)){
-                        switchWifi.setEnabled(true);
-                        isSwitchOpen = false ; 
-                        closeWifiView();
-                    }else {
-                         Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
-                        .show();
-                        switchWifi.setEnabled(false);
-                        isSwitchOpen = false ; 
-                        closeWifiView();
+                    Map<String,Object> mpStatus = (Map<String,Object>) msg.obj;
+                    isOpenWifi = StringUtils.ToString(mpStatus.get("status")) ;
+                    int type = StringUtils.ToInt(mpStatus.get("type")) ;
+                    if("2".equals(isOpenWifi)){
+                            Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
+                            .show();
+                            // switchWifi.setEnabled(false);
+                            isSwitchOpen = false ; 
+                            closeWifiView();
+                    }else{
+                        if(type == 0){
+                            //if  first watch
+                            if("1".equals(isOpenWifi)){
+                                // switchWifi.setEnabled(true);
+                                isSwitchOpen = true ; 
+                                openWifiView();
+                                ScanWifi();
+                            }else if("0".equals(isOpenWifi)){
+                                // switchWifi.setEnabled(true);
+                                isSwitchOpen = false ; 
+                                closeWifiView();
+                            }
+                        }else{
+                            isSwitchOpen = !isSwitchOpen ;
+                            if(isSwitchOpen){
+                                new Thread(new OpenAndCloseWifiThread(1)).start();
+                                openWifiView();
+                            }else{
+                                new Thread(new OpenAndCloseWifiThread(0)).start();
+                                closeWifiView();
+                            }
+                        }
+                    
                     }
+
+                    // if(type == 0){
+                    //   //if wifi enable
+                    //     if("1".equals(isOpenWifi)){
+                    //         switchWifi.setEnabled(true);
+                    //         isSwitchOpen = true ; 
+                    //         openWifiView();
+                    //         ScanWifi();
+                    //     }else if("0".equals(isOpenWifi)){
+                    //         switchWifi.setEnabled(true);
+                    //         isSwitchOpen = false ; 
+                    //         closeWifiView();
+                    //     }else {
+                    //         Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
+                    //         .show();
+                    //         switchWifi.setEnabled(false);
+                    //         isSwitchOpen = false ; 
+                    //         closeWifiView();
+                    //     }
+                    // }else{
+                    //     isSwitchOpen = !isSwitchOpen ;
+                    //     if(isSwitchOpen){
+                    //         new Thread(new OpenAndCloseWifiThread(1)).start();
+                    //         openWifiView();
+                    //     }else{
+                    //         new Thread(new OpenAndCloseWifiThread(0)).start();
+                    //         closeWifiView();
+                    //     }
+                    // }
+                  
                 break;
 
                 case ENABLE_WIFI:
