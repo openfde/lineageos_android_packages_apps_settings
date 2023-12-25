@@ -149,7 +149,7 @@ public class SetEthernetFromHostFragment extends InstrumentedFragment implements
 	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
         successfullyFinish(mUIController.getConfig());
     }
-	public static class NetTask extends AsyncTask<Void, Void, Exception> {
+	public  class NetTask extends AsyncTask<Void, Void, Exception> {
 	    private final NetConfiguration mConfig;
 		private final Context mContext;
         public NetTask(Context context, NetConfiguration config) {
@@ -169,6 +169,7 @@ public class SetEthernetFromHostFragment extends InstrumentedFragment implements
         			mConfig.gateway, mConfig.dns1, mConfig.dns2);
                 LogTools.i("setStaticIp "+mConfig.toString() + " , status "+status)  ;      
         	}
+           //mUIController.getIpConfig();
           return null;
         } catch (Exception e) {
           return e;

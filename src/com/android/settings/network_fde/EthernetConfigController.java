@@ -50,6 +50,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.android.settings.network_fde.api.NetApi;
@@ -57,7 +58,7 @@ import android.os.Handler;
 import android.os.Message;
 import com.android.settings.utils.LogTools;
 import com.android.settings.utils.StringUtils;
-
+import android.widget.Toast;
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
  * share the logic for controlling buttons, text fields, etc.
@@ -90,8 +91,12 @@ public class EthernetConfigController implements TextWatcher,
 	ArrayList<String> mInterfacesInPosition = new ArrayList<>();
 	int mInterfaceNamePosition;
 	int mIPTypePosition;
+    List<String> listNetName ;
+    String curNetName ;
 
-  
+    public static final int GET_STATIC_NET = 1001 ;
+    public static final int GET_ACTIVED_NET = 1002 ;
+    public static final int GET_IP_CONFIG = 1003 ;
 
 
     public EthernetConfigController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
@@ -110,6 +115,20 @@ public class EthernetConfigController implements TextWatcher,
         mIpSettingsSpinner = (Spinner) mView.findViewById(R.id.ip_settings);
         mIpSettingsSpinner.setOnItemSelectedListener(this);
 
+         if (mIpAddressView == null) {
+                mIpAddressView = (TextView) mView.findViewById(R.id.ipaddress);
+                mIpAddressView.addTextChangedListener(this);
+                mGatewayView = (TextView) mView.findViewById(R.id.gateway);
+                mGatewayView.addTextChangedListener(this);
+                mNetworkPrefixLengthView = (TextView) mView.findViewById(
+                        R.id.network_prefix_length);
+                mNetworkPrefixLengthView.addTextChangedListener(this);
+                mDns1View = (TextView) mView.findViewById(R.id.dns1);
+                mDns1View.addTextChangedListener(this);
+                mDns2View = (TextView) mView.findViewById(R.id.dns2);
+                mDns2View.addTextChangedListener(this);
+            }
+
         if (mFde == null) {
             configureInterfaceSpinner();
             mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
@@ -121,6 +140,8 @@ public class EthernetConfigController implements TextWatcher,
 
         // After done view show and hide, request focus from parent view
         mView.findViewById(R.id.l_wifidialog).requestFocus();
+
+        new Thread(new GetActivedInterfaceThread()).start();
     }
 	
     void hideSubmitButton() {
@@ -251,6 +272,14 @@ public class EthernetConfigController implements TextWatcher,
         return 0;
     }
 
+    private void setEditViewEnable (boolean isEnable) {
+        mIpAddressView.setEnabled(isEnable);
+        mGatewayView.setEnabled(isEnable);
+        mNetworkPrefixLengthView.setEnabled(isEnable);
+        mDns1View.setEnabled(isEnable);
+        mDns2View.setEnabled(isEnable);
+    }
+
     private void showIpConfigFields() {
         NetConfiguration config = null;
 
@@ -261,20 +290,8 @@ public class EthernetConfigController implements TextWatcher,
         }
 
         if (mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) {
-            mView.findViewById(R.id.staticip).setVisibility(View.VISIBLE);
-            if (mIpAddressView == null) {
-                mIpAddressView = (TextView) mView.findViewById(R.id.ipaddress);
-                mIpAddressView.addTextChangedListener(this);
-                mGatewayView = (TextView) mView.findViewById(R.id.gateway);
-                mGatewayView.addTextChangedListener(this);
-                mNetworkPrefixLengthView = (TextView) mView.findViewById(
-                        R.id.network_prefix_length);
-                mNetworkPrefixLengthView.addTextChangedListener(this);
-                mDns1View = (TextView) mView.findViewById(R.id.dns1);
-                mDns1View.addTextChangedListener(this);
-                mDns2View = (TextView) mView.findViewById(R.id.dns2);
-                mDns2View.addTextChangedListener(this);
-            }
+            // mView.findViewById(R.id.staticip).setVisibility(View.VISIBLE);
+            setEditViewEnable(true);
             if (config != null) {				
                 if (config.ipAddress != null) {
                     mIpAddressView.setText(config.ipAddress);
@@ -293,7 +310,8 @@ public class EthernetConfigController implements TextWatcher,
                 }
             }
         } else {
-            mView.findViewById(R.id.staticip).setVisibility(View.GONE);
+            setEditViewEnable(false);
+            // mView.findViewById(R.id.staticip).setVisibility(View.GONE);
         }
 		mIPTypePosition = (mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? STATIC_IP : DHCP;
     }
@@ -368,10 +386,7 @@ public class EthernetConfigController implements TextWatcher,
 			+ " ,position: " + position);
 			showIpConfigFields();
             enableSubmitIfAppropriate();
-
-            if(position == 1){
-                new Thread(new GetStaticIpConfThread(mSecuritySpinner.getSelectedItem().toString())).start();
-            }
+            getIpConfig();    
     	} else {
     		//showIpConfigFields();
             //enableSubmitIfAppropriate();
@@ -397,33 +412,140 @@ public class EthernetConfigController implements TextWatcher,
                 String info = NetApi.getStaticIpConf(mContext,staticIpConf);  
                 LogTools.i("getStaticIpConf info "+info + " ,staticIpConf "+staticIpConf);  
                 Message msg = new Message();
-                msg.what = 1;
+                msg.what = GET_STATIC_NET;
                 msg.obj = info;
                 handler.sendMessage(msg);
             }
     }
 
+
+    /**
+     *getActivedInterface
+     */
+    class GetActivedInterfaceThread implements  Runnable{
+
+        // public GetActivedInterfaceThread(){
+        // }
+
+        @Override
+            public void run() {
+                String info = NetApi.getActivedInterface(mContext);  
+                LogTools.i("getActivedInterface info "+info);  
+                curNetName = info;
+                new Thread(new GetIpConfigureThread(curNetName,1)).start();
+                Message msg = new Message();
+                msg.what = GET_ACTIVED_NET;
+                msg.obj = info;
+                handler.sendMessage(msg);
+            }
+    }
+
+    /**
+     * getIpConfigure
+     */
+    class GetIpConfigureThread implements  Runnable{
+        private String staticIpConf ;
+        private int isFirst ;
+
+        public GetIpConfigureThread(String staticIpConf,int isFirst){
+            this.staticIpConf = staticIpConf;
+            this.isFirst = isFirst;
+        }
+
+        @Override
+            public void run() {
+                String info = NetApi.getIpConfigure(mContext,staticIpConf);  
+                LogTools.i("getIpConfigure info "+info + " ,staticIpConf "+staticIpConf);  
+                Message msg = new Message();
+                msg.what = GET_IP_CONFIG;
+                msg.obj = info;
+                msg.arg1 = isFirst;
+                handler.sendMessage(msg);
+            }
+    }
+
+    public void getIpConfig(){
+         new Thread(new GetIpConfigureThread(mSecuritySpinner.getSelectedItem().toString(),0)).start();
+    }
+
+
       Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-                if(msg.obj !=null){
-                    try{
-                         String info = msg.obj.toString();
-                        String[] arrInfo = info.split("\n");
-                        String strGateway = arrInfo[1].replace("ipv4.gateway:","");
-                        mGatewayView.setText(strGateway);
-                        String strDns = arrInfo[2].replace("ipv4.dns:","");
-                        String[] arrDns = strDns.split(",");
-                        mDns1View.setText(arrDns[0]);
-                        mDns2View.setText(arrDns[1]);
-                        String strIp = arrInfo[0].replace("ipv4.addresses:","");
-                        String[] arrIp = strIp.split("/");
-                        mIpAddressView.setText(arrIp[0]);
-                        mNetworkPrefixLengthView.setText(arrIp[1]);
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
+                  switch(msg.what){
+                    case GET_STATIC_NET:
+                        if(msg.obj !=null){
+                            try{
+                                String info = msg.obj.toString();
+                                String[] arrInfo = info.split("\n");
+                                String strGateway = arrInfo[1].replace("ipv4.gateway:","");
+                                mGatewayView.setText(strGateway);
+                                String strDns = arrInfo[2].replace("ipv4.dns:","");
+                                String[] arrDns = strDns.split(",");
+                                mDns1View.setText(arrDns[0]);
+                                mDns2View.setText(arrDns[1]);
+                                String strIp = arrInfo[0].replace("ipv4.addresses:","");
+                                String[] arrIp = strIp.split("/");
+                                mIpAddressView.setText(arrIp[0]);
+                                mNetworkPrefixLengthView.setText(arrIp[1]);
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        break ;
+
+                    case GET_ACTIVED_NET:
+                        int pos = findListIndex(listNetName,curNetName);
+                        if(pos == -1){
+                             Toast.makeText(mContext,mContext.getString(R.string.radioInfo_data_disconnected),Toast.LENGTH_SHORT).show();
+                        }else{
+                            mSecuritySpinner.setSelection(pos);
+                        }
+                        break;   
+                    case GET_IP_CONFIG:
+                        if(msg.obj !=null){
+                            try{
+                                String info = msg.obj.toString();
+                                String[] arrInfo = info.split("\n");
+                                mGatewayView.setText(arrInfo[2]);
+                                String[] arrIp = arrInfo[1].split("/");
+                                mIpAddressView.setText(arrIp[0]);
+                                mNetworkPrefixLengthView.setText(arrIp[1]);
+   
+                                mDns1View.setText(arrInfo[3]);
+                                mDns2View.setText("");
+                                if("auto".equals(arrInfo[0])){
+                                    if(arrInfo[3].contains("|")){
+                                        String[] arrDns = arrInfo[3].split("|");
+                                        mDns1View.setText(arrDns[0]);
+                                        mDns2View.setText(arrDns[1]);
+                                    }
+                                }else{
+                                    if(arrInfo[3].contains(",")){
+                                        String[] arrDns = arrInfo[3].split(",");
+                                        mDns1View.setText(arrDns[0]);
+                                        mDns2View.setText(arrDns[1]);
+                                    }
+                                }
+                                int isFirst = msg.arg1 ;
+                                if(isFirst == 1){
+                                    if("auto".equals(arrInfo[0])){
+                                      mIpSettingsSpinner.setSelection(0);
+                                    }else{
+                                      mIpSettingsSpinner.setSelection(1);
+                                    }
+                                }                             
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        break ;     
+
+                    default:
+
+                        break;
+
                 }
             }
 
@@ -447,6 +569,7 @@ public class EthernetConfigController implements TextWatcher,
 
         mSecuritySpinner = ((Spinner) mView.findViewById(R.id.security));
         mSecuritySpinner.setOnItemSelectedListener(this);
+        listNetName = new ArrayList<>();
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(mContext,
                 android.R.layout.simple_spinner_item, android.R.id.text1);
@@ -459,6 +582,7 @@ public class EthernetConfigController implements TextWatcher,
 			String line;
 			while ((line = reader.readLine()) != null) {
                 if(isEthernet(line)){
+                    listNetName.add(line);
                     spinnerAdapter.add(line);
                     mInterfacesInPosition.add(line);
                 }
@@ -483,11 +607,22 @@ public class EthernetConfigController implements TextWatcher,
      * @param param
      * @return
      */
-    public  boolean isEthernet(String param) {
-        String check = "en.+|usb\\\\d";
+    private  boolean isEthernet(String param) {
+        String check = "en.+|usb\\d{1,10}";
         Pattern regex = Pattern.compile(check);
         Matcher matcher = regex.matcher(param);
         return matcher.matches();
+    }
+
+    private int findListIndex(List<String> list ,String content){
+        if(list !=null && content != null && !"".equals(content)){
+            for(int i=0;i< list.size();i++){
+                if(content.equals(list.get(i))){
+                     return i ;
+                }
+            }
+        }
+        return -1 ;
     }
 
 

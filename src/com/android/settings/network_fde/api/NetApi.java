@@ -143,5 +143,25 @@ public class NetApi{
         return status ;
     }
 
+    /**
+     * getActivedInterface
+     */
+    public static String  getActivedInterface(Context context){
+        Net net = Net.getInstance(context);
+        String  info = net.getActivedInterface();
+        return info ;
+    }
+
+
+    /**
+     * getActivedInterface
+     */
+    public static String  getIpConfigure(Context context,String interfaceName){
+        Net net = Net.getInstance(context);
+        String  info = net.getIpConfigure(interfaceName);
+        return info ;
+    }
+
+
 
 }
