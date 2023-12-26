@@ -515,18 +515,14 @@ public class EthernetConfigController implements TextWatcher,
    
                                 mDns1View.setText(arrInfo[3]);
                                 mDns2View.setText("");
-                                if("auto".equals(arrInfo[0])){
-                                    if(arrInfo[3].contains("|")){
-                                        String[] arrDns = arrInfo[3].split("|");
-                                        mDns1View.setText(arrDns[0]);
-                                        mDns2View.setText(arrDns[1]);
-                                    }
-                                }else{
-                                    if(arrInfo[3].contains(",")){
-                                        String[] arrDns = arrInfo[3].split(",");
-                                        mDns1View.setText(arrDns[0]);
-                                        mDns2View.setText(arrDns[1]);
-                                    }
+                                if(arrInfo[3].contains("|")){
+                                    String[] arrDns = arrInfo[3].split("|");
+                                    mDns1View.setText(arrDns[0]);
+                                    mDns2View.setText(arrDns[1]);
+                                }else if(arrInfo[3].contains(",")){
+                                    String[] arrDns = arrInfo[3].split(",");
+                                    mDns1View.setText(arrDns[0]);
+                                    mDns2View.setText(arrDns[1]);
                                 }
                                 int isFirst = msg.arg1 ;
                                 if(isFirst == 1){
