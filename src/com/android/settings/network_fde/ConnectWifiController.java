@@ -70,6 +70,8 @@ import com.android.settings.network_fde.dialog.WifiInfoDialog;
 import android.app.ProgressDialog;
 import com.android.settings.utils.LogTools;
 import com.android.settings.utils.StringUtils;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
@@ -188,10 +190,11 @@ public class ConnectWifiController implements
         switchWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(System.currentTimeMillis() - lastSwitchTime < 2 *1000){
-                    Toast.makeText(mContext,mContext.getString(R.string.fde_btn_operating_error),Toast.LENGTH_SHORT).show();
-                    return ;
-                }
+                // if(System.currentTimeMillis() - lastSwitchTime < 2 *1000){
+                //     Toast.makeText(mContext,mContext.getString(R.string.fde_btn_operating_error),Toast.LENGTH_SHORT).show();
+                //     return ;
+                // }
+                showProgressDialog(mContext.getString(R.string.fde_connecting));
                 new Thread(new QueryWifiStatus(1)).start();
                 
                 lastSwitchTime = System.currentTimeMillis();
@@ -244,7 +247,7 @@ public class ConnectWifiController implements
     void closeWifiView(){
         //如果关闭WiFi
         txtAddWifi.setVisibility(View.GONE);
-        layoutRefresh.setVisibility(View.VISIBLE);
+        layoutRefresh.setVisibility(View.GONE);
         if(list !=null){
             list.clear();
             fdeWifiAdapter.notifyDataSetChanged();
@@ -898,10 +901,18 @@ public class ConnectWifiController implements
     }
 
     private void showProgressDialog(String content){
-        progressDialog = ProgressDialog.show(mContext, "", content, true,true);
+        // progressDialog = ProgressDialog.show(mContext, "", content, true,true);
+        RotateAnimation rotateAnimation = new RotateAnimation(
+                0, 360, // Start and end values for the rotation
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X rotation
+                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y rotation
+        rotateAnimation.setDuration(2000); // Duration in milliseconds
+        rotateAnimation.setRepeatCount(Animation.INFINITE);
+        imgRefresh.startAnimation(rotateAnimation);
     }
 
     private void hideProgressDialog(){
-        progressDialog.dismiss();
+        // progressDialog.dismiss();
+        imgRefresh.clearAnimation();
     }
 }

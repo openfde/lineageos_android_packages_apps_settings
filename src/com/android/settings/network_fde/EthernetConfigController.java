@@ -465,7 +465,11 @@ public class EthernetConfigController implements TextWatcher,
     }
 
     public void getIpConfig(){
-         new Thread(new GetIpConfigureThread(mSecuritySpinner.getSelectedItem().toString(),0)).start();
+         if(mSecuritySpinner.getSelectedItem() !=null){
+            new Thread(new GetIpConfigureThread(mSecuritySpinner.getSelectedItem().toString(),0)).start();
+         }else{
+            Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
+         }
     }
 
 
