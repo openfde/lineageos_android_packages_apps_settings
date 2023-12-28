@@ -72,6 +72,8 @@ import com.android.settings.utils.LogTools;
 import com.android.settings.utils.StringUtils;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * The class for allowing UIs like {@link WifiDialog} and {@link FdeWifiConfigUiBase} to
@@ -701,7 +703,14 @@ public class ConnectWifiController implements
                                       list.add(mp);
                                     }  
                             }
+
                         }
+                         Collections.sort(list, new Comparator<Map<String,Object>>() {
+                            @Override
+                            public int compare(Map<String,Object> o1, Map<String,Object> o2) {
+                                return Long.compare(StringUtils.ToLong(o2.get("signal")), StringUtils.ToLong(o1.get("signal")));
+                            }
+                        });
                         fdeWifiAdapter.notifyDataSetChanged();
                     }catch (Exception e){
                         e.printStackTrace();
