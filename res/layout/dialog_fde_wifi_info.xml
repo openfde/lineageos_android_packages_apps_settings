@@ -13,6 +13,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+     dialog_fde_wifi_info
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -27,6 +28,7 @@
         android:text="--"
         android:gravity="center"
         android:padding="12dp"
+        android:textColor="@color/app_black_light"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
@@ -44,6 +46,7 @@
         <TextView
             android:text="状态"
             android:layout_weight="1"
+            android:textColor="@color/app_black_light"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -51,6 +54,7 @@
             android:id="@+id/txtStatus"
             android:text="--"
             android:layout_weight="1"
+            android:textColor="@color/app_black_light"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -74,6 +78,7 @@
             <TextView
                 android:text="信号强度"
                 android:layout_weight="1"
+                android:textColor="@color/app_black_light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -81,6 +86,7 @@
                 android:id="@+id/txtSignal"
                 android:text="--"
                 android:layout_weight="1"
+                android:textColor="@color/app_black_light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -104,6 +110,7 @@
             <TextView
                 android:text="加密方式"
                 android:layout_weight="1"
+                android:textColor="@color/app_black_light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -111,6 +118,7 @@
                 android:id="@+id/txtEncryption"
                 android:text="--"
                 android:layout_weight="1"
+                android:textColor="@color/app_black_light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -129,6 +137,7 @@
             android:layout_width="wrap_content"
             android:text="@string/fde_btn_cancel"
             android:gravity="center"
+            android:textColor="@color/app_black_light"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
@@ -138,6 +147,7 @@
             android:layout_width="wrap_content"
             android:text="@string/fde_no_save"
             android:layout_weight="1"
+            android:textColor="@color/app_black_light"
             android:gravity="center"
             android:layout_height="wrap_content"/>
 

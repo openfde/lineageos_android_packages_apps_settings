@@ -188,7 +188,9 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Small</item>
         <item name="android:textColorHint">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">@color/app_black_light</item>
         <item name="android:minHeight">@dimen/zen_mode_icon_size</item>
+
         <item name ="android:background"> @drawable/bg_fde_ethernet_edit </item>
     </style>
 

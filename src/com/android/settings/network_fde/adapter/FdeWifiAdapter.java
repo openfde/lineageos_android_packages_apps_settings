@@ -77,14 +77,14 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
 
         if(curNet == position){
             holder.txtEncrypted.setText(context.getString(R.string.fde_has_connected));
-            holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
+            // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
         }else{
             if("1".equals(isSaved)){
                 holder.txtEncrypted.setText(context.getString(R.string.fde_has_saved));
             }else{
                 holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("encryption")));
             }
-            holder.txtWifiName.setTextColor(R.color.black);
+            // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
         }
  
         holder.layoutWifiInfo.setOnClickListener(new View.OnClickListener() {
