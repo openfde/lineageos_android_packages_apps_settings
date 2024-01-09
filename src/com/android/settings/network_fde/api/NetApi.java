@@ -163,5 +163,32 @@ public class NetApi{
     }
 
 
+    /**
+     * getLans
+     */
+    public static String  getLans(Context context){
+        Net net = Net.getInstance(context);
+        String  info = net.getLans();
+        return info ;
+    }
+
+    /**
+     * getLansAndWlans
+     */
+    public static String  getLansAndWlans(Context context){
+        Net net = Net.getInstance(context);
+        String  info = net.getLansAndWlans();
+        return info ;
+    }
+
+
+    /**
+     * getLanAndWlanIpConfigurations
+     */
+    public static String  getLanAndWlanIpConfigurations(Context context){
+        Net net = Net.getInstance(context);
+        String  info = net.getLanAndWlanIpConfigurations();
+        return info ;
+    }
 
 }

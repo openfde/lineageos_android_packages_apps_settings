@@ -97,7 +97,7 @@ public class EthernetConfigController implements TextWatcher,
     public static final int GET_STATIC_NET = 1001 ;
     public static final int GET_ACTIVED_NET = 1002 ;
     public static final int GET_IP_CONFIG = 1003 ;
-
+    public static final int GET_LANS = 1004 ;
 
     public EthernetConfigController(FdeWifiConfigUiBase parent, View view, Fde accessPoint) {
         mConfigUi = parent;
@@ -141,7 +141,8 @@ public class EthernetConfigController implements TextWatcher,
         // After done view show and hide, request focus from parent view
         mView.findViewById(R.id.l_wifidialog).requestFocus();
 
-        new Thread(new GetActivedInterfaceThread()).start();
+        new Thread(new GetLansThread()).start();
+       
     }
 	
     void hideSubmitButton() {
@@ -440,6 +441,23 @@ public class EthernetConfigController implements TextWatcher,
             }
     }
 
+/**
+     *GetLansThread
+     */
+    class GetLansThread implements  Runnable{
+
+        @Override
+            public void run() {
+                String info = NetApi.getLans(mContext);  
+                LogTools.i("getLans info "+info);  
+                 new Thread(new GetActivedInterfaceThread()).start();
+                Message msg = new Message();
+                msg.what = GET_LANS;
+                msg.obj = info;
+                handler.sendMessage(msg);
+            }
+    }
+
     /**
      * getIpConfigure
      */
@@ -468,7 +486,7 @@ public class EthernetConfigController implements TextWatcher,
          if(mSecuritySpinner.getSelectedItem() !=null){
             new Thread(new GetIpConfigureThread(mSecuritySpinner.getSelectedItem().toString(),0)).start();
          }else{
-            Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
+            // Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
          }
     }
 
@@ -498,6 +516,33 @@ public class EthernetConfigController implements TextWatcher,
                             }
                         }
                         break ;
+
+                    case GET_LANS:
+                        if(msg.obj !=null){
+                            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(mContext,
+                            android.R.layout.simple_spinner_item, android.R.id.text1);
+                            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mSecuritySpinner.setAdapter(spinnerAdapter);
+                            try{
+                                    String info = msg.obj.toString();
+                                    String[] arrInfo = info.split("\n");
+                                    for (String wi : arrInfo) {
+                                        listNetName.add(wi);
+                                        spinnerAdapter.add(wi);
+                                        mInterfacesInPosition.add(wi);
+                                    }
+                                    if(arrInfo.length < 1){
+                                         Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch(Exception e){
+                                    Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+                            spinnerAdapter.notifyDataSetChanged();
+                        }else{
+                            Toast.makeText(mContext,mContext.getString(R.string.fde_no_wifi_module),Toast.LENGTH_SHORT).show();
+                        }
+                        break;    
 
                     case GET_ACTIVED_NET:
                         int pos = findListIndex(listNetName,curNetName);
@@ -571,30 +616,30 @@ public class EthernetConfigController implements TextWatcher,
         mSecuritySpinner.setOnItemSelectedListener(this);
         listNetName = new ArrayList<>();
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(mContext,
-                android.R.layout.simple_spinner_item, android.R.id.text1);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSecuritySpinner.setAdapter(spinnerAdapter);
-		try {
-			ProcessBuilder processBuilder = new ProcessBuilder("ls", "/sys/class/net");
-			Process process = processBuilder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
-			while ((line = reader.readLine()) != null) {
-                if(isEthernet(line)){
-                    listNetName.add(line);
-                    spinnerAdapter.add(line);
-                    mInterfacesInPosition.add(line);
-                }
-			}
+        // ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(mContext,
+        //         android.R.layout.simple_spinner_item, android.R.id.text1);
+        // spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // mSecuritySpinner.setAdapter(spinnerAdapter);
+		// try {
+		// 	ProcessBuilder processBuilder = new ProcessBuilder("ls", "/sys/class/net");
+		// 	Process process = processBuilder.start();
+		// 	BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		// 	String line;
+		// 	while ((line = reader.readLine()) != null) {
+        //         if(isEthernet(line)){
+        //             listNetName.add(line);
+        //             spinnerAdapter.add(line);
+        //             mInterfacesInPosition.add(line);
+        //         }
+		// 	}
 
-			int exitCode = process.waitFor();
-			android.util.Log.e(TAG, "Exit code: " + exitCode);
+		// 	int exitCode = process.waitFor();
+		// 	android.util.Log.e(TAG, "Exit code: " + exitCode);
 
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-        spinnerAdapter.notifyDataSetChanged();
+		// } catch (IOException | InterruptedException e) {
+		// 	e.printStackTrace();
+		// }
+        // spinnerAdapter.notifyDataSetChanged();
 
         mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
 
