@@ -461,9 +461,17 @@ public class ConnectWifiController implements
                     switchWifi.setChecked(true);
                     openWifiView();
                     getAllSsid();
+                    switchWifi.setEnabled(true);
                 } else {
                     closeWifiView();
                     switchWifi.setChecked(false);
+                    if (wifiStatus == 2) {
+                        Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
+                                .show();
+                        switchWifi.setEnabled(false);
+                    } else {
+                        switchWifi.setEnabled(true);
+                    }
                 }
             }
 
