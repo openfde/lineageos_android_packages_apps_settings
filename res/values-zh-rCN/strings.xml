@@ -4997,7 +4997,7 @@
     <string name="fde_btn_confirm">确定</string>
 	<string name="fde_btn_operating_error">您操作太快</string>
     <string name="fde_scanning">正在扫描...</string>
-    <string name="fde_connecting">正在连接...</string>
+    <string name="fde_connecting">正在连接</string>
 	<string name="fde_forget">忘记</string>
     <string name="fde_del_network">删除网络</string>
     <string name="fde_unconnect">断开连接</string>

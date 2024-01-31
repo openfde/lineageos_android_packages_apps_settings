@@ -1,0 +1,50 @@
+package com.android.settings.network_fde.http;
+
+public class Mythread extends AsyncTask<String,Integer,String> {
+ 
+    private Ontextchance ontextchance;
+ 
+    public Mythread() {
+        super();
+    }
+ 
+    @Override
+    protected String doInBackground(String... params) {
+        int count = 0;
+        while(count<99){
+            count = count + 1;
+            publishProgress(count);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+ 
+    @Override
+    protected void onPreExecute() {
+        ontextchance.textchance("加载中");
+        super.onPreExecute();
+    }
+ 
+    @Override
+    protected void onPostExecute(String s) {
+        ontextchance.textchance("加载完毕");
+        super.onPostExecute(s);
+    }
+ 
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        ontextchance.progresschance(values[0]);
+        ontextchance.textchance("loading..." + values[0] + "%");
+        super.onProgressUpdate(values);
+    }
+ 
+    @Override
+    protected void onCancelled() {
+        ontextchance.textchance("已取消");
+        ontextchance.progresschance(0);
+        super.onCancelled();
+    }

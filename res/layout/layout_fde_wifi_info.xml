@@ -32,12 +32,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <!-- <TextView
             android:id="@+id/switchWifi"
             android:layout_alignParentRight="true"
             android:background="@mipmap/icon_switch_close"
             android:layout_width="42dp"
-            android:layout_height="24dp"/>
+            android:layout_height="24dp"/> -->
+
+            <Switch
+            android:id="@+id/switchWifi"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="30dp"/>
 
     </RelativeLayout>
 
@@ -82,8 +88,8 @@
     <TextView
         android:id="@+id/txtAddWifi"
         android:layout_width="wrap_content"
-        android:text="添加网络"
-        android:textColor="#00f"
+        android:text="@string/fde_add_wifi"
+        android:textColor="@color/app_blue_light"
         android:textSize="20sp"
         android:paddingVertical="6dp"
         android:layout_marginBottom="32dp"

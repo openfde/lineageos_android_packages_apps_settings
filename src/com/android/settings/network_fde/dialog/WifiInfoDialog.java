@@ -16,7 +16,6 @@
  */
 package com.android.settings.network_fde.dialog;
 
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -30,28 +29,33 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import com.android.settings.network_fde.AdapterItem;
+import com.android.settings.utils.StringUtils;
+
+import java.util.Map;
+
 import com.android.settings.R;
 
 public class WifiInfoDialog extends Dialog implements View.OnClickListener {
-    TextView txtCancel ;
+    TextView txtCancel;
     TextView txtConfirm;
     TextView txtStatus;
     TextView txtSignal;
     TextView txtEncryption;
     TextView txtWifiName;
-    String strWifiInfo ;
-    String status ;
-    String wifiName ;
-    Context context ;
+    Map<String, Object> wifiMap;
+    String status;
+    String wifiName;
+    Context context;
 
-    AdapterItem dialogClick ;
+    AdapterItem dialogClick;
 
-    public WifiInfoDialog(@NonNull Context context, AdapterItem dialogClick ,String status ,String wifiName,String strWifiInfo) {
+    public WifiInfoDialog(@NonNull Context context, AdapterItem dialogClick, String status, String wifiName,
+            Map<String, Object> wifiMap) {
         super(context);
         this.context = context;
-        this.strWifiInfo = strWifiInfo;
-        this.status = status ;
-        this.wifiName = wifiName ;
+        this.wifiMap = wifiMap;
+        this.status = status;
+        this.wifiName = wifiName;
         this.dialogClick = dialogClick;
     }
 
@@ -63,7 +67,7 @@ public class WifiInfoDialog extends Dialog implements View.OnClickListener {
         initView();
     }
 
-      private void initView(){
+    private void initView() {
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         txtConfirm = (TextView) findViewById(R.id.txtConfirm);
         txtStatus = (TextView) findViewById(R.id.txtStatus);
@@ -74,37 +78,36 @@ public class WifiInfoDialog extends Dialog implements View.OnClickListener {
         txtCancel.setOnClickListener(this);
         txtConfirm.setOnClickListener(this);
 
-
-        if(status !=null){
-            txtStatus.setText("1".equals(status) ? context.getString(R.string.fde_has_connected): context.getString(R.string.fde_has_saved));
+        if (status != null) {
+            txtStatus.setText("1".equals(status) ? context.getString(R.string.fde_has_connected)
+                    : context.getString(R.string.fde_has_saved));
         }
 
-        if(wifiName !=null){
+        if (wifiName != null) {
             txtWifiName.setText(wifiName);
         }
 
-        if(strWifiInfo !=null){
-            try{
-                String[] arrWifis	= strWifiInfo.split("\n");
-                txtSignal.setText(arrWifis[0]);
-                txtEncryption.setText(arrWifis[1]);
-            }catch(Exception e){
+        if (wifiMap != null) {
+            try {
+                txtSignal.setText(StringUtils.ToString(wifiMap.get("signal")));
+                txtEncryption.setText(StringUtils.ToString(wifiMap.get("encryption")));
+            } catch (Exception e) {
                 txtSignal.setText("--");
                 txtEncryption.setText("--");
                 e.printStackTrace();
             }
-        }    
+        }
 
-        if("1".equals(status)){
-            //if saved
-            txtConfirm.setText(context.getString(R.string.fde_unconnect)); 
-        }else {
-            //if connected
+        if ("1".equals(status)) {
+            // if saved
+            txtConfirm.setText(context.getString(R.string.fde_unconnect));
+        } else {
+            // if connected
             txtConfirm.setText(context.getString(R.string.fde_del_network));
         }
     }
 
-    private  void setLayout(){
+    private void setLayout() {
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager m = getWindow().getWindowManager();
@@ -112,22 +115,22 @@ public class WifiInfoDialog extends Dialog implements View.OnClickListener {
         WindowManager.LayoutParams p = getWindow().getAttributes();
         p.x = 0;
         p.y = 200;
-//        p.width = 400;// WindowManager.LayoutParams.MATCH_PARENT;
-//        p.height = 250;///WindowManager.LayoutParams.WRAP_CONTENT;
+        // p.width = 400;// WindowManager.LayoutParams.MATCH_PARENT;
+        // p.height = 250;///WindowManager.LayoutParams.WRAP_CONTENT;
         p.width = WindowManager.LayoutParams.MATCH_PARENT;
         p.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(p);
     }
 
-       @Override
+    @Override
     public void onClick(View view) {
-       if(view.getId() == R.id.txtCancel){
+        if (view.getId() == R.id.txtCancel) {
             dismiss();
-        }else if(view.getId() == R.id.txtConfirm){
-            if("1".equals(status)){
-                dialogClick.onDialogClick(3,wifiName,"");
-            }else{
-                dialogClick.onDialogClick(4,wifiName,"");
+        } else if (view.getId() == R.id.txtConfirm) {
+            if ("1".equals(status)) {
+                dialogClick.onDialogClick(3, wifiName, "", 0);
+            } else {
+                dialogClick.onDialogClick(4, wifiName, "", 0);
             }
             dismiss();
         }

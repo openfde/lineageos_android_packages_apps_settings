@@ -35,14 +35,13 @@ import com.android.settings.utils.StringUtils;
 import java.util.List;
 import java.util.Map;
 
-public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWifiHolder>{
-     Context context ;
-     List<Map<String,Object>> list ;
-     LayoutInflater layoutInflater; //
-     AdapterItem aditem;
+public class FdeWifiAdapter extends RecyclerView.Adapter<FdeWifiAdapter.FdeWifiHolder> {
+    Context context;
+    List<Map<String, Object>> list;
+    LayoutInflater layoutInflater; //
+    AdapterItem aditem;
 
-
-    public FdeWifiAdapter(Context context, List<Map<String, Object>> list,AdapterItem aditem) {
+    public FdeWifiAdapter(Context context, List<Map<String, Object>> list, AdapterItem aditem) {
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.list = list;
@@ -52,7 +51,7 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
     @NonNull
     @Override
     public FdeWifiHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_fde_wifi_info,parent,false);
+        View view = layoutInflater.inflate(R.layout.item_fde_wifi_info, parent, false);
         FdeWifiHolder fdeWifiHolder = new FdeWifiHolder(view);
         return fdeWifiHolder;
     }
@@ -65,39 +64,45 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
         String isSaved = StringUtils.ToString(list.get(position).get("isSaved"));
         int curNet = StringUtils.ToInt(list.get(position).get("curNet")); // Integer.valueOf(list.get(position).get("curNet").toString());
         int signal = StringUtils.ToInt(list.get(position).get("signal"));
-        if(signal >= 80){
+        if (signal >= 80) {
             holder.imgWifi.setImageResource(R.mipmap.icon_wifi);
-        }else if(signal >= 50){
+        } else if (signal >= 50) {
             holder.imgWifi.setImageResource(R.mipmap.icon_wifi_high);
-        }else if(signal > 20 ){
-            holder.imgWifi.setImageResource(R.mipmap.icon_wifi_half); 
-        }else {
+        } else if (signal > 20) {
+            holder.imgWifi.setImageResource(R.mipmap.icon_wifi_half);
+        } else {
             holder.imgWifi.setImageResource(R.mipmap.icon_wifi_lower);
         }
 
-        if(curNet == position){
+        if (curNet == position) {
             holder.txtEncrypted.setText(context.getString(R.string.fde_has_connected));
-            // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
-        }else{
-            if("1".equals(isSaved)){
+            holder.txtEncrypted.setTextColor(context.getColor(R.color.palette_list_color_blue));
+        } else {
+            if ("1".equals(isSaved)) {
                 holder.txtEncrypted.setText(context.getString(R.string.fde_has_saved));
-            }else{
+                holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
+            } else if ("2".equals(isSaved)) {
+                holder.txtEncrypted.setText(context.getString(R.string.fde_connecting));
+                holder.txtEncrypted.setTextColor(context.getColor(R.color.app_blue_light));
+            } else {
                 holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("encryption")));
+                holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
             }
             // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
         }
- 
+
         holder.layoutWifiInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aditem.onItemClick(position,wifiName);    
+                // holder.txtEncrypted.setText(context.getString(R.string.fde_connecting));
+                aditem.onItemClick(position, wifiName);
             }
         });
 
         holder.layoutWifiInfo.setOnContextClickListener(new View.OnContextClickListener() {
             @Override
             public boolean onContextClick(View view) {
-                aditem.onContextClick(position,wifiName);    
+                aditem.onContextClick(position, wifiName);
                 return false;
             }
         });
@@ -109,7 +114,7 @@ public class FdeWifiAdapter extends   RecyclerView.Adapter<FdeWifiAdapter.FdeWif
     }
 
     class FdeWifiHolder extends RecyclerView.ViewHolder {
-        TextView txtWifiName ;
+        TextView txtWifiName;
         TextView txtEncrypted;
         LinearLayout layoutWifiInfo;
         ImageView imgWifi;

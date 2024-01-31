@@ -17,8 +17,9 @@
 package com.android.settings.network_fde;
 
 public interface AdapterItem {
-    void onItemClick(int pos,String content);
-    void onDialogClick(int type,String ssid,String password);
-    void onContextClick(int pos,String content);
-}
+    void onItemClick(int pos, String content);
 
+    void onDialogClick(int type, String ssid, String password, int pos);
+
+    void onContextClick(int pos, String content);
+}

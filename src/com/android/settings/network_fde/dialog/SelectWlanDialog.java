@@ -30,21 +30,22 @@ import com.android.settings.network_fde.AdapterItem;
 import com.android.settings.R;
 import android.util.Log;
 
-
 public class SelectWlanDialog extends Dialog implements View.OnClickListener {
-    Context context ;
-    AdapterItem dialogClick ;
+    Context context;
+    AdapterItem dialogClick;
 
-    TextView txtCancel ;
+    TextView txtCancel;
     TextView txtConfirm;
     TextView txtWifiName;
     EditText editPassword;
-    String wifiName ;
+    String wifiName;
+    int pos;
 
-    public SelectWlanDialog(@NonNull Context context,String wifiName,AdapterItem dialogClick) {
+    public SelectWlanDialog(@NonNull Context context, String wifiName, int pos, AdapterItem dialogClick) {
         super(context);
         this.context = context;
         this.wifiName = wifiName;
+        this.pos = pos;
         this.dialogClick = dialogClick;
     }
 
@@ -56,7 +57,7 @@ public class SelectWlanDialog extends Dialog implements View.OnClickListener {
         initView();
     }
 
-    private  void setLayout(){
+    private void setLayout() {
         getWindow().setGravity(Gravity.CENTER);
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay();
@@ -65,12 +66,12 @@ public class SelectWlanDialog extends Dialog implements View.OnClickListener {
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         p.x = 0;
         p.y = 0;
-        p.width =  400;//WindowManager.LayoutParams.MATCH_PARENT;
+        p.width = 400;// WindowManager.LayoutParams.MATCH_PARENT;
         p.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(p);
     }
 
-    private void initView(){
+    private void initView() {
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         txtConfirm = (TextView) findViewById(R.id.txtConfirm);
         txtWifiName = (TextView) findViewById(R.id.txtWifiName);
@@ -79,18 +80,17 @@ public class SelectWlanDialog extends Dialog implements View.OnClickListener {
         txtCancel.setOnClickListener(this);
         txtConfirm.setOnClickListener(this);
 
-        txtWifiName.setText(wifiName);    
+        txtWifiName.setText(wifiName);
     }
-
 
     @Override
     public void onClick(View view) {
-       if(view.getId() == R.id.txtCancel){
+        if (view.getId() == R.id.txtCancel) {
             dismiss();
-        }else if(view.getId() == R.id.txtConfirm){
+        } else if (view.getId() == R.id.txtConfirm) {
             String wifiName = txtWifiName.getText().toString();
             String password = editPassword.getText().toString();
-            dialogClick.onDialogClick(2,wifiName,password);
+            dialogClick.onDialogClick(2, wifiName, password, pos);
             dismiss();
         }
     }

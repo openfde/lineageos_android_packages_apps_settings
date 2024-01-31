@@ -39,6 +39,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 import android.content.Context;
 import android.util.Log;
+import com.android.settings.utils.LogTools;
+
 public class SetWifiFromHostFragment extends InstrumentedFragment implements FdeWifiConfigUiBase,
         View.OnClickListener {
 
@@ -56,10 +58,16 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
     // private EditText passwd;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUIController.destTimer();
+        mUIController.destTimerLong();
     }
 
     @Override
@@ -74,7 +82,7 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
         // final Button neutral = rootView.findViewById(android.R.id.button3);
         // if (neutral != null) {
-        //     neutral.setVisibility(View.GONE);
+        // neutral.setVisibility(View.GONE);
         // }
 
         // mSubmitBtn = rootView.findViewById(SUBMIT_BUTTON_ID);
@@ -82,14 +90,12 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
         // passwd = rootView.findViewById(R.id.passwd);
         // security = rootView.findViewById(R.id.security);
 
-        
         // mSubmitBtn.setOnClickListener(this);
         // mCancelBtn.setOnClickListener(this);
 
-
-
         mUIController = new ConnectWifiController(this, rootView, null);
-
+        mUIController.initTimer();
+        mUIController.initTimerLong();
         return rootView;
     }
 
@@ -102,18 +108,18 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
     public void onClick(View view) {
         switch (view.getId()) {
             // case SUBMIT_BUTTON_ID:
-            //     handleSubmitAction();
-            //     break;
+            // handleSubmitAction();
+            // break;
             // case CANCEL_BUTTON_ID:
-            //     handleCancelAction();
-            //     break;
-            // case  R.id.imgRefresh:
+            // handleCancelAction();
+            // break;
+            // case R.id.imgRefresh:
 
-            //     break;
+            // break;
 
             // case R.id.txtAddWifi:
 
-            //     break;       
+            // break;
         }
     }
 
@@ -121,12 +127,13 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-/*
-    @Override
-    public FdeWifiConfigUiBase getController() {
-        return mUIController;
-    }
-*/
+
+    /*
+     * @Override
+     * public FdeWifiConfigUiBase getController() {
+     * return mUIController;
+     * }
+     */
     @Override
     public void dispatchSubmit() {
         handleSubmitAction();
@@ -154,78 +161,81 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
     @Override
     public Button getSubmitButton() {
-        return null;//mSubmitBtn;
+        return null;// mSubmitBtn;
     }
 
     @Override
     public Button getCancelButton() {
-        return null;//mCancelBtn;
+        return null;// mCancelBtn;
     }
 
     @VisibleForTesting
     void handleSubmitAction() {
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getFileName()
+                + " ,Line: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getLineNumber());
         // successfullyFinish(mUIController.getConfig());
     }
-// 	public  class NetTask extends AsyncTask<Void, Void, Exception> {
-// 	    private final NetConfiguration mConfig;
-// 		private final Context mContext;
-//         public NetTask(Context context, NetConfiguration config) {
-// 			mContext = context;
-//             mConfig = config;
-//         }
-        
-//         @Override
-//         protected Exception doInBackground(Void... params) {
-//         try {
-// 		    Net net = Net.getInstance(mContext);
-//             String wifiName = security.getSelectedItem().toString();
-//             String password = passwd.getText().toString();
-//             Log.i("MYLOG","wifiName "+wifiName +" , password: "+password);
-//             net.connectSsid(wifiName,password);
-// //        	if (mConfig.ipType == 0) {
-// //        	    net.setDHCP(mConfig.interfaceName);
-// //        	} else {
-// ////                net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress, mConfig.networkPrefixLength,
-// ////        			mConfig.gateway, mConfig.dns1, mConfig.dns2);
-// //
-// //        	}
-//           return null;
-//         } catch (Exception e) {
-//           return e;
-//         }
-// 	  }
+    // public class NetTask extends AsyncTask<Void, Void, Exception> {
+    // private final NetConfiguration mConfig;
+    // private final Context mContext;
+    // public NetTask(Context context, NetConfiguration config) {
+    // mContext = context;
+    // mConfig = config;
+    // }
 
-	//   @Override
-	//   protected void onPostExecute(Exception e) {
-	// 	  if (e == null) {
-	// 		  Toast.makeText(mContext, "net set success!!", Toast.LENGTH_SHORT).show();
-	// 	  } else {
-	// 		  android.util.Log.e("MYLOG", "Failed to set: " + mConfig, e);
-	// 		  Toast.makeText(mContext, "net set fail!!", Toast.LENGTH_SHORT).show();
-	// 	  }
-	//   }
-	// }
+    // @Override
+    // protected Exception doInBackground(Void... params) {
+    // try {
+    // Net net = Net.getInstance(mContext);
+    // String wifiName = security.getSelectedItem().toString();
+    // String password = passwd.getText().toString();
+    // Log.i("MYLOG","wifiName "+wifiName +" , password: "+password);
+    // net.connectSsid(wifiName,password);
+    // // if (mConfig.ipType == 0) {
+    // // net.setDHCP(mConfig.interfaceName);
+    // // } else {
+    // //// net.setStaticIp(mConfig.interfaceName, mConfig.ipAddress,
+    // mConfig.networkPrefixLength,
+    // //// mConfig.gateway, mConfig.dns1, mConfig.dns2);
+    // //
+    // // }
+    // return null;
+    // } catch (Exception e) {
+    // return e;
+    // }
+    // }
+
+    // @Override
+    // protected void onPostExecute(Exception e) {
+    // if (e == null) {
+    // Toast.makeText(mContext, "net set success!!", Toast.LENGTH_SHORT).show();
+    // } else {
+    // android.util.Log.e("MYLOG", "Failed to set: " + mConfig, e);
+    // Toast.makeText(mContext, "net set fail!!", Toast.LENGTH_SHORT).show();
+    // }
+    // }
+    // }
 
     private void successfullyFinish(NetConfiguration config) {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() 
-		+ " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber()
-		+ " ," + config);
-	    // new NetTask(getContext(), config).execute();
-        //final Intent intent = new Intent();
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getFileName()
+                + " ,Line: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getLineNumber()
+                + " ," + config);
+        // new NetTask(getContext(), config).execute();
+        // final Intent intent = new Intent();
         final Activity activity = getActivity();
-        //intent.putExtra(WIFI_CONFIG_KEY, config);
-        //activity.setResult(Activity.RESULT_OK, intent);
+        // intent.putExtra(WIFI_CONFIG_KEY, config);
+        // activity.setResult(Activity.RESULT_OK, intent);
         activity.finish();
     }
 
     @VisibleForTesting
     void handleCancelAction() {
-    
-	android.util.Log.e("MYLOG", "file: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getFileName() + " ,Line: " + ((StackTraceElement)(new Throwable().getStackTrace()[0])).getLineNumber());
+
+        android.util.Log.e("MYLOG", "file: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getFileName()
+                + " ,Line: " + ((StackTraceElement) (new Throwable().getStackTrace()[0])).getLineNumber());
         final Activity activity = getActivity();
-        //activity.setResult(Activity.RESULT_CANCELED);
+        // activity.setResult(Activity.RESULT_CANCELED);
         activity.finish();
     }
 }

@@ -33,15 +33,14 @@ import com.android.settings.R;
 import android.util.Log;
 
 public class AddWlanDialog extends Dialog implements View.OnClickListener {
-    Context context ;
-    TextView txtCancel ;
+    Context context;
+    TextView txtCancel;
     TextView txtConfirm;
     EditText editWifiName;
     EditText editPassword;
-    AdapterItem dialogClick ;
+    AdapterItem dialogClick;
 
-
-    public AddWlanDialog(@NonNull Context context,  AdapterItem dialogClick ) {
+    public AddWlanDialog(@NonNull Context context, AdapterItem dialogClick) {
         super(context);
         this.context = context;
         this.dialogClick = dialogClick;
@@ -55,7 +54,7 @@ public class AddWlanDialog extends Dialog implements View.OnClickListener {
         initView();
     }
 
-    private  void setLayout(){
+    private void setLayout() {
         getWindow().setGravity(Gravity.CENTER);
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay();
@@ -69,7 +68,7 @@ public class AddWlanDialog extends Dialog implements View.OnClickListener {
         getWindow().setAttributes(p);
     }
 
-    private void initView(){
+    private void initView() {
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         txtConfirm = (TextView) findViewById(R.id.txtConfirm);
         editWifiName = (EditText) findViewById(R.id.editWifiName);
@@ -82,12 +81,12 @@ public class AddWlanDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-       if(view.getId() == R.id.txtCancel){
+        if (view.getId() == R.id.txtCancel) {
             dismiss();
-        }else if(view.getId() == R.id.txtConfirm){
+        } else if (view.getId() == R.id.txtConfirm) {
             String wifiName = editWifiName.getText().toString();
             String password = editPassword.getText().toString();
-            dialogClick.onDialogClick(1,wifiName,password);
+            dialogClick.onDialogClick(1, wifiName, password, 0);
             dismiss();
         }
     }
