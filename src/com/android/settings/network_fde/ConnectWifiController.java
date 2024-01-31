@@ -608,6 +608,10 @@ public class ConnectWifiController implements
                             list.set(i, mpScan);
                         }
                         getActivedWifi();
+                    } else {
+                        isScaning = false;
+                        fdeWifiAdapter.notifyDataSetChanged();
+                        hideProgressDialog();
                     }
                 } catch (Exception e) {
                     isScaning = false;
@@ -646,10 +650,10 @@ public class ConnectWifiController implements
                             mAc.put("curNet", -1);
                             list.set(i, mAc);
                         }
-                        fdeWifiAdapter.notifyDataSetChanged();
-                        hideProgressDialog();
                     }
                 }
+                fdeWifiAdapter.notifyDataSetChanged();
+                hideProgressDialog();
                 isScaning = false;
             }
 
@@ -700,6 +704,10 @@ public class ConnectWifiController implements
                             }
                         }
 
+                    } else {
+                        fdeWifiAdapter.notifyDataSetChanged();
+                        hideProgressDialog();
+                        isScaning = false;
                     }
                     Collections.sort(list, new Comparator<Map<String, Object>>() {
                         @Override
