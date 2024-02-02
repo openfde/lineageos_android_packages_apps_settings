@@ -41,8 +41,11 @@
 
             <Switch
             android:id="@+id/switchWifi"
+            android:checked="true"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_width="60dp"
+
             android:layout_height="30dp"/>
 
     </RelativeLayout>

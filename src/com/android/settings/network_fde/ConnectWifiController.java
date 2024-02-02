@@ -457,6 +457,7 @@ public class ConnectWifiController implements
             public void callBackListener(String result) {
                 LogTools.i("callBackListener: isWifiEnable result-- >" + result);
                 wifiStatus = StringUtils.ToInt(result);
+                switchWifi.setVisibility(View.VISIBLE);
                 if (wifiStatus == 1) {
                     switchWifi.setChecked(true);
                     openWifiView();
@@ -479,6 +480,7 @@ public class ConnectWifiController implements
             public void requestFail(String errorString, int code) {
                 LogTools.i("requestFail:isWifiEnable  errorString-- >" + errorString + " ,code " + code);
                 wifiStatus = 2;
+                switchWifi.setVisibility(View.VISIBLE);
                 closeWifiView();
                 switchWifi.setChecked(false);
             }
