@@ -88,10 +88,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The class for allowing UIs like {@link WifiDialog} and {@link WifiConfigUiBase} to
+ * The class for allowing UIs like {@link WifiDialog} and
+ * {@link WifiConfigUiBase} to
  * share the logic for controlling buttons, text fields, etc.
  *
- * Migrating from Wi-Fi SettingsLib to to WifiTrackerLib, this object will be removed in the near
+ * Migrating from Wi-Fi SettingsLib to to WifiTrackerLib, this object will be
+ * removed in the near
  * future, please develop in {@link WifiConfigController2}.
  */
 public class WifiConfigController implements TextWatcher,
@@ -120,32 +122,32 @@ public class WifiConfigController implements TextWatcher,
 
     /* These values come from "wifi_eap_method" resource array */
     public static final int WIFI_EAP_METHOD_PEAP = 0;
-    public static final int WIFI_EAP_METHOD_TLS  = 1;
+    public static final int WIFI_EAP_METHOD_TLS = 1;
     public static final int WIFI_EAP_METHOD_TTLS = 2;
-    public static final int WIFI_EAP_METHOD_PWD  = 3;
-    public static final int WIFI_EAP_METHOD_SIM  = 4;
-    public static final int WIFI_EAP_METHOD_AKA  = 5;
-    public static final int WIFI_EAP_METHOD_AKA_PRIME  = 6;
+    public static final int WIFI_EAP_METHOD_PWD = 3;
+    public static final int WIFI_EAP_METHOD_SIM = 4;
+    public static final int WIFI_EAP_METHOD_AKA = 5;
+    public static final int WIFI_EAP_METHOD_AKA_PRIME = 6;
 
     /* These values come from "wifi_peap_phase2_entries" resource array */
-    public static final int WIFI_PEAP_PHASE2_MSCHAPV2   = 0;
-    public static final int WIFI_PEAP_PHASE2_GTC        = 1;
-    public static final int WIFI_PEAP_PHASE2_SIM        = 2;
-    public static final int WIFI_PEAP_PHASE2_AKA        = 3;
-    public static final int WIFI_PEAP_PHASE2_AKA_PRIME  = 4;
+    public static final int WIFI_PEAP_PHASE2_MSCHAPV2 = 0;
+    public static final int WIFI_PEAP_PHASE2_GTC = 1;
+    public static final int WIFI_PEAP_PHASE2_SIM = 2;
+    public static final int WIFI_PEAP_PHASE2_AKA = 3;
+    public static final int WIFI_PEAP_PHASE2_AKA_PRIME = 4;
 
     /* These values come from "wifi_ttls_phase2_entries" resource array */
-    public static final int WIFI_TTLS_PHASE2_PAP       = 0;
-    public static final int WIFI_TTLS_PHASE2_MSCHAP    = 1;
-    public static final int WIFI_TTLS_PHASE2_MSCHAPV2  = 2;
-    public static final int WIFI_TTLS_PHASE2_GTC       = 3;
+    public static final int WIFI_TTLS_PHASE2_PAP = 0;
+    public static final int WIFI_TTLS_PHASE2_MSCHAP = 1;
+    public static final int WIFI_TTLS_PHASE2_MSCHAPV2 = 2;
+    public static final int WIFI_TTLS_PHASE2_GTC = 3;
 
     private static final String UNDESIRED_CERTIFICATE_MACRANDSECRET = "MacRandSecret";
     private static final String UNDESIRED_CERTIFICATE_MACRANDSAPSECRET = "MacRandSapSecret";
     @VisibleForTesting
     static final String[] UNDESIRED_CERTIFICATES = {
-        UNDESIRED_CERTIFICATE_MACRANDSECRET,
-        UNDESIRED_CERTIFICATE_MACRANDSAPSECRET
+            UNDESIRED_CERTIFICATE_MACRANDSECRET,
+            UNDESIRED_CERTIFICATE_MACRANDSAPSECRET
     };
 
     /* Phase2 methods supported by PEAP are limited */
@@ -167,13 +169,16 @@ public class WifiConfigController implements TextWatcher,
 
     private ScrollView mDialogContainer;
     private Spinner mSecuritySpinner;
-    @VisibleForTesting Spinner mEapMethodSpinner;
-    @VisibleForTesting Spinner mEapSimSpinner;    // For EAP-SIM, EAP-AKA and EAP-AKA-PRIME.
+    @VisibleForTesting
+    Spinner mEapMethodSpinner;
+    @VisibleForTesting
+    Spinner mEapSimSpinner; // For EAP-SIM, EAP-AKA and EAP-AKA-PRIME.
     private Spinner mEapCaCertSpinner;
     private Spinner mEapOcspSpinner;
     private TextView mEapDomainView;
     private Spinner mPhase2Spinner;
-    // Associated with mPhase2Spinner, one of mPhase2TtlsAdapter or mPhase2PeapAdapter
+    // Associated with mPhase2Spinner, one of mPhase2TtlsAdapter or
+    // mPhase2PeapAdapter
     private ArrayAdapter<CharSequence> mPhase2Adapter;
     private Spinner mEapUserCertSpinner;
     private TextView mEapIdentityView;
@@ -218,7 +223,7 @@ public class WifiConfigController implements TextWatcher,
 
     public WifiConfigController(WifiConfigUiBase parent, View view, AccessPoint accessPoint,
             int mode) {
-        this (parent, view, accessPoint, mode, true /* requestFocus */);
+        this(parent, view, accessPoint, mode, true /* requestFocus */);
     }
 
     public WifiConfigController(WifiConfigUiBase parent, View view, AccessPoint accessPoint,
@@ -249,8 +254,7 @@ public class WifiConfigController implements TextWatcher,
 
     private void initWifiConfigController(AccessPoint accessPoint, int mode) {
 
-        mAccessPointSecurity = (accessPoint == null) ? AccessPoint.SECURITY_NONE :
-                accessPoint.getSecurity();
+        mAccessPointSecurity = (accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.getSecurity();
         mMode = mode;
 
         final Resources res = mContext.getResources();
@@ -261,7 +265,7 @@ public class WifiConfigController implements TextWatcher,
             mPhase2PeapAdapter = getSpinnerAdapter(R.array.wifi_peap_phase2_entries);
         } else {
             mPhase2PeapAdapter = getSpinnerAdapterWithEapMethodsTts(
-                R.array.wifi_peap_phase2_entries_with_sim_auth);
+                    R.array.wifi_peap_phase2_entries_with_sim_auth);
         }
 
         mPhase2TtlsAdapter = getSpinnerAdapter(R.array.wifi_ttls_phase2_entries);
@@ -269,10 +273,8 @@ public class WifiConfigController implements TextWatcher,
         mUnspecifiedCertString = mContext.getString(R.string.wifi_unspecified);
         mMultipleCertSetString = mContext.getString(R.string.wifi_multiple_cert_added);
         mUseSystemCertsString = mContext.getString(R.string.wifi_use_system_certs);
-        mDoNotProvideEapUserCertString =
-            mContext.getString(R.string.wifi_do_not_provide_eap_user_cert);
-        mDoNotValidateEapServerString =
-            mContext.getString(R.string.wifi_do_not_validate_eap_server);
+        mDoNotProvideEapUserCertString = mContext.getString(R.string.wifi_do_not_provide_eap_user_cert);
+        mDoNotValidateEapServerString = mContext.getString(R.string.wifi_do_not_validate_eap_server);
 
         mSsidScanButton = (ImageButton) mView.findViewById(R.id.ssid_scanner_button);
         mDialogContainer = mView.findViewById(R.id.dialog_scrollview);
@@ -354,7 +356,7 @@ public class WifiConfigController implements TextWatcher,
                 if (config != null && config.isPasspoint()) {
                     addRow(group, R.string.passpoint_label,
                             String.format(mContext.getString(R.string.passpoint_content),
-                            config.providerFriendlyName));
+                                    config.providerFriendlyName));
                 }
             }
 
@@ -364,8 +366,7 @@ public class WifiConfigController implements TextWatcher,
                 showSecurityFields(/* refreshEapMethods */ true, /* refreshCertificates */ true);
                 showIpConfigFields();
                 showProxyFields();
-                final CheckBox advancedTogglebox =
-                        (CheckBox) mView.findViewById(R.id.wifi_advanced_togglebox);
+                final CheckBox advancedTogglebox = (CheckBox) mView.findViewById(R.id.wifi_advanced_togglebox);
                 if (!showAdvancedFields) {
                     // Need to show Advanced Option button.
                     mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
@@ -398,7 +399,7 @@ public class WifiConfigController implements TextWatcher,
                         String suggestionOrSpecifierPackageName = null;
                         if (config != null
                                 && (config.fromWifiNetworkSpecifier
-                                || config.fromWifiNetworkSuggestion)) {
+                                        || config.fromWifiNetworkSuggestion)) {
                             suggestionOrSpecifierPackageName = config.creatorName;
                         }
                         String summary = AccessPoint.getSummary(
@@ -469,8 +470,7 @@ public class WifiConfigController implements TextWatcher,
 
     @VisibleForTesting
     boolean isSplitSystemUser() {
-        final UserManager userManager =
-                (UserManager) mContext.getSystemService(Context.USER_SERVICE);
+        final UserManager userManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         return userManager.isSplitSystemUser();
     }
 
@@ -493,14 +493,16 @@ public class WifiConfigController implements TextWatcher,
 
     void hideForgetButton() {
         Button forget = mConfigUi.getForgetButton();
-        if (forget == null) return;
+        if (forget == null)
+            return;
 
         forget.setVisibility(View.GONE);
     }
 
     void hideSubmitButton() {
         Button submit = mConfigUi.getSubmitButton();
-        if (submit == null) return;
+        if (submit == null)
+            return;
 
         submit.setVisibility(View.GONE);
     }
@@ -508,7 +510,8 @@ public class WifiConfigController implements TextWatcher,
     /* show submit button if password, ip and proxy settings are valid */
     void enableSubmitIfAppropriate() {
         Button submit = mConfigUi.getSubmitButton();
-        if (submit == null) return;
+        if (submit == null)
+            return;
 
         submit.setEnabled(isSubmittable());
     }
@@ -535,19 +538,19 @@ public class WifiConfigController implements TextWatcher,
         if (mPasswordView != null
                 && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP
                         && mPasswordView.length() == 0)
-                    || (mAccessPointSecurity == AccessPoint.SECURITY_PSK
-                           && !isValidPsk(mPasswordView.getText().toString()))
-                    || (mAccessPointSecurity == AccessPoint.SECURITY_SAE
-                        && !isValidSaePassword(mPasswordView.getText().toString())))) {
+                        || (mAccessPointSecurity == AccessPoint.SECURITY_PSK
+                                && !isValidPsk(mPasswordView.getText().toString()))
+                        || (mAccessPointSecurity == AccessPoint.SECURITY_SAE
+                                && !isValidSaePassword(mPasswordView.getText().toString())))) {
             passwordInvalid = true;
         }
         if ((mSsidView != null && mSsidView.length() == 0)
                 // If Accesspoint is not saved, apply passwordInvalid check
                 || ((mAccessPoint == null || !mAccessPoint.isSaved()) && passwordInvalid
-                // If AccessPoint is saved (modifying network) and password is changed, apply
-                // Invalid password check
-                || mAccessPoint != null && mAccessPoint.isSaved() && passwordInvalid
-                    && mPasswordView.length() > 0)) {
+                        // If AccessPoint is saved (modifying network) and password is changed, apply
+                        // Invalid password check
+                        || mAccessPoint != null && mAccessPoint.isSaved() && passwordInvalid
+                                && mPasswordView.length() > 0)) {
             enabled = false;
         } else {
             enabled = ipAndProxyFieldsAreValid();
@@ -558,7 +561,8 @@ public class WifiConfigController implements TextWatcher,
                 && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE) {
             String caCertSelection = (String) mEapCaCertSpinner.getSelectedItem();
             if (caCertSelection.equals(mUnspecifiedCertString)) {
-                // Disallow submit if the user has not selected a CA certificate for an EAP network
+                // Disallow submit if the user has not selected a CA certificate for an EAP
+                // network
                 // configuration.
                 enabled = false;
             } else if (!caCertSelection.equals(mDoNotValidateEapServerString)
@@ -575,7 +579,8 @@ public class WifiConfigController implements TextWatcher,
                 && mEapUserCertSpinner != null
                 && mView.findViewById(R.id.l_user_cert).getVisibility() != View.GONE
                 && mEapUserCertSpinner.getSelectedItem().equals(mUnspecifiedCertString)) {
-            // Disallow submit if the user has not selected a user certificate for an EAP network
+            // Disallow submit if the user has not selected a user certificate for an EAP
+            // network
             // configuration.
             enabled = false;
         }
@@ -691,7 +696,7 @@ public class WifiConfigController implements TextWatcher,
                         // PEAP supports limited phase2 values
                         // Map the index from the mPhase2PeapAdapter to the one used
                         // by the API which has the full list of PEAP methods.
-                        switch(phase2Method) {
+                        switch (phase2Method) {
                             case WIFI_PEAP_PHASE2_MSCHAPV2:
                                 config.enterpriseConfig.setPhase2Method(Phase2.MSCHAPV2);
                                 break;
@@ -714,7 +719,7 @@ public class WifiConfigController implements TextWatcher,
                         break;
                     case Eap.TTLS:
                         // The default index from mPhase2TtlsAdapter maps to the API
-                        switch(phase2Method) {
+                        switch (phase2Method) {
                             case WIFI_TTLS_PHASE2_PAP:
                                 config.enterpriseConfig.setPhase2Method(Phase2.PAP);
                                 break;
@@ -753,12 +758,11 @@ public class WifiConfigController implements TextWatcher,
                         }
                         config.enterpriseConfig.setCaCertificateAliases(
                                 mAccessPoint
-                                        .getConfig()
-                                        .enterpriseConfig
+                                        .getConfig().enterpriseConfig
                                         .getCaCertificateAliases());
                     }
                 } else {
-                    config.enterpriseConfig.setCaCertificateAliases(new String[] {caCert});
+                    config.enterpriseConfig.setCaCertificateAliases(new String[] { caCert });
                 }
 
                 // ca_cert or ca_path should not both be non-null, since we only intend to let
@@ -837,7 +841,7 @@ public class WifiConfigController implements TextWatcher,
 
         config.setIpConfiguration(
                 new IpConfiguration(mIpAssignment, mProxySettings,
-                                    mStaticIpConfiguration, mHttpProxy));
+                        mStaticIpConfiguration, mHttpProxy));
         if (mMeteredSettingsSpinner != null) {
             config.meteredOverride = mMeteredSettingsSpinner.getSelectedItemPosition();
         }
@@ -858,11 +862,10 @@ public class WifiConfigController implements TextWatcher,
     }
 
     private boolean ipAndProxyFieldsAreValid() {
-        mIpAssignment =
-                (mIpSettingsSpinner != null
-                    && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP)
-                ? IpAssignment.STATIC
-                : IpAssignment.DHCP;
+        mIpAssignment = (mIpSettingsSpinner != null
+                && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP)
+                        ? IpAssignment.STATIC
+                        : IpAssignment.DHCP;
 
         if (mIpAssignment == IpAssignment.STATIC) {
             mStaticIpConfiguration = new StaticIpConfiguration();
@@ -917,10 +920,12 @@ public class WifiConfigController implements TextWatcher,
     }
 
     private int validateIpConfigFields(StaticIpConfiguration staticIpConfiguration) {
-        if (mIpAddressView == null) return 0;
+        if (mIpAddressView == null)
+            return 0;
 
         String ipAddr = mIpAddressView.getText().toString();
-        if (TextUtils.isEmpty(ipAddr)) return R.string.wifi_ip_settings_invalid_ip_address;
+        if (TextUtils.isEmpty(ipAddr))
+            return R.string.wifi_ip_settings_invalid_ip_address;
 
         Inet4Address inetAddr = getIPv4Address(ipAddr);
         if (inetAddr == null || inetAddr.equals(Inet4Address.ANY)) {
@@ -937,7 +942,7 @@ public class WifiConfigController implements TextWatcher,
         } catch (NumberFormatException e) {
             // Set the hint as default after user types in ip address
             mNetworkPrefixLengthView.setText(mConfigUi.getContext().getString(
-                    R.string.wifi_network_prefix_length_hint));
+                    R.string.fde_net_input_mask));
         } catch (IllegalArgumentException e) {
             return R.string.wifi_ip_settings_invalid_ip_address;
         }
@@ -945,7 +950,7 @@ public class WifiConfigController implements TextWatcher,
         String gateway = mGatewayView.getText().toString();
         if (TextUtils.isEmpty(gateway)) {
             try {
-                //Extract a default gateway from IP address
+                // Extract a default gateway from IP address
                 InetAddress netPart = NetworkUtils.getNetworkPart(inetAddr, networkPrefixLength);
                 byte[] addr = netPart.getAddress();
                 addr[addr.length - 1] = 1;
@@ -968,7 +973,7 @@ public class WifiConfigController implements TextWatcher,
         InetAddress dnsAddr = null;
 
         if (TextUtils.isEmpty(dns)) {
-            //If everything else is valid, provide hint as a default option
+            // If everything else is valid, provide hint as a default option
             mDns1View.setText(mConfigUi.getContext().getString(R.string.wifi_dns1_hint));
         } else {
             dnsAddr = getIPv4Address(dns);
@@ -1003,7 +1008,7 @@ public class WifiConfigController implements TextWatcher,
             mPasswordView.setOnEditorActionListener(this);
             mPasswordView.setOnKeyListener(this);
             ((CheckBox) mView.findViewById(R.id.show_password))
-                .setOnCheckedChangeListener(this);
+                    .setOnCheckedChangeListener(this);
 
             if (mAccessPoint != null && mAccessPoint.isSaved()) {
                 mPasswordView.setHint(R.string.wifi_unchanged);
@@ -1017,7 +1022,8 @@ public class WifiConfigController implements TextWatcher,
         }
         mView.findViewById(R.id.eap).setVisibility(View.VISIBLE);
 
-        // TODO (b/140541213): Maybe we can remove initiateEnterpriseNetworkUi by moving code block
+        // TODO (b/140541213): Maybe we can remove initiateEnterpriseNetworkUi by moving
+        // code block
         boolean initiateEnterpriseNetworkUi = false;
         if (mEapMethodSpinner == null) {
             initiateEnterpriseNetworkUi = true;
@@ -1200,25 +1206,25 @@ public class WifiConfigController implements TextWatcher,
 
     /**
      * EAP-PWD valid fields include
-     *   identity
-     *   password
+     * identity
+     * password
      * EAP-PEAP valid fields include
-     *   phase2: MSCHAPV2, GTC, SIM, AKA, AKA'
-     *   ca_cert
-     *   identity
-     *   anonymous_identity
-     *   password (not required for SIM, AKA, AKA')
+     * phase2: MSCHAPV2, GTC, SIM, AKA, AKA'
+     * ca_cert
+     * identity
+     * anonymous_identity
+     * password (not required for SIM, AKA, AKA')
      * EAP-TLS valid fields include
-     *   user_cert
-     *   ca_cert
-     *   domain
-     *   identity
+     * user_cert
+     * ca_cert
+     * domain
+     * identity
      * EAP-TTLS valid fields include
-     *   phase2: PAP, MSCHAP, MSCHAPV2, GTC
-     *   ca_cert
-     *   identity
-     *   anonymous_identity
-     *   password
+     * phase2: PAP, MSCHAP, MSCHAPV2, GTC
+     * ca_cert
+     * identity
+     * anonymous_identity
+     * password
      */
     private void showEapFieldsByMethod(int eapMethod) {
         // Common defaults
@@ -1306,7 +1312,7 @@ public class WifiConfigController implements TextWatcher,
     private void showPeapFields() {
         int phase2Method = mPhase2Spinner.getSelectedItemPosition();
         if (phase2Method == WIFI_PEAP_PHASE2_SIM || phase2Method == WIFI_PEAP_PHASE2_AKA
-                 || phase2Method == WIFI_PEAP_PHASE2_AKA_PRIME) {
+                || phase2Method == WIFI_PEAP_PHASE2_AKA_PRIME) {
             mEapIdentityView.setText("");
             mView.findViewById(R.id.l_identity).setVisibility(View.GONE);
             setPasswordInvisible();
@@ -1500,7 +1506,7 @@ public class WifiConfigController implements TextWatcher,
 
         // Shows disabled 'No SIM' when there is no active subscription.
         if (mActiveSubscriptionInfos.size() == 0) {
-            final String[] noSim = new String[]{mContext.getString(R.string.wifi_no_sim_card)};
+            final String[] noSim = new String[] { mContext.getString(R.string.wifi_no_sim_card) };
             mEapSimSpinner.setAdapter(getSpinnerAdapter(noSim));
             mEapSimSpinner.setSelection(0 /* position */);
             mEapSimSpinner.setEnabled(false);
@@ -1557,7 +1563,8 @@ public class WifiConfigController implements TextWatcher,
             certs.add(noCertificateString);
         }
 
-        // If there is only mUnspecifiedCertString and one item to select, only shows the item
+        // If there is only mUnspecifiedCertString and one item to select, only shows
+        // the item
         if (certs.size() == 2) {
             certs.remove(mUnspecifiedCertString);
             spinner.setEnabled(false);
@@ -1633,12 +1640,13 @@ public class WifiConfigController implements TextWatcher,
             int pos = mPasswordView.getSelectionEnd();
             mPasswordView.setInputType(InputType.TYPE_CLASS_TEXT
                     | (isChecked ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                                 : InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                            : InputType.TYPE_TEXT_VARIATION_PASSWORD));
             if (pos >= 0) {
                 ((EditText) mPasswordView).setSelection(pos);
             }
         } else if (view.getId() == R.id.wifi_advanced_togglebox) {
-            // Hide the SoftKeyboard temporary to let user can see most of the expanded items.
+            // Hide the SoftKeyboard temporary to let user can see most of the expanded
+            // items.
             hideSoftKeyboard(mView.getWindowToken());
             view.setVisibility(View.GONE);
             mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
@@ -1668,7 +1676,8 @@ public class WifiConfigController implements TextWatcher,
             showProxyFields();
         } else if (parent == mHiddenSettingsSpinner) {
             mHiddenWarningView.setVisibility(position == NOT_HIDDEN_NETWORK
-                    ? View.GONE : View.VISIBLE);
+                    ? View.GONE
+                    : View.VISIBLE);
         } else {
             showIpConfigFields();
         }
@@ -1688,8 +1697,8 @@ public class WifiConfigController implements TextWatcher,
         TextView passwdView = (TextView) mView.findViewById(R.id.password);
         passwdView.setInputType(InputType.TYPE_CLASS_TEXT
                 | (((CheckBox) mView.findViewById(R.id.show_password)).isChecked()
-                   ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                   : InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                        : InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
 
     public AccessPoint getAccessPoint() {
@@ -1710,7 +1719,8 @@ public class WifiConfigController implements TextWatcher,
         mSecuritySpinner.setAdapter(spinnerAdapter);
         int idx = 0;
 
-        // Populate the Wi-Fi security spinner with the various supported key management types
+        // Populate the Wi-Fi security spinner with the various supported key management
+        // types
         spinnerAdapter.add(mContext.getString(R.string.wifi_security_none));
         mSecurityInPosition[idx++] = AccessPoint.SECURITY_NONE;
         if (mWifiManager.isEnhancedOpenSupported()) {
@@ -1748,16 +1758,21 @@ public class WifiConfigController implements TextWatcher,
     }
 
     /**
-     * For each target string in {@code targetStringArray} try to find if it appears in {@code
-     * originalStringArray}, if found then use the corresponding string, which have the same index
-     * of the target string in {@code replacementStringArray}, to replace it. And finally return the
+     * For each target string in {@code targetStringArray} try to find if it appears
+     * in {@code
+     * originalStringArray}, if found then use the corresponding string, which have
+     * the same index
+     * of the target string in {@code replacementStringArray}, to replace it. And
+     * finally return the
      * whole new string array back to caller.
      */
     @VisibleForTesting
     CharSequence[] findAndReplaceTargetStrings(CharSequence originalStringArray[],
             CharSequence targetStringArray[], CharSequence replacementStringArray[]) {
-        // The length of the targetStringArray and replacementStringArray should be the same, each
-        // item in the targetStringArray should have a 1:1 mapping to replacementStringArray, so
+        // The length of the targetStringArray and replacementStringArray should be the
+        // same, each
+        // item in the targetStringArray should have a 1:1 mapping to
+        // replacementStringArray, so
         // just return the original string if the lengths are different.
         if (targetStringArray.length != replacementStringArray.length) {
             return originalStringArray;
@@ -1796,7 +1811,7 @@ public class WifiConfigController implements TextWatcher,
      * spinner to have detail TTS content for the TTS engine usage.
      */
     private ArrayAdapter<CharSequence> getSpinnerAdapterWithEapMethodsTts(
-                int contentStringArrayResId) {
+            int contentStringArrayResId) {
         final Resources res = mContext.getResources();
         CharSequence[] sourceStrings = res.getStringArray(
                 contentStringArrayResId);

@@ -58,6 +58,8 @@ import android.os.Handler;
 import android.os.Message;
 import com.android.settings.utils.LogTools;
 import com.android.settings.utils.StringUtils;
+import com.android.settings.wifi.WifiDialog;
+
 import android.widget.Toast;
 
 /**
@@ -176,7 +178,7 @@ public class EthernetConfigController implements TextWatcher,
         if (config.ipType == STATIC_IP) {
             config.ipAddress = mIpAddressView.getText().toString();
             ;
-            config.networkPrefixLength = Integer.parseInt(mNetworkPrefixLengthView.getText().toString());
+            config.networkPrefixLength = NetApi.getMask(mNetworkPrefixLengthView.getText().toString().trim()); // NetApi.getMask(mNetworkPrefixLengthView.getText().toString().trim());
             config.gateway = mGatewayView.getText().toString();
             config.dns1 = mDns1View.getText().toString();
             config.dns2 = mDns2View.getText().toString();
@@ -219,17 +221,18 @@ public class EthernetConfigController implements TextWatcher,
 
         int networkPrefixLength = -1;
         try {
-            networkPrefixLength = Integer.parseInt(mNetworkPrefixLengthView.getText().toString().trim());
+            networkPrefixLength = NetApi.getMask(mNetworkPrefixLengthView.getText().toString().trim()); // Integer.parseInt(mNetworkPrefixLengthView.getText().toString().trim());
             if (networkPrefixLength < 0 || networkPrefixLength > 32) {
                 return R.string.wifi_ip_settings_invalid_network_prefix_length;
             }
             staticIpConfiguration.ipAddress = mIpAddressView.getText().toString().trim();
-            staticIpConfiguration.networkPrefixLength = Integer
-                    .parseInt(mNetworkPrefixLengthView.getText().toString().trim());
+            staticIpConfiguration.networkPrefixLength = NetApi
+                    .getMask(mNetworkPrefixLengthView.getText().toString().trim());
+            // Integer.parseInt(mNetworkPrefixLengthView.getText().toString().trim());
         } catch (NumberFormatException e) {
             // Set the hint as default after user types in ip address
-            mNetworkPrefixLengthView.setText(mConfigUi.getContext().getString(
-                    R.string.wifi_network_prefix_length_hint));
+            mNetworkPrefixLengthView.setHint(mConfigUi.getContext().getString(
+                    R.string.fde_net_input_mask));
         } catch (IllegalArgumentException e) {
             return R.string.wifi_ip_settings_invalid_ip_address;
         }
@@ -261,7 +264,7 @@ public class EthernetConfigController implements TextWatcher,
 
         if (TextUtils.isEmpty(dns)) {
             // If everything else is valid, provide hint as a default option
-            mDns1View.setText(mConfigUi.getContext().getString(R.string.wifi_dns1_hint));
+            mDns1View.setHint(mConfigUi.getContext().getString(R.string.wifi_dns1_hint));
         } else {
             dnsAddr = getIPv4Address(dns);
             if (dnsAddr == null) {
@@ -304,7 +307,7 @@ public class EthernetConfigController implements TextWatcher,
             if (config != null) {
                 if (config.ipAddress != null) {
                     mIpAddressView.setText(config.ipAddress);
-                    mNetworkPrefixLengthView.setText(Integer.toString(config.networkPrefixLength));
+                    mNetworkPrefixLengthView.setText(NetApi.getMaskLen(config.networkPrefixLength));
                 }
 
                 if (config.gateway != null) {
@@ -527,7 +530,7 @@ public class EthernetConfigController implements TextWatcher,
                             String strIp = arrInfo[0].replace("ipv4.addresses:", "");
                             String[] arrIp = strIp.split("/");
                             mIpAddressView.setText(arrIp[0]);
-                            mNetworkPrefixLengthView.setText(arrIp[1]);
+                            mNetworkPrefixLengthView.setText(NetApi.getMaskLen(StringUtils.ToInt(arrIp[1])));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -581,7 +584,7 @@ public class EthernetConfigController implements TextWatcher,
                             mGatewayView.setText(arrInfo[2]);
                             String[] arrIp = arrInfo[1].split("/");
                             mIpAddressView.setText(arrIp[0]);
-                            mNetworkPrefixLengthView.setText(arrIp[1]);
+                            mNetworkPrefixLengthView.setText(NetApi.getMaskLen(StringUtils.ToInt(arrIp[1])));
 
                             mDns1View.setText(arrInfo[3].trim());
                             mDns2View.setText("");

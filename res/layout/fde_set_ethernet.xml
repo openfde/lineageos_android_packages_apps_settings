@@ -124,15 +124,15 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             style="@style/ethernet_item_label"
-                            android:text="@string/wifi_network_prefix_length" />
+                            android:text="@string/fde_net_mask" />
 
                     <EditText android:id="@+id/network_prefix_length"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             style="@style/wifi_item_edit_bg"
                             android:singleLine="true"
-                            android:hint="@string/wifi_network_prefix_length_hint"
-                            android:inputType="number" />
+                            android:hint="@string/fde_net_input_mask"
+                            android:inputType="textNoSuggestions" />
                 </LinearLayout>
                 <LinearLayout
                         android:layout_width="match_parent"

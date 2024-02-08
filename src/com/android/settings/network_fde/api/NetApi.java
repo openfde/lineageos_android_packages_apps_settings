@@ -17,7 +17,14 @@
 package com.android.settings.network_fde.api;
 
 import lineageos.waydroid.Net;
+
+import com.android.settings.utils.LogTools;
+
 import android.content.Context;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class NetApi {
 
@@ -182,6 +189,63 @@ public class NetApi {
         Net net = Net.getInstance(context);
         String info = net.getLanAndWlanIpConfigurations();
         return info;
+    }
+
+    /**
+     * mask string change length
+     * 
+     * @param strMask
+     * @return
+     */
+    public static int getMask(String strMask) {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(strMask);
+            byte[] subnetMaskBytes = inetAddress.getAddress();
+
+            int maskLength = 0;
+            for (byte b : subnetMaskBytes) {
+                for (int i = 7; i >= 0; i--) {
+                    if ((b & (1 << i)) != 0) {
+                        maskLength++;
+                    }
+                }
+            }
+            return maskLength;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * mash length change string
+     * 
+     * @param maskLength
+     * @return
+     */
+    public static String getMaskLen(int maskLength) {
+        try {
+            int bytes = maskLength / 8;
+            int remainingBits = maskLength % 8;
+
+            byte[] subnetMaskBytes = new byte[4];
+
+            for (int i = 0; i < bytes; i++) {
+                subnetMaskBytes[i] = (byte) 0xFF;
+            }
+
+            if (remainingBits > 0) {
+                subnetMaskBytes[bytes] = (byte) (0xFF << (8 - remainingBits));
+            }
+
+            InetAddress inetAddress = InetAddress.getByAddress(subnetMaskBytes);
+            String subnetMask = inetAddress.getHostAddress();
+
+            return subnetMask;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }
