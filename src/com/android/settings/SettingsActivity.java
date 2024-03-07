@@ -72,7 +72,6 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SettingsActivity extends SettingsBaseActivity
         implements PreferenceManager.OnPreferenceTreeClickListener,
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
@@ -86,8 +85,10 @@ public class SettingsActivity extends SettingsBaseActivity
     /**
      * When starting this activity, the invoking Intent can contain this extra
      * string to specify which fragment should be initially displayed.
-     * <p/>Starting from Key Lime Pie, when this argument is passed in, the activity
-     * will call isValidFragment() to confirm that the fragment class name is valid for this
+     * <p/>
+     * Starting from Key Lime Pie, when this argument is passed in, the activity
+     * will call isValidFragment() to confirm that the fragment class name is valid
+     * for this
      * activity.
      */
     public static final String EXTRA_SHOW_FRAGMENT = ":settings:show_fragment";
@@ -114,38 +115,37 @@ public class SettingsActivity extends SettingsBaseActivity
     // add a Skip button?
     private static final String EXTRA_PREFS_SHOW_SKIP = "extra_prefs_show_skip";
 
-    // specify custom text for the Back or Next buttons, or cause a button to not appear
+    // specify custom text for the Back or Next buttons, or cause a button to not
+    // appear
     // at all by setting it to null
     protected static final String EXTRA_PREFS_SET_NEXT_TEXT = "extra_prefs_set_next_text";
     protected static final String EXTRA_PREFS_SET_BACK_TEXT = "extra_prefs_set_back_text";
 
     /**
      * When starting this activity and using {@link #EXTRA_SHOW_FRAGMENT},
-     * those extra can also be specify to supply the title or title res id to be shown for
+     * those extra can also be specify to supply the title or title res id to be
+     * shown for
      * that fragment.
      */
     public static final String EXTRA_SHOW_FRAGMENT_TITLE = ":settings:show_fragment_title";
     /**
      * The package name used to resolve the title resource id.
      */
-    public static final String EXTRA_SHOW_FRAGMENT_TITLE_RES_PACKAGE_NAME =
-            ":settings:show_fragment_title_res_package_name";
-    public static final String EXTRA_SHOW_FRAGMENT_TITLE_RESID =
-            ":settings:show_fragment_title_resid";
+    public static final String EXTRA_SHOW_FRAGMENT_TITLE_RES_PACKAGE_NAME = ":settings:show_fragment_title_res_package_name";
+    public static final String EXTRA_SHOW_FRAGMENT_TITLE_RESID = ":settings:show_fragment_title_resid";
 
-    public static final String EXTRA_SHOW_FRAGMENT_AS_SUBSETTING =
-            ":settings:show_fragment_as_subsetting";
+    public static final String EXTRA_SHOW_FRAGMENT_AS_SUBSETTING = ":settings:show_fragment_as_subsetting";
 
     /**
      * Personal or Work profile tab of {@link ProfileSelectFragment}
-     * <p>0: Personal tab.
-     * <p>1: Work profile tab.
+     * <p>
+     * 0: Personal tab.
+     * <p>
+     * 1: Work profile tab.
      */
-    public static final String EXTRA_SHOW_FRAGMENT_TAB =
-            ":settings:show_fragment_tab";
+    public static final String EXTRA_SHOW_FRAGMENT_TAB = ":settings:show_fragment_tab";
 
-    public static final String META_DATA_KEY_FRAGMENT_CLASS =
-            "com.android.settings.FRAGMENT_CLASS";
+    public static final String META_DATA_KEY_FRAGMENT_CLASS = "com.android.settings.FRAGMENT_CLASS";
 
     private static final String EXTRA_UI_OPTIONS = "settings:ui_options";
 
@@ -254,9 +254,11 @@ public class SettingsActivity extends SettingsBaseActivity
         final boolean isSubSettings = this instanceof SubSettings ||
                 intent.getBooleanExtra(EXTRA_SHOW_FRAGMENT_AS_SUBSETTING, false);
 
-        // If this is a sub settings, then apply the SubSettings Theme for the ActionBar content
+        // If this is a sub settings, then apply the SubSettings Theme for the ActionBar
+        // content
         // insets.
-        // If this is in setup flow, don't apply theme. Because light theme needs to be applied
+        // If this is in setup flow, don't apply theme. Because light theme needs to be
+        // applied
         // in SettingsBaseActivity#onCreate().
         if (isSubSettings && !WizardManagerHelper.isAnySetupWizard(getIntent())) {
             setTheme(R.style.Theme_SubSettings);
@@ -267,12 +269,12 @@ public class SettingsActivity extends SettingsBaseActivity
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         if (savedState != null) {
-            // We are restarting from a previous saved state; used that to initialize, instead
+            // We are restarting from a previous saved state; used that to initialize,
+            // instead
             // of starting fresh.
             setTitleFromIntent(intent);
 
-            ArrayList<DashboardCategory> categories =
-                    savedState.getParcelableArrayList(SAVE_KEY_CATEGORIES);
+            ArrayList<DashboardCategory> categories = savedState.getParcelableArrayList(SAVE_KEY_CATEGORIES);
             if (categories != null) {
                 mCategories.clear();
                 mCategories.addAll(categories);
@@ -430,8 +432,7 @@ public class SettingsActivity extends SettingsBaseActivity
             return;
         }
 
-        FragmentManager.BackStackEntry bse = getSupportFragmentManager().
-                getBackStackEntryAt(count - 1);
+        FragmentManager.BackStackEntry bse = getSupportFragmentManager().getBackStackEntryAt(count - 1);
         setTitleFromBackStackEntry(bse);
     }
 
@@ -455,7 +456,8 @@ public class SettingsActivity extends SettingsBaseActivity
     }
 
     /**
-     * For testing purposes to avoid crashes from final variables in Activity's onSaveInstantState.
+     * For testing purposes to avoid crashes from final variables in Activity's
+     * onSaveInstantState.
      */
     @VisibleForTesting
     void saveState(Bundle outState) {
@@ -500,7 +502,8 @@ public class SettingsActivity extends SettingsBaseActivity
         // Almost all fragments are wrapped in this,
         // except for a few that have their own activities.
         for (int i = 0; i < SettingsGateway.ENTRY_FRAGMENTS.length; i++) {
-            if (SettingsGateway.ENTRY_FRAGMENTS[i].equals(fragmentName)) return true;
+            if (SettingsGateway.ENTRY_FRAGMENTS[i].equals(fragmentName))
+                return true;
         }
         return false;
     }
@@ -528,14 +531,17 @@ public class SettingsActivity extends SettingsBaseActivity
     }
 
     /**
-     * Checks if the component name in the intent is different from the Settings class and
+     * Checks if the component name in the intent is different from the Settings
+     * class and
      * returns the class name to load as a fragment.
      */
     private String getStartingFragmentClass(Intent intent) {
-        if (mFragmentClass != null) return mFragmentClass;
+        if (mFragmentClass != null)
+            return mFragmentClass;
 
         String intentClass = intent.getComponent().getClassName();
-        if (intentClass.equals(getClass().getName())) return null;
+        if (intentClass.equals(getClass().getName()))
+            return null;
 
         if ("com.android.settings.RunningServices".equals(intentClass)
                 || "com.android.settings.applications.StorageUse".equals(intentClass)) {
@@ -565,7 +571,8 @@ public class SettingsActivity extends SettingsBaseActivity
     }
 
     /**
-     * Switch to a specific Fragment with taking care of validation, Title and BackStack
+     * Switch to a specific Fragment with taking care of validation, Title and
+     * BackStack
      */
     private Fragment switchToFragment(String fragmentName, Bundle args, boolean validate,
             int titleResId, CharSequence title) {
@@ -607,11 +614,12 @@ public class SettingsActivity extends SettingsBaseActivity
                 pm.hasSystemFeature(PackageManager.FEATURE_WIFI), isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.BluetoothSettingsActivity.class.getName()),
+                Settings.BluetoothSettingsActivity.class.getName()),
                 pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH), isAdmin)
                 || somethingChanged;
 
-        // Enable DataUsageSummaryActivity if the data plan feature flag is turned on otherwise
+        // Enable DataUsageSummaryActivity if the data plan feature flag is turned on
+        // otherwise
         // enable DataPlanUsageSummaryActivity.
         somethingChanged = setTileEnabled(changedList,
                 new ComponentName(packageName, Settings.DataUsageSummaryActivity.class.getName()),
@@ -625,46 +633,48 @@ public class SettingsActivity extends SettingsBaseActivity
                 isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.SetWifiFromHostActivity.class.getName()),
+                Settings.SetWifiFromHostActivity.class.getName()),
                 mBatteryPresent, isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.SetNetworkFromHostActivity.class.getName()),
+                Settings.SetNetworkFromHostActivity.class.getName()),
                 mBatteryPresent, isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.SetEthernetFromHostActivity.class.getName()),
+                Settings.SetEthernetFromHostActivity.class.getName()),
                 mBatteryPresent, isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.PowerUsageSummaryActivity.class.getName()),
+                Settings.PowerUsageSummaryActivity.class.getName()),
                 mBatteryPresent, isAdmin) || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.DataUsageSummaryActivity.class.getName()),
+                Settings.DataUsageSummaryActivity.class.getName()),
                 Utils.isBandwidthControlEnabled(), isAdmin)
                 || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.UserSettingsActivity.class.getName()),
+                Settings.UserSettingsActivity.class.getName()),
                 UserHandle.MU_ENABLED && UserManager.supportsMultipleUsers()
-                        && !Utils.isMonkeyRunning(), isAdmin)
+                        && !Utils.isMonkeyRunning(),
+                isAdmin)
                 || somethingChanged;
 
         final boolean showDev = DevelopmentSettingsEnabler.isDevelopmentSettingsEnabled(this)
                 && !Utils.isMonkeyRunning();
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.DevelopmentSettingsDashboardActivity.class.getName()),
+                Settings.DevelopmentSettingsDashboardActivity.class.getName()),
                 showDev, isAdmin)
                 || somethingChanged;
 
         somethingChanged = setTileEnabled(changedList, new ComponentName(packageName,
-                        Settings.WifiDisplaySettingsActivity.class.getName()),
+                Settings.WifiDisplaySettingsActivity.class.getName()),
                 WifiDisplaySettings.isAvailable(this), isAdmin)
                 || somethingChanged;
 
         if (UserHandle.MU_ENABLED && !isAdmin) {
-            // When on restricted users, disable all extra categories (but only the settings ones).
+            // When on restricted users, disable all extra categories (but only the settings
+            // ones).
             final List<DashboardCategory> categories = mDashboardFeatureProvider.getAllCategories();
             synchronized (categories) {
                 for (DashboardCategory category : categories) {
@@ -677,9 +687,8 @@ public class SettingsActivity extends SettingsBaseActivity
                                 SettingsGateway.SETTINGS_FOR_RESTRICTED, name);
                         if (packageName.equals(component.getPackageName())
                                 && !isEnabledForRestricted) {
-                            somethingChanged =
-                                    setTileEnabled(changedList, component, false, isAdmin)
-                                            || somethingChanged;
+                            somethingChanged = setTileEnabled(changedList, component, false, isAdmin)
+                                    || somethingChanged;
                         }
                     }
                 }
@@ -703,7 +712,7 @@ public class SettingsActivity extends SettingsBaseActivity
             boolean enabled, boolean isAdmin) {
         if (UserHandle.MU_ENABLED && !isAdmin && getPackageName().equals(component.getPackageName())
                 && !ArrayUtils.contains(SettingsGateway.SETTINGS_FOR_RESTRICTED,
-                component.getClassName())) {
+                        component.getClassName())) {
             enabled = false;
         }
         boolean changed = setTileEnabled(component, enabled);
@@ -717,7 +726,8 @@ public class SettingsActivity extends SettingsBaseActivity
         try {
             ActivityInfo ai = getPackageManager().getActivityInfo(getComponentName(),
                     PackageManager.GET_META_DATA);
-            if (ai == null || ai.metaData == null) return;
+            if (ai == null || ai.metaData == null)
+                return;
             mFragmentClass = ai.metaData.getString(META_DATA_KEY_FRAGMENT_CLASS);
         } catch (NameNotFoundException nnfe) {
             // No recovery

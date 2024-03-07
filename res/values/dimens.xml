@@ -430,4 +430,12 @@
 
     <!-- Text padding for EmptyTextSettings -->
     <dimen name="empty_text_padding">24dp</dimen>
+    <dimen name="all_apps_item_height">48dp</dimen>
+    <dimen name="settings_item_height">60dp</dimen>
+
+    <dimen name="fde_medium_text">16sp</dimen>
+    <dimen name="fde_min_text">12sp</dimen>
+    <dimen name="fde_max_text">20sp</dimen>
+    <dimen name="fde_large_text">18sp</dimen>
+    <dimen name="fde_light_text">14sp</dimen>
 </resources>

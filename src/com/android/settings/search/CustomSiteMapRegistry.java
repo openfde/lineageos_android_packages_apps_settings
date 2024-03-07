@@ -31,6 +31,7 @@ import com.android.settings.location.RecentLocationRequestSeeAllFragment;
 import com.android.settings.network.NetworkDashboardFragment;
 import com.android.settings.network_fde.SetWifiFromHostFragment;
 import com.android.settings.network_fde.SetNetworkFromHostFragment;
+import com.android.settings.compatible.SetCompatibleFragment;
 import com.android.settings.network_fde.SetEthernetFromHostFragment;
 import com.android.settings.notification.zen.ZenModeBlockedEffectsSettings;
 import com.android.settings.notification.zen.ZenModeRestrictNotificationsSettings;
@@ -47,34 +48,36 @@ import java.util.Map;
  */
 public class CustomSiteMapRegistry {
 
-    /**
-     * Map from child class to parent class.
-     */
-    public static final Map<String, String> CUSTOM_SITE_MAP;
+        /**
+         * Map from child class to parent class.
+         */
+        public static final Map<String, String> CUSTOM_SITE_MAP;
 
-    static {
-        CUSTOM_SITE_MAP = new ArrayMap<>();
-        CUSTOM_SITE_MAP.put(ScreenLockSettings.class.getName(), SecuritySettings.class.getName());
-        CUSTOM_SITE_MAP.put(
-                WallpaperSuggestionActivity.class.getName(), DisplaySettings.class.getName());
-        CUSTOM_SITE_MAP.put(
-                WifiSettings2.class.getName(), NetworkDashboardFragment.class.getName());
-        CUSTOM_SITE_MAP.put(
-                WifiSettings2.class.getName(), SetWifiFromHostFragment.class.getName());
-        CUSTOM_SITE_MAP.put(
-                WifiSettings2.class.getName(), SetNetworkFromHostFragment.class.getName());
-        CUSTOM_SITE_MAP.put(
-                WifiSettings2.class.getName(), SetEthernetFromHostFragment.class.getName());   
-        CUSTOM_SITE_MAP.put(PowerUsageAdvanced.class.getName(), PowerUsageSummary.class.getName());
-        CUSTOM_SITE_MAP.put(RecentLocationRequestSeeAllFragment.class.getName(),
-                LocationSettings.class.getName());
-        CUSTOM_SITE_MAP.put(UsbDetailsFragment.class.getName(),
-                ConnectedDeviceDashboardFragment.class.getName());
-        CUSTOM_SITE_MAP.put(UserBackupSettingsActivity.class.getName(),
-                SystemDashboardFragment.class.getName());
-        CUSTOM_SITE_MAP.put(ZenModeBlockedEffectsSettings.class.getName(),
-                ZenModeRestrictNotificationsSettings.class.getName());
-        CUSTOM_SITE_MAP.put(GestureNavigationSettingsFragment.class.getName(),
-                SystemNavigationGestureSettings.class.getName());
-    }
+        static {
+                CUSTOM_SITE_MAP = new ArrayMap<>();
+                CUSTOM_SITE_MAP.put(ScreenLockSettings.class.getName(), SecuritySettings.class.getName());
+                CUSTOM_SITE_MAP.put(
+                                WallpaperSuggestionActivity.class.getName(), DisplaySettings.class.getName());
+                CUSTOM_SITE_MAP.put(
+                                WifiSettings2.class.getName(), NetworkDashboardFragment.class.getName());
+                CUSTOM_SITE_MAP.put(
+                                WifiSettings2.class.getName(), SetWifiFromHostFragment.class.getName());
+                CUSTOM_SITE_MAP.put(
+                                WifiSettings2.class.getName(), SetNetworkFromHostFragment.class.getName());
+                // CUSTOM_SITE_MAP.put(
+                // WifiSettings2.class.getName(), SetCompatibleFragment.class.getName());
+                CUSTOM_SITE_MAP.put(
+                                WifiSettings2.class.getName(), SetEthernetFromHostFragment.class.getName());
+                CUSTOM_SITE_MAP.put(PowerUsageAdvanced.class.getName(), PowerUsageSummary.class.getName());
+                CUSTOM_SITE_MAP.put(RecentLocationRequestSeeAllFragment.class.getName(),
+                                LocationSettings.class.getName());
+                CUSTOM_SITE_MAP.put(UsbDetailsFragment.class.getName(),
+                                ConnectedDeviceDashboardFragment.class.getName());
+                CUSTOM_SITE_MAP.put(UserBackupSettingsActivity.class.getName(),
+                                SystemDashboardFragment.class.getName());
+                CUSTOM_SITE_MAP.put(ZenModeBlockedEffectsSettings.class.getName(),
+                                ZenModeRestrictNotificationsSettings.class.getName());
+                CUSTOM_SITE_MAP.put(GestureNavigationSettingsFragment.class.getName(),
+                                SystemNavigationGestureSettings.class.getName());
+        }
 }

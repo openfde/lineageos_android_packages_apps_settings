@@ -96,6 +96,7 @@
     <color name="homepage_support_background">#26459C</color>
     <color name="homepage_generic_icon_background">#1A73E8</color>
     <color name="homepage_location_background">#2EC7DC</color>
+    <color name="homepage_compatible_background">#3D9140</color>
     <color name="homepage_about_background">#6F86DA</color>
     <color name="homepage_privacy_background">#5E97F6</color>
 
@@ -174,5 +175,7 @@
     <color name="app_black_light">#333333</color>
     <color name="app_gray_dark">#666666</color>
     <color name="app_blue_light">#008ED2</color>
-   <color name="app_gray">#999999</color>
+    <color name="app_gray">#999999</color>
+    <color name="blue"> #1E88E5 </color>
+    <color name="main_bg"> #f2f2f2 </color>
 </resources>

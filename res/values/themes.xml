@@ -261,4 +261,9 @@
     <style name="Theme.TabTheme" parent="@style/Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@*android:color/edge_effect_device_default_light</item>
     </style>
+
+    <style name="noTitleTheme" parent="Theme.Settings.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
