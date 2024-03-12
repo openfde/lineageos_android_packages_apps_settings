@@ -183,10 +183,10 @@ public class SetEthernetFromHostFragment extends InstrumentedFragment implements
         @Override
         protected void onPostExecute(Exception e) {
             if (e == null) {
-                Toast.makeText(mContext, "net set success!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "net set success.", Toast.LENGTH_SHORT).show();
             } else {
                 android.util.Log.e("MYLOG", "Failed to set: " + mConfig, e);
-                Toast.makeText(mContext, "net set fail!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "net set fail.", Toast.LENGTH_SHORT).show();
             }
         }
     }
