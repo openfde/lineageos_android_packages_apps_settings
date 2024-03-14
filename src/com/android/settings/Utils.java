@@ -139,8 +139,7 @@ public final class Utils extends com.android.settingslib.Utils {
     /**
      * Whether to disable the new device identifier access restrictions.
      */
-    public static final String PROPERTY_DEVICE_IDENTIFIER_ACCESS_RESTRICTIONS_DISABLED =
-            "device_identifier_access_restrictions_disabled";
+    public static final String PROPERTY_DEVICE_IDENTIFIER_ACCESS_RESTRICTIONS_DISABLED = "device_identifier_access_restrictions_disabled";
 
     /**
      * Whether to show the Permissions Hub.
@@ -151,14 +150,14 @@ public final class Utils extends com.android.settingslib.Utils {
      * Finds a matching activity for a preference's intent. If a matching
      * activity is not found, it will remove the preference.
      *
-     * @param context The context.
+     * @param context               The context.
      * @param parentPreferenceGroup The preference group that contains the
-     *            preference whose intent is being resolved.
-     * @param preferenceKey The key of the preference whose intent is being
-     *            resolved.
-     * @param flags 0 or one or more of
-     *            {@link #UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY}
-     *            .
+     *                              preference whose intent is being resolved.
+     * @param preferenceKey         The key of the preference whose intent is being
+     *                              resolved.
+     * @param flags                 0 or one or more of
+     *                              {@link #UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY}
+     *                              .
      * @return Whether an activity was found. If false, the preference was
      *         removed.
      */
@@ -178,8 +177,7 @@ public final class Utils extends com.android.settingslib.Utils {
             final int listSize = list.size();
             for (int i = 0; i < listSize; i++) {
                 final ResolveInfo resolveInfo = list.get(i);
-                if ((resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)
-                        != 0) {
+                if ((resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
 
                     // Replace the intent with this specific activity
                     preference.setIntent(new Intent().setClassName(
@@ -213,13 +211,14 @@ public final class Utils extends com.android.settingslib.Utils {
      * Returns whether the device is voice-capable (meaning, it is also a phone).
      */
     public static boolean isVoiceCapable(Context context) {
-        final TelephonyManager telephony =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        final TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephony != null && telephony.isVoiceCapable();
     }
 
     /**
-     * Returns the WIFI IP Addresses, if any, taking into account IPv4 and IPv6 style addresses.
+     * Returns the WIFI IP Addresses, if any, taking into account IPv4 and IPv6
+     * style addresses.
+     * 
      * @param context the application context
      * @return the formatted and newline-separated IP addresses, or null if none.
      */
@@ -227,8 +226,7 @@ public final class Utils extends com.android.settingslib.Utils {
         final WifiManager wifiManager = context.getSystemService(WifiManager.class);
         final Network currentNetwork = wifiManager.getCurrentNetwork();
         if (currentNetwork != null) {
-            final ConnectivityManager cm = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             final LinkProperties prop = cm.getLinkProperties(currentNetwork);
             return formatIpAddresses(prop);
         }
@@ -236,15 +234,18 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     private static String formatIpAddresses(LinkProperties prop) {
-        if (prop == null) return null;
+        if (prop == null)
+            return null;
         final Iterator<InetAddress> iter = prop.getAllAddresses().iterator();
         // If there are no entries, return null
-        if (!iter.hasNext()) return null;
+        if (!iter.hasNext())
+            return null;
         // Concatenate all available addresses, comma separated
         String addresses = "";
         while (iter.hasNext()) {
             addresses += iter.next().getHostAddress();
-            if (iter.hasNext()) addresses += "\n";
+            if (iter.hasNext())
+                addresses += "\n";
         }
         return addresses;
     }
@@ -337,11 +338,12 @@ public final class Utils extends com.android.settingslib.Utils {
         final long localRowProfileId;
         final Cursor localRawProfile = cr.query(
                 Profile.CONTENT_RAW_CONTACTS_URI,
-                new String[] {RawContacts._ID},
+                new String[] { RawContacts._ID },
                 RawContacts.ACCOUNT_TYPE + " IS NULL AND " +
                         RawContacts.ACCOUNT_NAME + " IS NULL",
                 null, null);
-        if (localRawProfile == null) return null;
+        if (localRawProfile == null)
+            return null;
 
         try {
             if (!localRawProfile.moveToFirst()) {
@@ -355,11 +357,12 @@ public final class Utils extends com.android.settingslib.Utils {
         // Find the structured name for the raw contact.
         final Cursor structuredName = cr.query(
                 Profile.CONTENT_URI.buildUpon().appendPath(Contacts.Data.CONTENT_DIRECTORY).build(),
-                new String[] {CommonDataKinds.StructuredName.GIVEN_NAME,
-                    CommonDataKinds.StructuredName.FAMILY_NAME},
+                new String[] { CommonDataKinds.StructuredName.GIVEN_NAME,
+                        CommonDataKinds.StructuredName.FAMILY_NAME },
                 Data.RAW_CONTACT_ID + "=" + localRowProfileId,
                 null, null);
-        if (structuredName == null) return null;
+        if (structuredName == null)
+            return null;
 
         try {
             if (!structuredName.moveToFirst()) {
@@ -378,8 +381,9 @@ public final class Utils extends com.android.settingslib.Utils {
     private static final String getProfileDisplayName(Context context) {
         final ContentResolver cr = context.getContentResolver();
         final Cursor profile = cr.query(Profile.CONTENT_URI,
-                new String[] {Profile.DISPLAY_NAME}, null, null, null);
-        if (profile == null) return null;
+                new String[] { Profile.DISPLAY_NAME }, null, null, null);
+        if (profile == null)
+            return null;
 
         try {
             if (!profile.moveToFirst()) {
@@ -397,7 +401,8 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Returns the managed profile of the current user or {@code null} if none is found or a profile
+     * Returns the managed profile of the current user or {@code null} if none is
+     * found or a profile
      * exists but it is disabled.
      */
     public static UserHandle getManagedProfile(UserManager userManager) {
@@ -415,14 +420,19 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Returns the managed profile of the current user or {@code null} if none is found. Unlike
-     * {@link #getManagedProfile} this method returns enabled and disabled managed profiles.
+     * Returns the managed profile of the current user or {@code null} if none is
+     * found. Unlike
+     * {@link #getManagedProfile} this method returns enabled and disabled managed
+     * profiles.
      */
     public static UserHandle getManagedProfileWithDisabled(UserManager userManager) {
         // TODO: Call getManagedProfileId from here once Robolectric supports
-        // API level 24 and UserManager.getProfileIdsWithDisabled can be Mocked (to avoid having
-        // yet another implementation that loops over user profiles in this method). In the meantime
-        // we need to use UserManager.getProfiles that is available on API 23 (the one currently
+        // API level 24 and UserManager.getProfileIdsWithDisabled can be Mocked (to
+        // avoid having
+        // yet another implementation that loops over user profiles in this method). In
+        // the meantime
+        // we need to use UserManager.getProfiles that is available on API 23 (the one
+        // currently
         // used for Settings Robolectric tests).
         final int myUserId = UserHandle.myUserId();
         final List<UserInfo> profiles = userManager.getProfiles(myUserId);
@@ -457,15 +467,19 @@ public final class Utils extends com.android.settingslib.Utils {
      * <p>
      * User would be retrieved in this order:
      * <ul>
-     * <li> If this activity is launched from other user, return that user id.
-     * <li> If this is launched from the Settings app in same user, return the user contained as an
-     *      extra in the arguments or intent extras.
-     * <li> Otherwise, return UserHandle.myUserId().
+     * <li>If this activity is launched from other user, return that user id.
+     * <li>If this is launched from the Settings app in same user, return the user
+     * contained as an
+     * extra in the arguments or intent extras.
+     * <li>Otherwise, return UserHandle.myUserId().
      * </ul>
      * <p>
-     * Note: This is secure in the sense that it only returns a target user different to the current
-     * one if the app launching this activity is the Settings app itself, running in the same user
-     * or in one that is in the same profile group, or if the user id is provided by the system.
+     * Note: This is secure in the sense that it only returns a target user
+     * different to the current
+     * one if the app launching this activity is the Settings app itself, running in
+     * the same user
+     * or in one that is in the same profile group, or if the user id is provided by
+     * the system.
      */
     public static UserHandle getSecureTargetUser(IBinder activityToken,
             UserManager um, @Nullable Bundle arguments, @Nullable Bundle intentExtras) {
@@ -473,8 +487,7 @@ public final class Utils extends com.android.settingslib.Utils {
         final IActivityManager am = ActivityManager.getService();
         try {
             final String launchedFromPackage = am.getLaunchedFromPackage(activityToken);
-            final boolean launchedFromSettingsApp =
-                    SETTINGS_PACKAGE_NAME.equals(launchedFromPackage);
+            final boolean launchedFromSettingsApp = SETTINGS_PACKAGE_NAME.equals(launchedFromPackage);
 
             final UserHandle launchedFromUser = new UserHandle(UserHandle.getUserId(
                     am.getLaunchedFromUid(activityToken)));
@@ -506,8 +519,10 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Lookup both {@link Intent#EXTRA_USER} and {@link Intent#EXTRA_USER_ID} in the bundle
-     * and return the {@link UserHandle} object. Return {@code null} if nothing is found.
+     * Lookup both {@link Intent#EXTRA_USER} and {@link Intent#EXTRA_USER_ID} in the
+     * bundle
+     * and return the {@link UserHandle} object. Return {@code null} if nothing is
+     * found.
      */
     private static @Nullable UserHandle getUserHandleFromBundle(Bundle bundle) {
         if (bundle == null) {
@@ -524,19 +539,23 @@ public final class Utils extends com.android.settingslib.Utils {
         return null;
     }
 
-   /**
-    * Returns true if the user provided is in the same profiles group as the current user.
-    */
-   private static boolean isProfileOf(UserManager um, UserHandle otherUser) {
-       if (um == null || otherUser == null) return false;
-       return (UserHandle.myUserId() == otherUser.getIdentifier())
-               || um.getUserProfiles().contains(otherUser);
-   }
+    /**
+     * Returns true if the user provided is in the same profiles group as the
+     * current user.
+     */
+    private static boolean isProfileOf(UserManager um, UserHandle otherUser) {
+        if (um == null || otherUser == null)
+            return false;
+        return (UserHandle.myUserId() == otherUser.getIdentifier())
+                || um.getUserProfiles().contains(otherUser);
+    }
 
     /**
-     * Queries for the UserInfo of a user. Returns null if the user doesn't exist (was removed).
+     * Queries for the UserInfo of a user. Returns null if the user doesn't exist
+     * (was removed).
+     * 
      * @param userManager Instance of UserManager
-     * @param checkUser The user to check the existence of.
+     * @param checkUser   The user to check the existence of.
      * @return UserInfo of the user or null for non-existent user.
      */
     public static UserInfo getExistingUser(UserManager userManager, UserHandle checkUser) {
@@ -561,8 +580,7 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     public static ArraySet<String> getHandledDomains(PackageManager pm, String packageName) {
-        final List<IntentFilterVerificationInfo> iviList =
-                pm.getIntentFilterVerifications(packageName);
+        final List<IntentFilterVerificationInfo> iviList = pm.getIntentFilterVerifications(packageName);
         final List<IntentFilter> filters = pm.getAllIntentFilters(packageName);
 
         final ArraySet<String> result = new ArraySet<>();
@@ -589,8 +607,7 @@ public final class Utils extends com.android.settingslib.Utils {
      * Returns the application info of the currently installed MDM package.
      */
     public static ApplicationInfo getAdminApplicationInfo(Context context, int profileId) {
-        final DevicePolicyManager dpm =
-                (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        final DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         final ComponentName mdmPackage = dpm.getProfileOwnerAsUser(profileId);
         if (mdmPackage == null) {
             return null;
@@ -598,8 +615,7 @@ public final class Utils extends com.android.settingslib.Utils {
         final String mdmPackageName = mdmPackage.getPackageName();
         try {
             final IPackageManager ipm = AppGlobals.getPackageManager();
-            final ApplicationInfo mdmApplicationInfo =
-                    ipm.getApplicationInfo(mdmPackageName, 0, profileId);
+            final ApplicationInfo mdmApplicationInfo = ipm.getApplicationInfo(mdmPackageName, 0, profileId);
             return mdmApplicationInfo;
         } catch (RemoteException e) {
             Log.e(TAG, "Error while retrieving application info for package " + mdmPackageName
@@ -620,7 +636,8 @@ public final class Utils extends com.android.settingslib.Utils {
 
     /**
      * Returns an accessible SpannableString.
-     * @param displayText the text to display
+     * 
+     * @param displayText     the text to display
      * @param accessibileText the text text-to-speech engines should read
      */
     public static SpannableString createAccessibleSequence(CharSequence displayText,
@@ -637,7 +654,7 @@ public final class Utils extends com.android.settingslib.Utils {
      * {@link Intent#EXTRA_USER_ID} if it belongs to the current user.
      *
      * @throws SecurityException if the given userId does not belong to the
-     *             current user group.
+     *                           current user group.
      */
     public static int getUserIdFromBundle(Context context, Bundle bundle) {
         return getUserIdFromBundle(context, bundle, false);
@@ -648,10 +665,10 @@ public final class Utils extends com.android.settingslib.Utils {
      * {@link Intent#EXTRA_USER_ID} if it belongs to the current user.
      *
      * @param isInternal indicating if the caller is "internal" to the system,
-     *            meaning we're willing to trust extras like
-     *            {@link ChooseLockSettingsHelper#EXTRA_ALLOW_ANY_USER}.
+     *                   meaning we're willing to trust extras like
+     *                   {@link ChooseLockSettingsHelper#EXTRA_ALLOW_ANY_USER}.
      * @throws SecurityException if the given userId does not belong to the
-     *             current user group.
+     *                           current user group.
      */
     public static int getUserIdFromBundle(Context context, Bundle bundle, boolean isInternal) {
         if (bundle == null) {
@@ -683,7 +700,8 @@ public final class Utils extends com.android.settingslib.Utils {
     /**
      * Returns the given user id if it belongs to the current user.
      *
-     * @throws SecurityException if the given userId does not belong to the current user group.
+     * @throws SecurityException if the given userId does not belong to the current
+     *                           user group.
      */
     public static int enforceSameOwner(Context context, int userId) {
         final UserManager um = context.getSystemService(UserManager.class);
@@ -775,7 +793,7 @@ public final class Utils extends com.android.settingslib.Utils {
             final ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
                     packageName,
                     PackageManager.MATCH_DISABLED_COMPONENTS
-                    | PackageManager.MATCH_ANY_USER);
+                            | PackageManager.MATCH_ANY_USER);
             return appInfo.loadLabel(context.getPackageManager());
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "Unable to find info for package: " + packageName);
@@ -794,7 +812,8 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Returns a context created from the given context for the given user, or null if it fails
+     * Returns a context created from the given context for the given user, or null
+     * if it fails
      */
     public static Context createPackageContextAsUser(Context context, int userId) {
         try {
@@ -834,8 +853,9 @@ public final class Utils extends com.android.settingslib.Utils {
 
     /**
      * Launches an intent which may optionally have a user id defined.
+     * 
      * @param fragment Fragment to use to launch the activity.
-     * @param intent Intent to launch.
+     * @param intent   Intent to launch.
      */
     public static void launchIntent(Fragment fragment, Intent intent) {
         try {
@@ -864,7 +884,8 @@ public final class Utils extends com.android.settingslib.Utils {
 
     /**
      * Returns if a given user is a profile of another user.
-     * @param user The user whose profiles wibe checked.
+     * 
+     * @param user    The user whose profiles wibe checked.
      * @param profile The (potential) profile.
      * @return if the profile is actually a profile
      */
@@ -875,7 +896,8 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Tries to initalize a volume with the given bundle. If it is a valid, private, and readable
+     * Tries to initalize a volume with the given bundle. If it is a valid, private,
+     * and readable
      * {@link VolumeInfo}, it is returned. If it is not valid, null is returned.
      */
     @Nullable
@@ -887,11 +909,13 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Return {@code true} if the supplied package is device owner or profile owner of at
+     * Return {@code true} if the supplied package is device owner or profile owner
+     * of at
      * least one user.
-     * @param userManager used to get profile owner app for each user
+     * 
+     * @param userManager         used to get profile owner app for each user
      * @param devicePolicyManager used to check whether it is device owner app
-     * @param packageName package to check about
+     * @param packageName         package to check about
      */
     public static boolean isProfileOrDeviceOwner(UserManager userManager,
             DevicePolicyManager devicePolicyManager, String packageName) {
@@ -910,10 +934,12 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Return {@code true} if the supplied package is the device owner or profile owner of a
+     * Return {@code true} if the supplied package is the device owner or profile
+     * owner of a
      * given user.
      *
-     * @param devicePolicyManager used to check whether it is device owner and profile owner app
+     * @param devicePolicyManager used to check whether it is device owner and
+     *                            profile owner app
      * @param packageName         package to check about
      * @param userId              the if of the relevant user
      */
@@ -951,7 +977,8 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Sets the preference icon with a drawable that is scaled down to to avoid crashing Settings if
+     * Sets the preference icon with a drawable that is scaled down to to avoid
+     * crashing Settings if
      * it's too big.
      */
     public static void setSafeIcon(Preference pref, Drawable icon) {
@@ -963,10 +990,11 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Gets a drawable with a limited size to avoid crashing Settings if it's too big.
+     * Gets a drawable with a limited size to avoid crashing Settings if it's too
+     * big.
      *
-     * @param original original drawable, typically an app icon.
-     * @param maxWidth maximum width, in pixels.
+     * @param original  original drawable, typically an app icon.
+     * @param maxWidth  maximum width, in pixels.
      * @param maxHeight maximum height, in pixels.
      */
     public static Drawable getSafeDrawable(Drawable original, int maxWidth, int maxHeight) {
@@ -999,7 +1027,7 @@ public final class Utils extends com.android.settingslib.Utils {
     public static IconCompat createIconWithDrawable(Drawable drawable) {
         Bitmap bitmap;
         if (drawable instanceof BitmapDrawable) {
-            bitmap = ((BitmapDrawable)drawable).getBitmap();
+            bitmap = ((BitmapDrawable) drawable).getBitmap();
         } else {
             final int width = drawable.getIntrinsicWidth();
             final int height = drawable.getIntrinsicHeight();
@@ -1097,10 +1125,12 @@ public final class Utils extends com.android.settingslib.Utils {
      */
     public static Fragment getTargetFragment(Activity activity, String fragmentName, Bundle args) {
         Fragment f = null;
-        final boolean isPersonal = args != null ? args.getInt(ProfileSelectFragment.EXTRA_PROFILE)
-                == ProfileSelectFragment.ProfileType.PERSONAL : false;
-        final boolean isWork = args != null ? args.getInt(ProfileSelectFragment.EXTRA_PROFILE)
-                == ProfileSelectFragment.ProfileType.WORK : false;
+        final boolean isPersonal = args != null
+                ? args.getInt(ProfileSelectFragment.EXTRA_PROFILE) == ProfileSelectFragment.ProfileType.PERSONAL
+                : false;
+        final boolean isWork = args != null
+                ? args.getInt(ProfileSelectFragment.EXTRA_PROFILE) == ProfileSelectFragment.ProfileType.WORK
+                : false;
         if (activity.getSystemService(UserManager.class).getUserProfiles().size() > 1
                 && ProfileFragmentBridge.FRAGMENT_MAP.get(fragmentName) != null
                 && !isWork && !isPersonal) {
@@ -1127,24 +1157,23 @@ public final class Utils extends com.android.settingslib.Utils {
      * Returns true if the night mode is enabled.
      */
     public static boolean isNightMode(Context context) {
-        final int currentNightMode =
-                context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        final int currentNightMode = context.getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     /**
      * Returns a bitmap with rounded corner.
      *
-     * @param context application context.
-     * @param source bitmap to apply round corner.
+     * @param context      application context.
+     * @param source       bitmap to apply round corner.
      * @param cornerRadius corner radius value.
      */
     public static Bitmap convertCornerRadiusBitmap(@NonNull Context context,
             @NonNull Bitmap source, @NonNull float cornerRadius) {
         final Bitmap roundedBitmap = Bitmap.createBitmap(source.getWidth(), source.getHeight(),
                 Bitmap.Config.ARGB_8888);
-        final RoundedBitmapDrawable drawable =
-                RoundedBitmapDrawableFactory.create(context.getResources(), source);
+        final RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(context.getResources(), source);
         drawable.setAntiAlias(true);
         drawable.setCornerRadius(cornerRadius);
         final Canvas canvas = new Canvas(roundedBitmap);
@@ -1154,7 +1183,8 @@ public final class Utils extends com.android.settingslib.Utils {
     }
 
     /**
-     * Returns {@code true} if needed to disable media output, otherwise returns {@code false}.
+     * Returns {@code true} if needed to disable media output, otherwise returns
+     * {@code false}.
      */
     public static boolean isMediaOutputDisabled(
             MediaRouter2Manager router2Manager, String packageName) {

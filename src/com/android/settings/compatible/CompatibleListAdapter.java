@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONObject;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,13 +53,32 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
 
         String keyCode = StringUtils.ToString(mp.get("KEY_CODE"));
         holder.txtKey.setText(keyCode);
-        holder.txtValue.setText(StringUtils.ToString(mp.get("KEY_DESC")));
+        holder.txtTitle.setText(StringUtils.ToString(mp.get("KEY_DESC")));
 
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
+        holder.txtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onItemClick(position, "");
+                LogTools.i("onClick rootView " + position + " ,mp " + mp.toString());
+                if (packageName == null || "".equals(packageName)) {
 
+                } else {
+                    onItemClickListener.onItemClick(position, "");
+                }
+            }
+        });
+
+        String noteStr = parseJson(StringUtils.ToString(mp.get("NOTES")));
+        holder.imgRemarks.setVisibility("".equals(noteStr) ? View.GONE : View.VISIBLE);
+        holder.imgRemarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // LogTools.i("onClick imgRemarks " + position + " ,packageName " +
+                // packageName);
+
+                TipDialog tipDialog = new TipDialog(context, noteStr);
+                if (!tipDialog.isShowing()) {
+                    tipDialog.show();
+                }
             }
         });
 
@@ -77,6 +98,23 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         }
     }
 
+    private String parseJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String enText = jsonObject.getString("en");
+            String chText = jsonObject.getString("ch");
+
+            if (CompUtils.isChineseLanguage(context)) {
+                return chText;
+            } else {
+                return enText;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -85,14 +123,16 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
     class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout rootView;
         TextView txtKey;
-        TextView txtValue;
+        TextView txtTitle;
         RecyclerView recyclerView;
+        ImageView imgRemarks;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtKey = itemView.findViewById(R.id.txtKey);
-            txtValue = itemView.findViewById(R.id.txtValue);
+            txtTitle = itemView.findViewById(R.id.txtTitle);
             rootView = itemView.findViewById(R.id.rootView);
+            imgRemarks = itemView.findViewById(R.id.imgRemarks);
             recyclerView = itemView.findViewById(R.id.recyclerView);
         }
     }

@@ -18,10 +18,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_marginHorizontal="8dp"
     android:id="@+id/rootView"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="#f2f2f2"
+    android:layout_marginTop="1dp"
     android:minHeight="@dimen/settings_item_height"
     android:layout_height="wrap_content">
 
@@ -29,22 +30,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:paddingHorizontal="8dp"
         android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/txtValue"
-            android:text=""
+        <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+           <TextView
+            android:id="@+id/txtTitle"
+            android:text=""
+            android:layout_width="wrap_content"
             android:textSize="@dimen/fde_medium_text"
             android:textColor="@color/app_black_light"
             android:layout_height="wrap_content"/>
 
+            <ImageView
+                android:id="@+id/imgRemarks"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="@dimen/compatible_padding"
+                android:src="@drawable/icon_remark"
+                />
+            
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/txtKey"
             android:text=""
+            android:visibility="gone"
             android:textColor="@color/blue"
             android:layout_weight="1"
             android:layout_width="0dp"

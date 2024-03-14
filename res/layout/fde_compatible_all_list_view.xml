@@ -20,14 +20,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#fff"
     android:orientation="vertical">
 
      <LinearLayout
         android:id="@+id/layoutAppName"  
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_item_height"
-        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="8dp"
         android:gravity="center"
+        android:background="#f2f2f2"
         android:orientation="horizontal">
 
 
@@ -60,7 +62,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:visibility="visible" />
 
     

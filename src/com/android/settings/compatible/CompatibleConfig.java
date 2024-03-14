@@ -217,12 +217,14 @@ public class CompatibleConfig {
                     String DEFAULT_VALUE = cursor.getString(cursor.getColumnIndex("DEFAULT_VALUE"));
                     String OPTION_JSON = cursor.getString(cursor.getColumnIndex("OPTION_JSON"));
                     String INPUT_TYPE = cursor.getString(cursor.getColumnIndex("INPUT_TYPE"));
+                    String NOTES = cursor.getString(cursor.getColumnIndex("NOTES"));
                     Map<String, Object> mp = new HashMap<>();
                     mp.put("_ID", _ID);
                     mp.put("DEFAULT_VALUE", DEFAULT_VALUE);
                     mp.put("OPTION_JSON", OPTION_JSON);
                     mp.put("KEY_CODE", KEY_CODE);
                     mp.put("KEY_DESC", KEY_DESC);
+                    mp.put("NOTES", NOTES);
                     mp.put("CREATE_DATE", CREATE_DATE);
                     mp.put("INPUT_TYPE", INPUT_TYPE);
                     list.add(mp);

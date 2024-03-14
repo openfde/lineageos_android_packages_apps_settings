@@ -13,7 +13,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
-     dialog_fde_add_wlan
+     dialog_fde_update_compatible
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"/>
 
 
-        <LinearLayout
+     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/wifi_item_ethernet" >
@@ -57,7 +57,7 @@
             android:hint="@string/fde_input_appname_hint"/>
 
 
-    </LinearLayout>
+     </LinearLayout>
 
 
 
@@ -68,12 +68,53 @@
         android:layout_height="wrap_content"/>
 
 
-      <EditText
-            android:id="@+id/editText"
-            android:textSize="@dimen/fde_medium_text"
-            android:hint="@string/fde_input_hint"
+     <LinearLayout
+            android:id="@+id/layoutEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/wifi_item_ethernet" >
+            
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/compatible_item_label"
+                android:textSize="@dimen/fde_medium_text"
+                android:text="@string/fde_data_value" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:completionHint=""
+            style="@style/compatible_item_edit_bg"
+            android:textSize="@dimen/fde_light_text"
+            android:hint="@string/fde_input_hint"/>
+
+
+     </LinearLayout>
+
+       <LinearLayout
+            android:id="@+id/layoutSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/wifi_item_ethernet" >
+            
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/compatible_item_label"
+                android:textSize="@dimen/fde_medium_text"
+                android:text="@string/fde_switch" />
+
+
+      <Switch
+                  android:id="@+id/switchComp"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"  />
+
+     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

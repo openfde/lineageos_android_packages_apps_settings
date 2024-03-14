@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,11 +57,14 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
     RecyclerView recyclerView;
     EditText editText;
     TextView txtTitleName;
+    LinearLayout layoutEditText;
+    LinearLayout layoutSwitch;
+    Switch switchComp;
     AutoCompleteTextView autoCompleteTextView;
 
     CompatibleSetAdapter compatibleSetAdapter;
     List<Compatible> list;
-    List<Map<String, Object>> appList;
+    List<AppData> appList;
     Map<String, Object> mp;
     String packageName;
     String appName;
@@ -103,6 +107,9 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
     }
 
     private void initView() {
+        layoutEditText = (LinearLayout) findViewById(R.id.layoutEditText);
+        layoutSwitch = (LinearLayout) findViewById(R.id.layoutSwitch);
+        switchComp = (Switch) findViewById(R.id.switchComp);
         editText = (EditText) findViewById(R.id.editText);
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         txtConfirm = (TextView) findViewById(R.id.txtConfirm);
@@ -117,14 +124,12 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
         txtTitleName.setText(keyDesc);
 
-        appList = getAllApps();
+        appList = CompUtils.getAllApps(context);
 
         String[] arrayApp = new String[appList.size()];
         for (int i = 0; i < appList.size(); i++) {
-            Map<String, Object> map = appList.get(i);
-            // 这里假设你需要获取名为 "key" 的值
-            String value = StringUtils.ToString(map.get("appName"));
-            arrayApp[i] = value;
+            AppData appData = appList.get(i);
+            arrayApp[i] = appData.getName();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line,
@@ -159,7 +164,8 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
         if (TYPE_SELECT.equals(inputType)) {
             recyclerView.setVisibility(View.VISIBLE);
-            editText.setVisibility(View.GONE);
+            layoutEditText.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.GONE);
 
             list = new ArrayList<>();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
@@ -170,8 +176,6 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
             List<Map<String, Object>> tempList = parseJson(optionJson);
             if (tempList != null) {
                 String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
-                // LogTools.i("result " + result);
-
                 for (int i = 0; i < tempList.size(); i++) {
                     Compatible compatible = new Compatible();
                     compatible.setId(i);
@@ -185,9 +189,18 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 }
             }
             compatibleSetAdapter.notifyDataSetChanged();
+        } else if (TYPE_SWITCH.equals(inputType)) {
+            recyclerView.setVisibility(View.GONE);
+            layoutEditText.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
+            String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
+            if (result != null) {
+                switchComp.setChecked(result.contains("true") ? true : false);
+            }
         } else {
             recyclerView.setVisibility(View.GONE);
-            editText.setVisibility(View.VISIBLE);
+            layoutEditText.setVisibility(View.VISIBLE);
+            layoutSwitch.setVisibility(View.GONE);
 
             String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
             if (result != null) {
@@ -202,6 +215,14 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
             }
         });
 
+        // holder.switchComp.setOnCheckedChangeListener(new
+        // CompoundButton.OnCheckedChangeListener() {
+        // @Override
+        // public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        // }
+        // });
+
         txtConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,6 +236,10 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                     Compatible compatible = list.get(position);
                     String content = StringUtils.ToString(compatible.getMp());
                     CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode, content);
+                } else if (TYPE_SWITCH.equals(inputType)) {
+                    boolean isChecked = switchComp.isChecked();
+                    CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode,
+                            String.valueOf(isChecked));
                 } else {
                     String content = editText.getText().toString();
                     if (!"".equals(content)) {
@@ -263,34 +288,11 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         return null;
     }
 
-    private List<Map<String, Object>> getAllApps() {
-        List<Map<String, Object>> list = new ArrayList<>();
-        try {
-            LauncherApps launcherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
-            UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
-            List<UserHandle> userHandles = userManager.getUserProfiles();
-            List<LauncherActivityInfo> activityInfoList = new ArrayList<>();
-            for (UserHandle userHandle : userHandles) {
-                activityInfoList.addAll(launcherApps.getActivityList(null, userHandle));
-            }
-
-            for (LauncherActivityInfo info : activityInfoList) {
-                Map<String, Object> mp = new HashMap<>();
-                mp.put("appName", StringUtils.ToString(info.getLabel()));
-                mp.put("packageName", StringUtils.ToString(info.getComponentName().getPackageName()));
-                list.add(mp);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
     private String getCurPackageName(String appName) {
         String packageName = "";
-        for (Map<String, Object> mp : appList) {
-            if (appName.equals(StringUtils.ToString(mp.get("appName")))) {
-                packageName = StringUtils.ToString(mp.get("packageName"));
+        for (AppData appData : appList) {
+            if (appName.equals(appData.getName())) {
+                packageName = appData.getPackageName();
                 break;
             }
         }

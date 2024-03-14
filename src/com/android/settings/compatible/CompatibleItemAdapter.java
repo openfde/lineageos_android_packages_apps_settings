@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,28 +42,53 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String packageName = StringUtils.ToString(list.get(position).get("PACKAGE_NAME"));
-        String valueStr = StringUtils.ToString(list.get(position).get("VALUE"));
-        String appName = StringUtils.ToString(list.get(position).get("FIELDS1"));
+        Map<String, Object> itemMap = list.get(position);
+        String packageName = StringUtils.ToString(itemMap.get("PACKAGE_NAME"));
+        String valueStr = StringUtils.ToString(itemMap.get("VALUE"));
         // LogTools.i("mp " + mp.toString() + " , valueStr: " + valueStr);
 
-        holder.txtValue.setText(appName);
+        AppData appData = CompUtils.getAppInfo(context, packageName);
+        if (appData != null) {
+            holder.txtAppName.setText(appData.getName());
+            holder.imgIcon.setImageDrawable(appData.getIcon());
+        }
+
+        String showText = valueStr + "";
         if (valueStr.contains("=")) {
             String[] keyValue = valueStr.substring(1, valueStr.length() - 1).split("=");
             if (keyValue.length == 2) {
-                holder.txtKey.setText(keyValue[1] + "");
+                showText = keyValue[1] + "";
             }
+        }
+
+        if ("switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
+            holder.layoutSwitch.setVisibility(View.VISIBLE);
+            holder.txtKey.setVisibility(View.GONE);
+            holder.switchComp.setChecked("true".equals(showText) ? true : false);
+
+            holder.switchComp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    CompatibleConfig.updateValueData(context, appData.getName(), packageName,
+                            StringUtils.ToString(itemMap.get("KEY_CODE")), String.valueOf(b));
+                }
+            });
         } else {
-            holder.txtKey.setText(valueStr + "");
+            holder.layoutSwitch.setVisibility(View.GONE);
+            holder.txtKey.setVisibility(View.VISIBLE);
+            holder.txtKey.setText(showText);
         }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName, appName,
-                        mp);
-                if (!updateComatibleDialog.isShowing()) {
-                    updateComatibleDialog.show();
+                if (!"switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
+                    UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName,
+                            appData.getName(),
+                            mp);
+                    if (!updateComatibleDialog.isShowing()) {
+                        updateComatibleDialog.show();
+                    }
                 }
             }
         });
@@ -73,13 +102,19 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
     class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout rootView;
         TextView txtKey;
-        TextView txtValue;
+        TextView txtAppName;
+        ImageView imgIcon;
+        LinearLayout layoutSwitch;
+        Switch switchComp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rootView = itemView.findViewById(R.id.rootView);
             txtKey = itemView.findViewById(R.id.txtKey);
-            txtValue = itemView.findViewById(R.id.txtValue);
+            txtAppName = itemView.findViewById(R.id.txtAppName);
+            imgIcon = itemView.findViewById(R.id.imgIcon);
+            layoutSwitch = itemView.findViewById(R.id.layoutSwitch);
+            switchComp = itemView.findViewById(R.id.switchComp);
         }
     }
 }

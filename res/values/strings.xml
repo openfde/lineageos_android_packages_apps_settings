@@ -12272,4 +12272,6 @@
     <string name="fde_input_hint">please input data</string>
     <string name="fde_input_appname_hint">please input App Name</string>
     <string name="fde_app_name_title">appName</string>
+    <string name="fde_data_value">value</string>
+    <string name="fde_switch">switch</string>
 </resources>
