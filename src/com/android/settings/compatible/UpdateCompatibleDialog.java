@@ -75,6 +75,8 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
     int position = -1;
 
+    OnRefreshListener onRefreshListener;
+
     public UpdateCompatibleDialog(@NonNull Context context, String packageName, String appName,
             Map<String, Object> mp) {
         super(context);
@@ -82,6 +84,16 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         this.packageName = packageName;
         this.appName = appName;
         this.mp = mp;
+    }
+
+    public UpdateCompatibleDialog(@NonNull Context context, String packageName, String appName,
+            Map<String, Object> mp, OnRefreshListener onRefreshListener) {
+        super(context);
+        this.context = context;
+        this.packageName = packageName;
+        this.appName = appName;
+        this.mp = mp;
+        this.onRefreshListener = onRefreshListener;
     }
 
     @Override
@@ -247,6 +259,9 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                     } else {
                         Toast.makeText(context, context.getString(R.string.fde_input_hint), Toast.LENGTH_SHORT).show();
                     }
+                }
+                if (onRefreshListener != null) {
+                    onRefreshListener.OnRefresh();
                 }
                 dismiss();
             }
