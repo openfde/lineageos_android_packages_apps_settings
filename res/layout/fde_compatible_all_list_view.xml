@@ -50,6 +50,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
+        <ImageView
+            android:id="@+id/imgClean"
+            android:layout_width="24dp"
+            android:src="@drawable/icon_clean"
+            android:layout_height="24dp"/>
+
     </LinearLayout>
 
      <View

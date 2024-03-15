@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.android.settings.R;
 import com.android.settings.utils.LogTools;
+import com.android.settings.utils.StringUtils;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,11 @@ import java.util.Map;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ImageView;
+
+import android.content.DialogInterface;
+import android.app.AlertDialog;
+import com.android.settings.R;
 
 public class SetCompatibleController implements OnItemClickListener {
     private Context context;
@@ -22,6 +27,7 @@ public class SetCompatibleController implements OnItemClickListener {
     private RecyclerView recyclerView;
     private LinearLayout layoutAppName;
     private TextView txtAppName;
+    private ImageView imgClean;
 
     List<Map<String, Object>> list;
     CompatibleListAdapter compatibleListAdapter;
@@ -41,6 +47,7 @@ public class SetCompatibleController implements OnItemClickListener {
     private void initView() {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         txtAppName = (TextView) view.findViewById(R.id.txtAppName);
+        imgClean = (ImageView) view.findViewById(R.id.imgClean);
         layoutAppName = (LinearLayout) view.findViewById(R.id.layoutAppName);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
@@ -55,6 +62,31 @@ public class SetCompatibleController implements OnItemClickListener {
             layoutAppName.setVisibility(View.VISIBLE);
             txtAppName.setText(appName);
         }
+
+        imgClean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.fde_tips))
+                        .setMessage(context.getString(R.string.fde_clean_tips))
+                        .setPositiveButton(context.getString(R.string.fde_btn_confirm),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        CompatibleConfig.deleteValueData(context, packageName);
+                                        getData();
+                                    }
+                                })
+                        .setNegativeButton(context.getString(R.string.fde_btn_cancel),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .show();
+            }
+        });
 
         getData();
     }
