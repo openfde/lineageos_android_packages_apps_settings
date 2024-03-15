@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import com.android.settings.R;
 import com.android.settings.core.InstrumentedFragment;
+import com.android.settings.core.SettingsBaseActivity;
 import com.android.settings.utils.LogTools;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
+import android.app.Activity;
 
 public class SetCompatibleFragment extends InstrumentedFragment {
 
@@ -30,6 +32,11 @@ public class SetCompatibleFragment extends InstrumentedFragment {
         String packageName = getIntent().getStringExtra("packageName");
         String appName = getIntent().getStringExtra("appName");
         setCompatibleController = new SetCompatibleController(getActivity(), packageName, appName, rootView);
+        final Activity activity = getActivity();
+        activity.setTitle(getString(R.string.fde_compatible_set));
+        if (activity instanceof SettingsBaseActivity) {
+            ((SettingsBaseActivity) activity).showTitle(false);
+        }
         return rootView;
     }
 

@@ -56,7 +56,8 @@ public class SettingsBaseActivity extends FragmentActivity {
     private static final String TAG = "SettingsBaseActivity";
     private static final String DATA_SCHEME_PKG = "package";
 
-    // Serves as a temporary list of tiles to ignore until we heard back from the PM that they
+    // Serves as a temporary list of tiles to ignore until we heard back from the PM
+    // that they
     // are disabled.
     private static ArraySet<ComponentName> sTileBlacklist = new ArraySet<>();
 
@@ -78,7 +79,8 @@ public class SettingsBaseActivity extends FragmentActivity {
         if (!theme.getBoolean(android.R.styleable.Theme_windowNoTitle, false)) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
-        // Apply SetupWizard light theme during setup flow. This is for SubSettings pages.
+        // Apply SetupWizard light theme during setup flow. This is for SubSettings
+        // pages.
         if (WizardManagerHelper.isAnySetupWizard(getIntent()) && this instanceof SubSettings) {
             setTheme(R.style.LightTheme_SubSettings_SetupWizard);
         }
@@ -95,6 +97,11 @@ public class SettingsBaseActivity extends FragmentActivity {
             Log.d(TAG, "onCreate took " + (System.currentTimeMillis() - startTime)
                     + " ms");
         }
+    }
+
+    public void showTitle(boolean isShow) {
+        final Toolbar toolbar = findViewById(R.id.action_bar);
+        toolbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -152,7 +159,8 @@ public class SettingsBaseActivity extends FragmentActivity {
     }
 
     /**
-     * @return whether or not the activity can be launched from other apps in the pinning screen.
+     * @return whether or not the activity can be launched from other apps in the
+     *         pinning screen.
      */
     public boolean isLaunchableInTaskModePinned() {
         return false;
@@ -166,14 +174,12 @@ public class SettingsBaseActivity extends FragmentActivity {
     }
 
     private boolean isLockTaskModePinned() {
-        final ActivityManager activityManager =
-                getApplicationContext().getSystemService(ActivityManager.class);
+        final ActivityManager activityManager = getApplicationContext().getSystemService(ActivityManager.class);
         return activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_PINNED;
     }
 
     private boolean isSettingsRunOnTop() {
-        final ActivityManager activityManager =
-                getApplicationContext().getSystemService(ActivityManager.class);
+        final ActivityManager activityManager = getApplicationContext().getSystemService(ActivityManager.class);
         final String taskPkgName = activityManager.getRunningTasks(1 /* maxNum */)
                 .get(0 /* index */).baseActivity.getPackageName();
         return TextUtils.equals(getPackageName(), taskPkgName);
@@ -193,8 +199,8 @@ public class SettingsBaseActivity extends FragmentActivity {
                 sTileBlacklist.add(component);
             }
             pm.setComponentEnabledSetting(component, enabled
-                            ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                            : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                    : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
             return true;
         }
@@ -202,16 +208,19 @@ public class SettingsBaseActivity extends FragmentActivity {
     }
 
     /**
-     * Updates dashboard categories. Only necessary to call this after setTileEnabled
+     * Updates dashboard categories. Only necessary to call this after
+     * setTileEnabled
      */
     public void updateCategories() {
         updateCategories(false /* fromBroadcast */);
     }
 
     private void updateCategories(boolean fromBroadcast) {
-        // Only allow at most 2 tasks existing at the same time since when the first one is
+        // Only allow at most 2 tasks existing at the same time since when the first one
+        // is
         // executing, there may be new data from the second update request.
-        // Ignore the third update request because the second task is still waiting for the first
+        // Ignore the third update request because the second task is still waiting for
+        // the first
         // task to complete in a serial thread, which will get the latest data.
         if (mCategoriesUpdateTaskCount < 2) {
             new CategoriesUpdateTask().execute(fromBroadcast);
@@ -220,8 +229,9 @@ public class SettingsBaseActivity extends FragmentActivity {
 
     public interface CategoryListener {
         /**
-         * @param categories the changed categories that have to be refreshed, or null to force
-         * refreshing all.
+         * @param categories the changed categories that have to be refreshed, or null
+         *                   to force
+         *                   refreshing all.
          */
         void onCategoriesChanged(@Nullable Set<String> categories);
     }
@@ -254,7 +264,8 @@ public class SettingsBaseActivity extends FragmentActivity {
             mCategoriesUpdateTaskCount--;
         }
 
-        // Return the changed categories that have to be refreshed, or null to force refreshing all.
+        // Return the changed categories that have to be refreshed, or null to force
+        // refreshing all.
         private Set<String> getChangedCategories(boolean fromBroadcast) {
             if (!fromBroadcast) {
                 // Always refresh for non-broadcast case.
@@ -262,8 +273,7 @@ public class SettingsBaseActivity extends FragmentActivity {
             }
 
             final Set<String> changedCategories = new ArraySet<>();
-            final Map<ComponentName, Tile> currentTileMap =
-                    mCategoryManager.getTileByComponentMap();
+            final Map<ComponentName, Tile> currentTileMap = mCategoryManager.getTileByComponentMap();
             currentTileMap.forEach((component, currentTile) -> {
                 final Tile previousTile = mPreviousTileMap.get(component);
                 // Check if the tile is newly added.
@@ -277,7 +287,7 @@ public class SettingsBaseActivity extends FragmentActivity {
                 if (!TextUtils.equals(currentTile.getTitle(mContext),
                         previousTile.getTitle(mContext))
                         || !TextUtils.equals(currentTile.getSummary(mContext),
-                        previousTile.getSummary(mContext))) {
+                                previousTile.getSummary(mContext))) {
                     Log.i(TAG, "Tile changed: " + component.flattenToShortString());
                     changedCategories.add(currentTile.getCategory());
                 }

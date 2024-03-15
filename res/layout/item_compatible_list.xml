@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="16dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -54,7 +54,7 @@
                 android:id="@+id/imgRemarks"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginLeft="@dimen/compatible_padding"
+                android:layout_marginLeft="8dp"
                 android:src="@drawable/icon_remark"
                 />
             

@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:textSize="@dimen/fde_light_text"
             android:textColor="@color/app_black_light"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/txtKey"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:textSize="@dimen/fde_light_text"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
            <LinearLayout
              android:id="@+id/layoutSwitch"

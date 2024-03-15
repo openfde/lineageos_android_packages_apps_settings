@@ -743,4 +743,5 @@ public class SettingsActivity extends SettingsBaseActivity
     public Button getNextButton() {
         return mNextButton;
     }
+
 }

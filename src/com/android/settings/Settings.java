@@ -545,5 +545,6 @@ public class Settings extends SettingsActivity {
             super.onCreate(savedInstanceState);
             setTheme(android.R.styleable.Theme_windowNoTitle);
         }
+
     }
 }

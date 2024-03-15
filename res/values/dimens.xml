@@ -433,7 +433,7 @@
     <dimen name="all_apps_item_height">48dp</dimen>
     <dimen name="settings_item_height">60dp</dimen>
     <dimen name="compatible_icon_size">32dp</dimen>
-        <dimen name="compatible_padding">8dp</dimen>
+        <dimen name="compatible_padding">16dp</dimen>
 
     <dimen name="fde_medium_text">16sp</dimen>
     <dimen name="fde_min_text">12sp</dimen>

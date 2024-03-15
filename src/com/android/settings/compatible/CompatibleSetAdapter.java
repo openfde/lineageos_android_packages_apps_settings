@@ -47,8 +47,10 @@ public class CompatibleSetAdapter extends RecyclerView.Adapter<CompatibleSetAdap
             String value = StringUtils.ToString(entry.getValue());
             // LogTools.i("onBindViewHolder key: " + key + " , value " + value);
             // showContent += key + ": " + value + "\n";
-            showContent += value + "";
-            holder.txtTitle.setText(showContent);
+            showContent += value + ",";
+            if (showContent.length() > 1) {
+                holder.txtTitle.setText(showContent.substring(0, showContent.length() - 1));
+            }
         }
 
         if (compat.isSelect()) {

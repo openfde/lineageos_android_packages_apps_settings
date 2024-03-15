@@ -26,11 +26,17 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
+import com.android.settings.core.SettingsBaseActivity;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
 import com.android.settingslib.search.SearchIndexable;
+
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.app.Activity;
+import android.view.View;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,8 +49,17 @@ public class SetNetworkFromHostFragment extends DashboardFragment {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        // final PreferenceScreen screen = getPreferenceScreen();
+    }
 
-        //final PreferenceScreen screen = getPreferenceScreen();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        final Activity activity = getActivity();
+        if (activity instanceof SettingsBaseActivity) {
+            ((SettingsBaseActivity) activity).showTitle(false);
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -65,14 +80,13 @@ public class SetNetworkFromHostFragment extends DashboardFragment {
     /**
      * For Search.
      */
-    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider() {
-                @Override
-                public List<SearchIndexableResource> getXmlResourcesToIndex(
-                        Context context, boolean enabled) {
-                    final SearchIndexableResource sir = new SearchIndexableResource(context);
-                    sir.xmlResId = R.xml.fde_network_settings;
-                    return Arrays.asList(sir);
-                }
-            };
+    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER = new BaseSearchIndexProvider() {
+        @Override
+        public List<SearchIndexableResource> getXmlResourcesToIndex(
+                Context context, boolean enabled) {
+            final SearchIndexableResource sir = new SearchIndexableResource(context);
+            sir.xmlResId = R.xml.fde_network_settings;
+            return Arrays.asList(sir);
+        }
+    };
 }

@@ -34,6 +34,8 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.settings.R;
 import com.android.settings.core.InstrumentedFragment;
+import com.android.settings.core.SettingsBaseActivity;
+
 import lineageos.waydroid.Net;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -96,6 +98,10 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
         mUIController = new ConnectWifiController(this, rootView, null);
         mUIController.initTimer();
         mUIController.initTimerLong();
+        final Activity activity = getActivity();
+        if (activity instanceof SettingsBaseActivity) {
+            ((SettingsBaseActivity) activity).showTitle(false);
+        }
         return rootView;
     }
 
