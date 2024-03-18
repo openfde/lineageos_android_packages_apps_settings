@@ -183,6 +183,8 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         AppData appData = CompUtils.getAppInfo(context, packageName);
         if (appData != null) {
             imgApp.setImageDrawable(appData.getIcon());
+        } else {
+            imgApp.setImageDrawable(context.getDrawable(R.drawable.icon_vnc));
         }
 
         if (TYPE_SELECT.equals(inputType)) {

@@ -58,7 +58,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogTools.i("onClick rootView " + position + " ,mp " + mp.toString());
+                // LogTools.i("onClick rootView " + position + " ,mp " + mp.toString());
                 if (packageName == null || "".equals(packageName)) {
 
                 } else {

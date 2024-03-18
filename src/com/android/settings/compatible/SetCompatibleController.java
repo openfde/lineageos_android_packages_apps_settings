@@ -66,6 +66,8 @@ public class SetCompatibleController implements OnItemClickListener {
             AppData appData = CompUtils.getAppInfo(context, packageName);
             if (appData != null) {
                 imgApp.setImageDrawable(appData.getIcon());
+            } else {
+                imgApp.setImageDrawable(context.getDrawable(R.drawable.icon_vnc));
             }
 
         }

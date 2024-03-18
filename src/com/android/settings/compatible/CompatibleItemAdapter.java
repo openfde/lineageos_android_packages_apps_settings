@@ -45,13 +45,19 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Map<String, Object> itemMap = list.get(position);
         String packageName = StringUtils.ToString(itemMap.get("PACKAGE_NAME"));
+        String appName = StringUtils.ToString(itemMap.get("FIELDS1"));
+
         String valueStr = StringUtils.ToString(itemMap.get("VALUE"));
-        // LogTools.i("mp " + mp.toString() + " , valueStr: " + valueStr);
+        // LogTools.i("mp " + mp.toString() + " , itemMap: " + itemMap + ",packageName "
+        // + packageName);
 
         AppData appData = CompUtils.getAppInfo(context, packageName);
         if (appData != null) {
             holder.txtAppName.setText(appData.getName());
             holder.imgIcon.setImageDrawable(appData.getIcon());
+        } else {
+            holder.txtAppName.setText(appName);
+            holder.imgIcon.setImageDrawable(context.getDrawable(R.drawable.icon_vnc));
         }
 
         String showText = valueStr + "";
@@ -70,7 +76,7 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
             holder.switchComp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    CompatibleConfig.updateValueData(context, appData.getName(), packageName,
+                    CompatibleConfig.updateValueData(context, appName, packageName,
                             StringUtils.ToString(itemMap.get("KEY_CODE")), String.valueOf(b));
                 }
             });
@@ -85,7 +91,7 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
             public void onClick(View view) {
                 if (!"switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
                     UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName,
-                            appData.getName(),
+                            appName,
                             mp, CompatibleItemAdapter.this);
                     if (!updateComatibleDialog.isShowing()) {
                         updateComatibleDialog.show();
