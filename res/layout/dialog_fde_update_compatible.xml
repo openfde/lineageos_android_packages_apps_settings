@@ -23,38 +23,86 @@
     android:layout_gravity="top|left"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtTitleName"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:text="@string/fde_manuals_add_wifi"
-        android:gravity="center|left"
-        android:padding="12dp"
-        android:textSize="@dimen/fde_medium_text"
-        android:textColor="@color/app_black_light"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/compatible_item_ethernet" >
+
+        <ImageView
+            android:id="@+id/imgApp"
+            android:layout_width="@dimen/compatible_icon_size"
+            android:layout_height="@dimen/compatible_icon_size"
+        />        
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/app_black_light"
+            android:textSize="@dimen/fde_medium_text"
+        />    
+
+
+    </LinearLayout>
 
 
      <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/wifi_item_ethernet" >
+            style="@style/compatible_item_ethernet" >
             
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/compatible_item_label"
+                android:visibility="gone"
                 android:textSize="@dimen/fde_medium_text"
                 android:text="@string/fde_app_name_title" />
+
+       
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
             android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:completionHint=""
             style="@style/compatible_item_edit_bg"
+            android:visibility="gone"
             android:textSize="@dimen/fde_light_text"
             android:completionThreshold="3"
             android:hint="@string/fde_input_appname_hint"/>
+
+    <TextView
+        android:id="@+id/txtTitleName"
+        android:layout_width="0dp"
+        android:text="@string/fde_manuals_add_wifi"
+        android:gravity="center|left"
+        android:paddingVertical="8dp"
+        android:layout_weight="1"
+        android:textSize="@dimen/fde_medium_text"
+        android:textColor="@color/app_black_light"
+        android:layout_height="wrap_content"/>
+
+
+        <Switch
+            android:id="@+id/switchComp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"  />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:completionHint=""
+            android:layout_weight="1"
+            style="@style/compatible_item_edit_bg"
+            android:textSize="@dimen/fde_light_text"
+            android:hint="@string/fde_input_hint"/>    
 
 
      </LinearLayout>
@@ -72,7 +120,8 @@
             android:id="@+id/layoutEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/wifi_item_ethernet" >
+                 android:visibility="gone"
+            style="@style/compatible_item_ethernet" >
             
         <TextView
                 android:layout_width="0dp"
@@ -81,14 +130,7 @@
                 android:textSize="@dimen/fde_medium_text"
                 android:text="@string/fde_data_value" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:completionHint=""
-            style="@style/compatible_item_edit_bg"
-            android:textSize="@dimen/fde_light_text"
-            android:hint="@string/fde_input_hint"/>
+
 
 
      </LinearLayout>
@@ -96,8 +138,9 @@
        <LinearLayout
             android:id="@+id/layoutSwitch"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            style="@style/wifi_item_ethernet" >
+            style="@style/compatible_item_ethernet" >
             
         <TextView
                 android:layout_width="0dp"
@@ -106,12 +149,6 @@
                 android:textSize="@dimen/fde_medium_text"
                 android:text="@string/fde_switch" />
 
-
-      <Switch
-                  android:id="@+id/switchComp"
-                  android:layout_width="0dp"
-                  android:layout_weight="1"
-                  android:layout_height="wrap_content"  />
 
      </LinearLayout>
 

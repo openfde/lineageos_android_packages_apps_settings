@@ -5014,7 +5014,7 @@
     <string name="fde_input_hint">请输入值</string>
     <string name="fde_input_appname_hint">请输入应用名称</string>
     <string name="fde_app_name_title">应用名称</string>
-    <string name="fde_data_value">数值</string>
+    <string name="fde_data_value">值</string>
     <string name="fde_switch">请选择</string>
     <string name="fde_tips">提示</string>
     <string name="fde_clean_tips">是否清空所有配置?</string>

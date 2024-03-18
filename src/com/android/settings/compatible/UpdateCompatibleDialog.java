@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,12 +55,14 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
     TextView txtCancel;
     TextView txtConfirm;
+    TextView txtAppName;
     RecyclerView recyclerView;
     EditText editText;
     TextView txtTitleName;
     LinearLayout layoutEditText;
     LinearLayout layoutSwitch;
     Switch switchComp;
+    ImageView imgApp;
     AutoCompleteTextView autoCompleteTextView;
 
     CompatibleSetAdapter compatibleSetAdapter;
@@ -125,8 +128,10 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         editText = (EditText) findViewById(R.id.editText);
         txtCancel = (TextView) findViewById(R.id.txtCancel);
         txtConfirm = (TextView) findViewById(R.id.txtConfirm);
+        txtAppName = (TextView) findViewById(R.id.txtAppName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         txtTitleName = (TextView) findViewById(R.id.txtTitleName);
+        imgApp = (ImageView) findViewById(R.id.imgApp);
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
         keyCode = StringUtils.ToString(mp.get("KEY_CODE"));
@@ -150,6 +155,7 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         autoCompleteTextView.setThreshold(1);
 
         if (appName != null && !"".equals(appName)) {
+            txtAppName.setText(appName);
             autoCompleteTextView.setText(appName);
             autoCompleteTextView.setEnabled(false);
         } else {
@@ -174,10 +180,15 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         // LogTools.i("packageName " + packageName + " ,keyCode " + keyCode + " , mp " +
         // mp.toString());
 
+        AppData appData = CompUtils.getAppInfo(context, packageName);
+        if (appData != null) {
+            imgApp.setImageDrawable(appData.getIcon());
+        }
+
         if (TYPE_SELECT.equals(inputType)) {
             recyclerView.setVisibility(View.VISIBLE);
-            layoutEditText.setVisibility(View.GONE);
-            layoutSwitch.setVisibility(View.GONE);
+            editText.setVisibility(View.GONE);
+            switchComp.setVisibility(View.GONE);
 
             list = new ArrayList<>();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
@@ -203,16 +214,16 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
             compatibleSetAdapter.notifyDataSetChanged();
         } else if (TYPE_SWITCH.equals(inputType)) {
             recyclerView.setVisibility(View.GONE);
-            layoutEditText.setVisibility(View.GONE);
-            layoutSwitch.setVisibility(View.VISIBLE);
+            editText.setVisibility(View.GONE);
+            switchComp.setVisibility(View.VISIBLE);
             String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
             if (result != null) {
                 switchComp.setChecked(result.contains("true") ? true : false);
             }
         } else {
             recyclerView.setVisibility(View.GONE);
-            layoutEditText.setVisibility(View.VISIBLE);
-            layoutSwitch.setVisibility(View.GONE);
+            editText.setVisibility(View.VISIBLE);
+            switchComp.setVisibility(View.GONE);
 
             String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
             if (result != null) {
@@ -238,12 +249,14 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         txtConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                packageName = getCurPackageName(StringUtils.ToString(autoCompleteTextView.getText()));
-                if (packageName == null || "".equals(packageName)) {
-                    Toast.makeText(context, context.getString(R.string.fde_input_appname_hint), Toast.LENGTH_SHORT)
-                            .show();
-                    return;
-                }
+                // packageName =
+                // getCurPackageName(StringUtils.ToString(autoCompleteTextView.getText()));
+                // if (packageName == null || "".equals(packageName)) {
+                // Toast.makeText(context, context.getString(R.string.fde_input_appname_hint),
+                // Toast.LENGTH_SHORT)
+                // .show();
+                // return;
+                // }
                 if (TYPE_SELECT.equals(inputType)) {
                     Compatible compatible = list.get(position);
                     String content = StringUtils.ToString(compatible.getMp());
