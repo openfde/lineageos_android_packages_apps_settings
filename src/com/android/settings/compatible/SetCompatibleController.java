@@ -28,6 +28,7 @@ public class SetCompatibleController implements OnItemClickListener {
     private LinearLayout layoutAppName;
     private TextView txtAppName;
     private ImageView imgClean;
+    private ImageView imgApp;
 
     List<Map<String, Object>> list;
     CompatibleListAdapter compatibleListAdapter;
@@ -48,6 +49,7 @@ public class SetCompatibleController implements OnItemClickListener {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         txtAppName = (TextView) view.findViewById(R.id.txtAppName);
         imgClean = (ImageView) view.findViewById(R.id.imgClean);
+        imgApp = (ImageView) view.findViewById(R.id.imgApp);
         layoutAppName = (LinearLayout) view.findViewById(R.id.layoutAppName);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
@@ -61,6 +63,11 @@ public class SetCompatibleController implements OnItemClickListener {
         } else {
             layoutAppName.setVisibility(View.VISIBLE);
             txtAppName.setText(appName);
+            AppData appData = CompUtils.getAppInfo(context, packageName);
+            if (appData != null) {
+                imgApp.setImageDrawable(appData.getIcon());
+            }
+
         }
 
         imgClean.setOnClickListener(new View.OnClickListener() {

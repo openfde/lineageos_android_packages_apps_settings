@@ -55,7 +55,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         holder.txtKey.setText(keyCode);
         holder.txtTitle.setText(StringUtils.ToString(mp.get("KEY_DESC")));
 
-        holder.txtTitle.setOnClickListener(new View.OnClickListener() {
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LogTools.i("onClick rootView " + position + " ,mp " + mp.toString());
