@@ -90,7 +90,21 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             if (listItem == null) {
                 listItem = new ArrayList<>();
             }
-            CompatibleItemAdapter compatibleItemAdapter = new CompatibleItemAdapter(context, listItem,
+
+            List<Map<String, Object>> listTemp = new ArrayList<>();
+
+            for (Map<String, Object> mmm : listItem) {
+                AppData appData = CompUtils.getAppInfo(context, StringUtils.ToString(mmm.get("PACKAGE_NAME")));
+                if (appData == null) {
+                    if (StringUtils.ToString(mmm.get("FIELDS1")).contains("VNC_")) {
+                        listTemp.add(mmm);
+                    }
+                } else {
+                    listTemp.add(mmm);
+                }
+            }
+
+            CompatibleItemAdapter compatibleItemAdapter = new CompatibleItemAdapter(context, listTemp,
                     list.get(position));
             holder.recyclerView.setAdapter(compatibleItemAdapter);
         } else {

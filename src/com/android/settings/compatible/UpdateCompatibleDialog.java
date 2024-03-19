@@ -137,8 +137,7 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
         keyCode = StringUtils.ToString(mp.get("KEY_CODE"));
         optionJson = StringUtils.ToString(mp.get("OPTION_JSON"));
         inputType = StringUtils.ToString(mp.get("INPUT_TYPE"));
-        String keyDescStr = CompUtils.parseEnChJson(context, StringUtils.ToString(mp.get("KEY_DESC")));
-        keyDesc = StringUtils.ToString(mp.get("KEY_DESC"));
+        keyDesc = CompUtils.parseEnChJson(context, StringUtils.ToString(mp.get("KEY_DESC")));
 
         txtTitleName.setText(keyDesc);
 
