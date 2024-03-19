@@ -42,9 +42,20 @@
             android:gravity="center|left"
             android:orientation="horizontal">
 
+
+             <Switch
+                android:id="@+id/switchDown"
+                android:thumb="@drawable/switch_selector_down"
+                android:track="@null"
+                android:gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_width="30dp"
+                android:layout_height="24dp"/>     
+
            <TextView
             android:id="@+id/txtTitle"
             android:text=""
+            android:layout_marginLeft="-8dp"
             android:layout_width="wrap_content"
             android:textSize="@dimen/fde_medium_text"
             android:textColor="@color/app_black_light"
@@ -54,6 +65,7 @@
                 android:id="@+id/imgRemarks"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:gravity="center"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/icon_remark"
                 />
@@ -75,6 +87,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

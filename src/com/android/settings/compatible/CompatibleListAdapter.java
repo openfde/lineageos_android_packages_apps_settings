@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,8 +84,21 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             }
         });
 
+        holder.switchDown.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (packageName == null || "".equals(packageName)) {
+                    if (b) {
+                        holder.recyclerView.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.recyclerView.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
         if (packageName == null || "".equals(packageName)) {
-            holder.recyclerView.setVisibility(View.VISIBLE);
+            holder.switchDown.setVisibility(View.VISIBLE);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             holder.recyclerView.setLayoutManager(linearLayoutManager);
             List<Map<String, Object>> listItem = CompatibleConfig.queryValueListData(context, keyCode);
@@ -109,6 +124,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             holder.recyclerView.setAdapter(compatibleItemAdapter);
         } else {
             holder.recyclerView.setVisibility(View.GONE);
+            holder.switchDown.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -123,6 +139,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         TextView txtTitle;
         RecyclerView recyclerView;
         ImageView imgRemarks;
+        Switch switchDown;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,6 +147,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             txtTitle = itemView.findViewById(R.id.txtTitle);
             rootView = itemView.findViewById(R.id.rootView);
             imgRemarks = itemView.findViewById(R.id.imgRemarks);
+            switchDown = itemView.findViewById(R.id.switchDown);
             recyclerView = itemView.findViewById(R.id.recyclerView);
         }
     }
