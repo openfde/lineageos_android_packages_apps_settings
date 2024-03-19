@@ -18,7 +18,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:paddingHorizontal="@dimen/compatible_padding"
+    android:paddingHorizontal="@dimen/compatible_icon_size"
     android:id="@+id/rootView"
     android:layout_gravity="center"
     android:gravity="center"
@@ -29,8 +29,8 @@
 
     <ImageView 
              android:id="@+id/imgIcon"
-             android:layout_width="@dimen/compatible_icon_size"
-             android:layout_height="@dimen/compatible_icon_size"
+             android:layout_width="@dimen/compatible_icon_small_size"
+             android:layout_height="@dimen/compatible_icon_small_size"
         />
 
 
@@ -58,7 +58,7 @@
             android:textColor="@color/blue"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:gravity="center|left"
+            android:gravity="center|right"
             android:textSize="@dimen/fde_light_text"
             android:layout_height="match_parent"/>
 
@@ -67,7 +67,8 @@
              android:layout_weight="1"
              android:visibility="gone"
              android:layout_width="0dp"
-             android:layout_height="wrap_content" 
+             android:gravity="center|right"
+             android:layout_height="match_parent" 
            >
 
             <Switch

@@ -14,6 +14,8 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.content.Context;
 
+import org.json.JSONObject;
+
 import com.android.settings.utils.StringUtils;
 
 public class CompUtils {
@@ -55,6 +57,23 @@ public class CompUtils {
         Locale locale = context.getResources().getConfiguration().locale;
         String language = locale.getLanguage();
         return language.equals("zh");
+    }
+
+    public static String parseEnChJson(Context context, String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String enText = jsonObject.getString("en");
+            String chText = jsonObject.getString("ch");
+
+            if (isChineseLanguage(context)) {
+                return chText;
+            } else {
+                return enText;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

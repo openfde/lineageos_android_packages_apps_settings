@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONObject;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,7 +52,8 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
 
         String keyCode = StringUtils.ToString(mp.get("KEY_CODE"));
         holder.txtKey.setText(keyCode);
-        holder.txtTitle.setText(StringUtils.ToString(mp.get("KEY_DESC")));
+        String keyDescStr = CompUtils.parseEnChJson(context, StringUtils.ToString(mp.get("KEY_DESC")));
+        holder.txtTitle.setText(keyDescStr);
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             }
         });
 
-        String noteStr = parseJson(StringUtils.ToString(mp.get("NOTES")));
+        String noteStr = CompUtils.parseEnChJson(context, StringUtils.ToString(mp.get("NOTES")));
         holder.imgRemarks.setVisibility("".equals(noteStr) ? View.GONE : View.VISIBLE);
         holder.imgRemarks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,23 +96,6 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         } else {
             holder.recyclerView.setVisibility(View.GONE);
         }
-    }
-
-    private String parseJson(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            String enText = jsonObject.getString("en");
-            String chText = jsonObject.getString("ch");
-
-            if (CompUtils.isChineseLanguage(context)) {
-                return chText;
-            } else {
-                return enText;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     @Override

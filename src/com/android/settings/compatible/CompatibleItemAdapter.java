@@ -56,7 +56,8 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
             holder.txtAppName.setText(appData.getName());
             holder.imgIcon.setImageDrawable(appData.getIcon());
         } else {
-            holder.txtAppName.setText(appName);
+            String appNam = appName.replace("VNC_", "");
+            holder.txtAppName.setText(appNam + "(Linux)");
             holder.imgIcon.setImageDrawable(context.getDrawable(R.drawable.icon_vnc));
         }
 
