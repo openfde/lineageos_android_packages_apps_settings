@@ -29,7 +29,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:paddingHorizontal="16dp"
@@ -53,13 +53,15 @@
                 android:layout_height="24dp"/>     
 
            <TextView
-            android:id="@+id/txtTitle"
-            android:text=""
-            android:layout_marginLeft="-8dp"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/fde_medium_text"
-            android:textColor="@color/app_black_light"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/txtTitle"
+                android:text=""
+                android:layout_marginLeft="-8dp"
+                android:lineHeight="@dimen/settings_item_height"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/fde_medium_text"
+                android:gravity="center|left"
+                android:textColor="@color/app_black_light"
+                android:layout_height="36dp"/>
 
             <ImageView
                 android:id="@+id/imgRemarks"
@@ -82,6 +84,16 @@
             android:layout_width="0dp"
             android:textSize="@dimen/fde_medium_text"
             android:layout_height="wrap_content"/>
+
+      <ImageView
+                android:id="@+id/imgRight"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/icon_to_right"
+                />
 
     </LinearLayout>
 

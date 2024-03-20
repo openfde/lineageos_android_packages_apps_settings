@@ -82,7 +82,7 @@
         android:text="@string/fde_manuals_add_wifi"
         android:gravity="center|left"
         android:paddingVertical="8dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:textSize="@dimen/fde_medium_text"
         android:textColor="@color/app_black_light"
         android:layout_height="wrap_content"/>
@@ -91,7 +91,7 @@
         <Switch
             android:id="@+id/switchComp"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"  />
 
         <EditText
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:completionHint=""
-            android:layout_weight="1"
+            android:layout_weight="2"
             style="@style/compatible_item_edit_bg"
             android:textSize="@dimen/fde_light_text"
             android:hint="@string/fde_input_hint"/>    

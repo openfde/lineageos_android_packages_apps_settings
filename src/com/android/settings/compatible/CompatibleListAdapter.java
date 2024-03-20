@@ -99,6 +99,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
 
         if (packageName == null || "".equals(packageName)) {
             holder.switchDown.setVisibility(View.VISIBLE);
+            holder.imgRight.setVisibility(View.GONE);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             holder.recyclerView.setLayoutManager(linearLayoutManager);
             List<Map<String, Object>> listItem = CompatibleConfig.queryValueListData(context, keyCode);
@@ -125,6 +126,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         } else {
             holder.recyclerView.setVisibility(View.GONE);
             holder.switchDown.setVisibility(View.INVISIBLE);
+            holder.imgRight.setVisibility(View.VISIBLE);
         }
     }
 
@@ -139,6 +141,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
         TextView txtTitle;
         RecyclerView recyclerView;
         ImageView imgRemarks;
+        ImageView imgRight;
         Switch switchDown;
 
         public ViewHolder(@NonNull View itemView) {
@@ -147,6 +150,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             txtTitle = itemView.findViewById(R.id.txtTitle);
             rootView = itemView.findViewById(R.id.rootView);
             imgRemarks = itemView.findViewById(R.id.imgRemarks);
+            imgRight = itemView.findViewById(R.id.imgRight);
             switchDown = itemView.findViewById(R.id.switchDown);
             recyclerView = itemView.findViewById(R.id.recyclerView);
         }
