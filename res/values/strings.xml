@@ -12276,4 +12276,5 @@
     <string name="fde_switch">switch</string>
     <string name="fde_tips">Warning</string>
     <string name="fde_clean_tips">is all clean ?</string>
+    <string name="fde_reset_tips">Restore the default configuration?</string>
 </resources>

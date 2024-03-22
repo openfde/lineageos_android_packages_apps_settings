@@ -5018,4 +5018,5 @@
     <string name="fde_switch">请选择</string>
     <string name="fde_tips">提示</string>
     <string name="fde_clean_tips">是否清空所有配置?</string>
+    <string name="fde_reset_tips">是否恢复默认配置?</string>
 </resources>
