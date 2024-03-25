@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="@*android:string/android_start_title"/>
+            android:text="@*android:string/android_start_title_fde"/>
 
         <ProgressBar
             style="@android:style/Widget.Material.ProgressBar.Horizontal"
