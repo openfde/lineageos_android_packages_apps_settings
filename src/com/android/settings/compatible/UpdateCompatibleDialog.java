@@ -200,11 +200,13 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
             List<Map<String, Object>> tempList = parseJson(optionJson);
             if (tempList != null) {
-                String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
+                String result = CompatibleConfig.queryValueData(context, packageName, keyCode).trim().replaceAll(" ",
+                        "");
                 for (int i = 0; i < tempList.size(); i++) {
                     Compatible compatible = new Compatible();
                     compatible.setId(i);
-                    if (result != null && result.equals(StringUtils.ToString(tempList.get(i)))) {
+                    if (result != null
+                            && result.equals(StringUtils.ToString(tempList.get(i)).trim().replaceAll(" ", ""))) {
                         compatible.setSelect(true);
                     } else {
                         compatible.setSelect(false);
@@ -261,7 +263,7 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 // }
                 if (TYPE_SELECT.equals(inputType)) {
                     Compatible compatible = list.get(position);
-                    String content = StringUtils.ToString(compatible.getMp());
+                    String content = StringUtils.ToString(compatible.getMp()).trim();
                     CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode, content);
                 } else if (TYPE_SWITCH.equals(inputType)) {
                     boolean isChecked = switchComp.isChecked();
