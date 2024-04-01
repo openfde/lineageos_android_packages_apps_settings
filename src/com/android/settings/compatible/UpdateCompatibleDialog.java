@@ -200,13 +200,14 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
 
             List<Map<String, Object>> tempList = parseJson(optionJson);
             if (tempList != null) {
-                String result = CompatibleConfig.queryValueData(context, packageName, keyCode).trim().replaceAll(" ",
-                        "");
+                String result = CompatibleConfig.queryValueData(context, packageName, keyCode);
                 for (int i = 0; i < tempList.size(); i++) {
                     Compatible compatible = new Compatible();
                     compatible.setId(i);
+
                     if (result != null
-                            && result.equals(StringUtils.ToString(tempList.get(i)).trim().replaceAll(" ", ""))) {
+                            && compareStringsIgnoringSpace(result,
+                                    StringUtils.ToString(tempList.get(i)))) {
                         compatible.setSelect(true);
                     } else {
                         compatible.setSelect(false);
@@ -284,6 +285,10 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
             }
         });
 
+    }
+
+    public boolean compareStringsIgnoringSpace(String str1, String str2) {
+        return str1.replaceAll("\\s", "").equals(str2.replaceAll("\\s", ""));
     }
 
     private List<Map<String, Object>> parseJson(String jsonArrayString) {
