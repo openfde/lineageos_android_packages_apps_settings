@@ -53,11 +53,13 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
 
         AppData appData = CompUtils.getAppInfo(context, packageName);
         if (appData != null) {
-            holder.txtAppName.setText(appData.getName());
+            appName = appData.getName();
+            holder.txtAppName.setText(appName);
             holder.imgIcon.setImageDrawable(appData.getIcon());
         } else if (appName.contains("VNC_")) {
             String appNam = appName.replace("VNC_", "");
-            holder.txtAppName.setText(appNam + "(Linux)");
+            appName = appNam + "(Linux)";
+            holder.txtAppName.setText(appName);
             holder.imgIcon.setImageDrawable(context.getDrawable(R.drawable.icon_vnc));
         }
 
@@ -69,37 +71,36 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
             }
         }
 
+        final String dialogName = appName;
+
         if ("switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
             holder.layoutSwitch.setVisibility(View.VISIBLE);
             holder.txtKey.setVisibility(View.GONE);
             holder.switchComp.setChecked("true".equals(showText) ? true : false);
 
-            holder.switchComp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    CompatibleConfig.updateValueData(context, appName, packageName,
-                            StringUtils.ToString(itemMap.get("KEY_CODE")), String.valueOf(b));
-                }
-            });
+            holder.switchComp
+                    .setOnCheckedChangeListener((compoundButton, b) -> {
+                        CompatibleConfig.updateValueData(context, dialogName, packageName,
+                                StringUtils.ToString(itemMap.get("KEY_CODE")), String.valueOf(b));
+                    });
+
         } else {
             holder.layoutSwitch.setVisibility(View.GONE);
             holder.txtKey.setVisibility(View.VISIBLE);
             holder.txtKey.setText(showText);
         }
 
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!"switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
-                    UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName,
-                            appName,
-                            mp, CompatibleItemAdapter.this);
-                    if (!updateComatibleDialog.isShowing()) {
-                        updateComatibleDialog.show();
-                    }
+        holder.rootView.setOnClickListener(view -> {
+            if (!"switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
+                UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName,
+                        dialogName,
+                        mp, CompatibleItemAdapter.this);
+                if (!updateComatibleDialog.isShowing()) {
+                    updateComatibleDialog.show();
                 }
             }
         });
+
     }
 
     @Override
