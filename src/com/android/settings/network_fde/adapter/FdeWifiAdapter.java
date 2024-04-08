@@ -58,12 +58,10 @@ public class FdeWifiAdapter extends RecyclerView.Adapter<FdeWifiAdapter.FdeWifiH
 
     @Override
     public void onBindViewHolder(@NonNull FdeWifiHolder holder, int position) {
-        String wifiName = list.get(position).get("name").toString();
+        String wifiName = list.get(position).get("WIFI_NAME").toString();
         holder.txtWifiName.setText(wifiName);
         // holder.txtEncrypted.setText(list.get(position).get("isEncrypted").toString());
-        String isSaved = StringUtils.ToString(list.get(position).get("isSaved"));
-        int curNet = StringUtils.ToInt(list.get(position).get("curNet")); // Integer.valueOf(list.get(position).get("curNet").toString());
-        int signal = StringUtils.ToInt(list.get(position).get("signal"));
+        int signal = StringUtils.ToInt(list.get(position).get("WIFI_SIGNAL"));
         if (signal >= 80) {
             holder.imgWifi.setImageResource(R.mipmap.icon_wifi);
         } else if (signal >= 50) {
@@ -74,22 +72,40 @@ public class FdeWifiAdapter extends RecyclerView.Adapter<FdeWifiAdapter.FdeWifiH
             holder.imgWifi.setImageResource(R.mipmap.icon_wifi_lower);
         }
 
-        if (curNet == position) {
+        int curNet = StringUtils.ToInt(list.get(position).get("IS_CUR")); // Integer.valueOf(list.get(position).get("curNet").toString());
+        int isSaved = StringUtils.ToInt(list.get(position).get("IS_SAVE"));
+        if (curNet == 1) {
             holder.txtEncrypted.setText(context.getString(R.string.fde_has_connected));
             holder.txtEncrypted.setTextColor(context.getColor(R.color.palette_list_color_blue));
+        } else if (curNet == 2) {
+            holder.txtEncrypted.setText(context.getString(R.string.fde_connecting));
+            holder.txtEncrypted.setTextColor(context.getColor(R.color.app_blue_light));
         } else {
-            if ("1".equals(isSaved)) {
+            if (isSaved == 1) {
                 holder.txtEncrypted.setText(context.getString(R.string.fde_has_saved));
                 holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
-            } else if ("2".equals(isSaved)) {
-                holder.txtEncrypted.setText(context.getString(R.string.fde_connecting));
-                holder.txtEncrypted.setTextColor(context.getColor(R.color.app_blue_light));
             } else {
-                holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("encryption")));
+                holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("IS_ENCRYPTION")));
                 holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
             }
-            // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
         }
+
+        // if (curNet == position) {
+        // holder.txtEncrypted.setText(context.getString(R.string.fde_has_connected));
+        // holder.txtEncrypted.setTextColor(context.getColor(R.color.palette_list_color_blue));
+        // } else {
+        // if ("1".equals(isSaved)) {
+        // holder.txtEncrypted.setText(context.getString(R.string.fde_has_saved));
+        // holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
+        // } else if ("2".equals(isSaved)) {
+        // holder.txtEncrypted.setText(context.getString(R.string.fde_connecting));
+        // holder.txtEncrypted.setTextColor(context.getColor(R.color.app_blue_light));
+        // } else {
+        // holder.txtEncrypted.setText(StringUtils.ToString(list.get(position).get("IS_ENCRYPTION")));
+        // holder.txtEncrypted.setTextColor(context.getColor(R.color.app_gray));
+        // }
+        // // holder.txtWifiName.setTextColor(R.color.palette_list_color_blue);
+        // }
 
         holder.layoutWifiInfo.setOnClickListener(new View.OnClickListener() {
             @Override

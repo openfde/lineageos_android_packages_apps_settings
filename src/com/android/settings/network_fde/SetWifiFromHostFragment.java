@@ -69,7 +69,6 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
     public void onDestroyView() {
         super.onDestroyView();
         mUIController.destTimer();
-        mUIController.destTimerLong();
     }
 
     @Override
@@ -97,7 +96,6 @@ public class SetWifiFromHostFragment extends InstrumentedFragment implements Fde
 
         mUIController = new ConnectWifiController(this, rootView, null);
         mUIController.initTimer();
-        mUIController.initTimerLong();
         final Activity activity = getActivity();
         if (activity instanceof SettingsBaseActivity) {
             ((SettingsBaseActivity) activity).showTitle(false);

@@ -42,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.settings.R;
+import com.android.settings.Settings;
 import com.android.settingslib.Utils;
 import com.android.settingslib.utils.ThreadUtils;
 import com.android.settings.network_fde.api.NetApi;
@@ -64,14 +65,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Calendar;
 
 import com.android.settings.network_fde.adapter.FdeWifiAdapter;
 import com.android.settings.network_fde.dialog.AddWlanDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.android.settings.network_fde.dialog.SelectWlanDialog;
 import com.android.settings.network_fde.dialog.WifiInfoDialog;
+import com.android.settings.network_fde.http.DatabaseRequestCallBack;
 import com.android.settings.network_fde.http.HttpRequestCallBack;
 import com.android.settings.network_fde.http.NetCtrl;
+import com.android.settings.network_fde.http.WifiUtils;
 
 import android.app.ProgressDialog;
 import com.android.settings.utils.LogTools;
@@ -125,14 +129,11 @@ public class ConnectWifiController implements
     ProgressDialog progressDialog;
 
     private int wifiStatus = 1;// 0-close ,1-open,3-disable
-    private String curWifiName = "";
     boolean isScaning = false;
     long lastSwitchTime = 0;
 
     Timer timer;
     TimerTask timerTask;
-    Timer timerLong;
-    TimerTask timerTaskLong;
 
     // public static final int UPDATE_LIST = 1001;
     // public static final int ENABLE_WIFI = 1002;
@@ -263,7 +264,8 @@ public class ConnectWifiController implements
                     Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
                             .show();
                 } else {
-                    getAllSsid();
+                    showProgressDialog();
+                    // getAllSsid();
                 }
             }
         });
@@ -290,15 +292,14 @@ public class ConnectWifiController implements
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                // LogTools.i("-------TimerTask run------------ wifiStatus " + wifiStatus);
-                if (wifiStatus == 1) {
-                    if (list == null || list.size() == 0) {
-                        getAllSsid();
-                    }
+                Calendar calendar = Calendar.getInstance();
+                int seconds = calendar.get(Calendar.SECOND);
+                if (seconds % 8 == 3) {
+                    getAllSsid();
                 }
             }
         };
-        timer.schedule(timerTask, 1 * 1000, 2 * 1000);
+        timer.schedule(timerTask, 1 * 1000, 1 * 1000);
     }
 
     public void destTimer() {
@@ -309,30 +310,6 @@ public class ConnectWifiController implements
         if (timerTask != null) {
             timerTask.cancel();
             timerTask = null;
-        }
-        isScaning = false;
-    }
-
-    public void initTimerLong() {
-        timerLong = new Timer();
-        timerTaskLong = new TimerTask() {
-            @Override
-            public void run() {
-                // LogTools.i("-------TimerTask run------------ wifiStatus " + wifiStatus);
-                isWifiEnable();
-            }
-        };
-        timerLong.schedule(timerTaskLong, 3 * 1000, 30 * 1000);
-    }
-
-    public void destTimerLong() {
-        if (timerLong != null) {
-            timerLong.cancel();
-            timerLong = null;
-        }
-        if (timerTaskLong != null) {
-            timerTaskLong.cancel();
-            timerTaskLong = null;
         }
         isScaning = false;
     }
@@ -348,7 +325,7 @@ public class ConnectWifiController implements
             connectHidedWifi(ssid, password);
         } else if (type == 2) {
             // new Thread(new ConnectWifiByPasswordThread(ssid, password)).start();
-            setConntectingShow(pos);
+            // setConntectingShow(pos);
             connectSsid(ssid, password);
         } else if (type == 3) {
             // new Thread(new ConnectWifiThread(ssid, 0)).start();
@@ -361,9 +338,11 @@ public class ConnectWifiController implements
 
     @Override
     public void onContextClick(int pos, String content) {
+        LogTools.i("onContextClick " + pos + " , content " + content);
         // mouse Right click
         Map<String, Object> mp = list.get(pos);
-        if (curWifiName.equals(content)) {
+        int curNet = StringUtils.ToInt(mp.get("IS_CUR"));
+        if (curNet == 1) {
             // new Thread(new GetWifiInfo(content, "1")).start();
             WifiInfoDialog wifiInfoDialog = new WifiInfoDialog(mContext, ConnectWifiController.this,
                     "1", content,
@@ -372,7 +351,7 @@ public class ConnectWifiController implements
                 wifiInfoDialog.show();
             }
         } else {
-            String isSaved = list.get(pos).get("isSaved").toString();
+            String isSaved = list.get(pos).get("IS_SAVE").toString();
             if ("1".equals(isSaved)) {
                 WifiInfoDialog wifiInfoDialog = new WifiInfoDialog(mContext, ConnectWifiController.this,
                         "0", content,
@@ -393,9 +372,10 @@ public class ConnectWifiController implements
 
     @Override
     public void onItemClick(int pos, String content) {
-        LogTools.i("onItemClick " + pos + " , content " + content + ",curWifiName " + curWifiName);
+        LogTools.i("onItemClick " + pos + " , content " + content);
         Map<String, Object> mp = list.get(pos);
-        if (content.equals(curWifiName)) {
+        int curNet = StringUtils.ToInt(mp.get("IS_CUR"));
+        if (curNet == 1) {
             LogTools.i("onItemClick  mp " + mp.toString());
             WifiInfoDialog wifiInfoDialog = new WifiInfoDialog(mContext, ConnectWifiController.this,
                     "1", content,
@@ -404,12 +384,12 @@ public class ConnectWifiController implements
                 wifiInfoDialog.show();
             }
         } else {
-            String isSaved = mp.get("isSaved").toString();
+            String isSaved = mp.get("IS_SAVE").toString();
             LogTools.i("onItemClick  isSaved " + isSaved);
 
             if ("1".equals(isSaved)) {
                 // new Thread(new ConnectWifiThread(content, 1)).start();
-                setConntectingShow(pos);
+                // setConntectingShow(pos);
                 connectActivedWifi(content, 1);
             } else {
                 // if not saved ,enter password
@@ -452,39 +432,69 @@ public class ConnectWifiController implements
      * @param type
      */
     private void isWifiEnable() {
-        NetCtrl.get(mContext, "isWifiEnable", null, new HttpRequestCallBack() {
-            @Override
-            public void callBackListener(String result) {
-                LogTools.i("callBackListener: isWifiEnable result-- >" + result);
-                wifiStatus = StringUtils.ToInt(result);
-                switchWifi.setVisibility(View.VISIBLE);
-                if (wifiStatus == 1) {
-                    switchWifi.setChecked(true);
-                    openWifiView();
-                    getAllSsid();
-                    switchWifi.setEnabled(true);
+        try {
+            wifiStatus = android.provider.Settings.Global.getInt(mContext.getContentResolver(), "wifi_status");
+            LogTools.i("callBackListener: isWifiEnable wifiStatus-- >" + wifiStatus);
+            switchWifi.setVisibility(View.VISIBLE);
+            if (wifiStatus == 1) {
+                switchWifi.setChecked(true);
+                openWifiView();
+                getAllSsid();
+                switchWifi.setEnabled(true);
+            } else {
+                closeWifiView();
+                switchWifi.setChecked(false);
+                if (wifiStatus == 2) {
+                    Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
+                            .show();
+                    switchWifi.setEnabled(false);
                 } else {
-                    closeWifiView();
-                    switchWifi.setChecked(false);
-                    if (wifiStatus == 2) {
-                        Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module), Toast.LENGTH_SHORT)
-                                .show();
-                        switchWifi.setEnabled(false);
-                    } else {
-                        switchWifi.setEnabled(true);
-                    }
+                    switchWifi.setEnabled(true);
                 }
             }
 
-            @Override
-            public void requestFail(String errorString, int code) {
-                LogTools.i("requestFail:isWifiEnable  errorString-- >" + errorString + " ,code " + code);
-                wifiStatus = 2;
-                switchWifi.setVisibility(View.VISIBLE);
-                closeWifiView();
-                switchWifi.setChecked(false);
-            }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+            wifiStatus = 2;
+            switchWifi.setVisibility(View.VISIBLE);
+            closeWifiView();
+            switchWifi.setChecked(false);
+        }
+        // NetCtrl.get(mContext, "isWifiEnable", null, new HttpRequestCallBack() {
+        // @Override
+        // public void callBackListener(String result) {
+        // LogTools.i("callBackListener: isWifiEnable result-- >" + result);
+        // wifiStatus = StringUtils.ToInt(result);
+        // switchWifi.setVisibility(View.VISIBLE);
+        // if (wifiStatus == 1) {
+        // switchWifi.setChecked(true);
+        // openWifiView();
+        // getAllSsid();
+        // switchWifi.setEnabled(true);
+        // } else {
+        // closeWifiView();
+        // switchWifi.setChecked(false);
+        // if (wifiStatus == 2) {
+        // Toast.makeText(mContext, mContext.getString(R.string.fde_no_wifi_module),
+        // Toast.LENGTH_SHORT)
+        // .show();
+        // switchWifi.setEnabled(false);
+        // } else {
+        // switchWifi.setEnabled(true);
+        // }
+        // }
+        // }
+
+        // @Override
+        // public void requestFail(String errorString, int code) {
+        // LogTools.i("requestFail:isWifiEnable errorString-- >" + errorString + " ,code
+        // " + code);
+        // wifiStatus = 2;
+        // switchWifi.setVisibility(View.VISIBLE);
+        // closeWifiView();
+        // switchWifi.setChecked(false);
+        // }
+        // });
     }
 
     /**
@@ -515,34 +525,23 @@ public class ConnectWifiController implements
         });
     }
 
-    // private void getSignalAndSecurity(String ssid) {
-    // Map<String, Object> mp = new HashMap<>();
-    // mp.put("ssid", ssid);
-    // NetCtrl.get(mContext, "getSignalAndSecurity", mp, new HttpRequestCallBack() {
-    // @Override
-    // public void callBackListener(String result) {
-    // LogTools.i("callBackListener: getSignalAndSecurity result-- >" + result);
-
-    // }
-
-    // @Override
-    // public void requestFail(String errorString, int code) {
-    // LogTools.i("requestFail:getSignalAndSecurity errorString-- >" + errorString +
-    // " ,code " + code);
-    // }
-    // });
-    // }
-
     private void connectActivedWifi(String ssid, int connect) {
+        WifiUtils.resetWifiListStatus(mContext);
+        if (connect == 1) {
+            WifiUtils.updateWifiListStatus(mContext, "WIFI_NAME = ?", new String[] { ssid }, "2");
+        }
+        getAllSsid();
+
         Map<String, Object> mp = new HashMap<>();
         mp.put("ssid", ssid);
         mp.put("connect", connect);
         NetCtrl.get(mContext, "connectActivedWifi", mp, new HttpRequestCallBack() {
             @Override
             public void callBackListener(String result) {
-                LogTools.i("callBackListener: connectActivedWifi result-- >" + result);
+                LogTools.i("callBackListener: connectActivedWifi result-- >" + result + " ,connect " + connect);
+
                 // getActivedWifi();
-                connectedWifiList();
+                // connectedWifiList();
             }
 
             @Override
@@ -553,6 +552,10 @@ public class ConnectWifiController implements
     }
 
     private void connectSsid(String ssid, String password) {
+        WifiUtils.resetWifiListStatus(mContext);
+        WifiUtils.updateWifiListStatus(mContext, "WIFI_NAME = ?", new String[] { ssid }, "2");
+        getAllSsid();
+
         Map<String, Object> mp = new HashMap<>();
         mp.put("ssid", ssid);
         mp.put("password", password);
@@ -560,7 +563,8 @@ public class ConnectWifiController implements
             @Override
             public void callBackListener(String result) {
                 LogTools.i("callBackListener: connectSsid result-- >" + result);
-                connectedWifiList();
+
+                // connectedWifiList();
                 // getActivedWifi();
             }
 
@@ -572,6 +576,8 @@ public class ConnectWifiController implements
     }
 
     private void connectHidedWifi(String ssid, String password) {
+        WifiUtils.resetWifiListStatus(mContext);
+        getAllSsid();
         Map<String, Object> mp = new HashMap<>();
         mp.put("ssid", ssid);
         mp.put("password", password);
@@ -579,7 +585,7 @@ public class ConnectWifiController implements
             @Override
             public void callBackListener(String result) {
                 LogTools.i("callBackListener: connectHidedWifi result-- >" + result);
-                getActivedWifi();
+                // getActivedWifi();
             }
 
             @Override
@@ -648,9 +654,9 @@ public class ConnectWifiController implements
                 LogTools.i("callBackListener: getActivedWifi result-- >" + result);
                 String strAc = result;
                 if (strAc == null || "".equals(strAc)) {
-                    curWifiName = "";
+                    // curWifiName = "";
                 } else {
-                    curWifiName = strAc;
+                    // curWifiName = strAc;
                     for (int i = 0; i < list.size(); i++) {
                         Map<String, Object> mAc = list.get(i);
                         if (!"".equals(strAc) && strAc.equals(mAc.get("name").toString())) {
@@ -670,7 +676,7 @@ public class ConnectWifiController implements
             @Override
             public void requestFail(String errorString, int code) {
                 LogTools.i("requestFail:getActivedWifi  errorString-- >" + errorString + " ,code " + code);
-                curWifiName = "";
+                // curWifiName = "";
                 isScaning = false;
                 fdeWifiAdapter.notifyDataSetChanged();
                 hideProgressDialog();
@@ -679,72 +685,98 @@ public class ConnectWifiController implements
     }
 
     private void getAllSsid() {
-        if (isScaning) {
-            LogTools.i("getAllSsid  isScaning");
-            return;
-        }
-        isScaning = true;
-        showProgressDialog();
-        NetCtrl.get(mContext, "getAllSsid", null, new HttpRequestCallBack() {
+        // if (isScaning) {
+        // LogTools.i("getAllSsid isScaning");
+        // return;
+        // }
+        // isScaning = true;
+        // showProgressDialog();
+        // list = WifiUtils.queryAllWifiList(mContext);
+        // fdeWifiAdapter.notifyDataSetChanged();
+        // hideProgressDialog();
+        // isScaning = false;
+
+        NetCtrl.getData(mContext, "", new DatabaseRequestCallBack() {
             @Override
-            public void callBackListener(String result) {
-                LogTools.i("callBackListener:getAllSsid  result-- >" + result);
-                String str = result;
-                try {
-                    if (str != null) {
-                        String[] arrWifis = str.split("\n");
-                        if (arrWifis != null && arrWifis.length > 0) {
-                            if (list != null) {
-                                list.clear();
-                            }
-                        }
-                        for (String wi : arrWifis) {
-                            // spinnerAdapter.add(wi);
-                            // mInterfacesInPosition.add(wi);
-                            if (!wi.startsWith(":")) {
-                                String[] arrInfo = wi.split(":");
-                                Map<String, Object> mp = new HashMap<>();
-                                mp.put("name", arrInfo[0]);
-                                mp.put("isEncrypted", "");
-                                mp.put("isSaved", "0");
-                                mp.put("signal", arrInfo[1]);
-                                mp.put("encryption", arrInfo[2]);
-                                mp.put("curNet", -1);
-                                list.add(mp);
-                            }
-                        }
-
-                    } else {
-                        fdeWifiAdapter.notifyDataSetChanged();
-                        hideProgressDialog();
-                        isScaning = false;
-                    }
-                    Collections.sort(list, new Comparator<Map<String, Object>>() {
-                        @Override
-                        public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                            return Long.compare(StringUtils.ToLong(o2.get("signal")),
-                                    StringUtils.ToLong(o1.get("signal")));
-                        }
-                    });
-                    // fdeWifiAdapter.notifyDataSetChanged();
-                    connectedWifiList();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    fdeWifiAdapter.notifyDataSetChanged();
-                    hideProgressDialog();
-                    isScaning = false;
+            public void callBackListener(List<Map<String, Object>> result) {
+                if (list != null && result != null) {
+                    LogTools.i("getAllSsid result " + result.size());
+                    list.clear();
+                    list.addAll(result);
+                } else {
+                    list = new ArrayList<>();
                 }
-
+                fdeWifiAdapter.notifyDataSetChanged();
+                hideProgressDialog();
             }
 
             @Override
             public void requestFail(String errorString, int code) {
-                LogTools.i("requestFail: getAllSsid errorString-- >" + errorString + " ,code " + code);
                 hideProgressDialog();
-                fdeWifiAdapter.notifyDataSetChanged();
-                isScaning = false;
             }
         });
+
+        // NetCtrl.get(mContext, "getAllSsid", null, new HttpRequestCallBack() {
+        // @Override
+        // public void callBackListener(String result) {
+        // LogTools.i("callBackListener:getAllSsid result-- >" + result);
+        // String str = result;
+        // try {
+        // if (str != null) {
+        // String[] arrWifis = str.split("\n");
+        // if (arrWifis != null && arrWifis.length > 0) {
+        // if (list != null) {
+        // list.clear();
+        // }
+        // }
+        // for (String wi : arrWifis) {
+        // // spinnerAdapter.add(wi);
+        // // mInterfacesInPosition.add(wi);
+        // if (!wi.startsWith(":")) {
+        // String[] arrInfo = wi.split(":");
+        // Map<String, Object> mp = new HashMap<>();
+        // mp.put("name", arrInfo[0]);
+        // mp.put("isEncrypted", "");
+        // mp.put("isSaved", "0");
+        // mp.put("signal", arrInfo[1]);
+        // mp.put("encryption", arrInfo[2]);
+        // mp.put("curNet", -1);
+        // list.add(mp);
+        // }
+        // }
+
+        // } else {
+        // fdeWifiAdapter.notifyDataSetChanged();
+        // hideProgressDialog();
+        // isScaning = false;
+        // }
+        // Collections.sort(list, new Comparator<Map<String, Object>>() {
+        // @Override
+        // public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+        // return Long.compare(StringUtils.ToLong(o2.get("signal")),
+        // StringUtils.ToLong(o1.get("signal")));
+        // }
+        // });
+        // // fdeWifiAdapter.notifyDataSetChanged();
+        // connectedWifiList();
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // fdeWifiAdapter.notifyDataSetChanged();
+        // hideProgressDialog();
+        // isScaning = false;
+        // }
+
+        // }
+
+        // @Override
+        // public void requestFail(String errorString, int code) {
+        // LogTools.i("requestFail: getAllSsid errorString-- >" + errorString + " ,code
+        // " + code);
+        // hideProgressDialog();
+        // fdeWifiAdapter.notifyDataSetChanged();
+        // isScaning = false;
+        // }
+        // });
     }
 
     private void forgetWifi(String ssid) {
@@ -754,7 +786,10 @@ public class ConnectWifiController implements
             @Override
             public void callBackListener(String result) {
                 LogTools.i("callBackListener:forgetWifi  result-- >" + result);
-                connectedWifiList();
+                // WifiUtils.deleteWifiList(mContext, "WIFI_NAME = ?", new String[] { ssid });
+                WifiUtils.updateWifiListSaveStatus(mContext, "WIFI_NAME = ?", new String[] { ssid }, "0");
+                getAllSsid();
+                // connectedWifiList();
             }
 
             @Override
