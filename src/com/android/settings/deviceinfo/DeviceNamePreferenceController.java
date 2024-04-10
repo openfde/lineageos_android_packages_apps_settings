@@ -76,7 +76,7 @@ public class DeviceNamePreferenceController extends BasePreferenceController
         mDeviceName = Settings.Global.getString(mContext.getContentResolver(),
                 Settings.Global.DEVICE_NAME);
         if (mDeviceName == null) {
-            mDeviceName = Build.MODEL;
+            mDeviceName = "OpenFDE device";// Build.MODEL;
         }
     }
 
@@ -104,7 +104,8 @@ public class DeviceNamePreferenceController extends BasePreferenceController
     @Override
     public boolean isTextValid(String deviceName) {
         // BluetoothNameDialogFragment describes BT name filter as a 248 bytes long cap.
-        // Given the restrictions presented by the SSID name filter (32 char), I don't believe it is
+        // Given the restrictions presented by the SSID name filter (32 char), I don't
+        // believe it is
         // possible to construct an SSID that is not a valid Bluetooth name.
         return mWifiDeviceNameTextValidator.isTextValid(deviceName);
     }
@@ -144,8 +145,10 @@ public class DeviceNamePreferenceController extends BasePreferenceController
     }
 
     /**
-     * Using a UTF8ByteLengthFilter, we can filter a string to be compliant with the Bluetooth spec.
-     * For more information, see {@link com.android.settings.bluetooth.BluetoothNameDialogFragment}.
+     * Using a UTF8ByteLengthFilter, we can filter a string to be compliant with the
+     * Bluetooth spec.
+     * For more information, see
+     * {@link com.android.settings.bluetooth.BluetoothNameDialogFragment}.
      */
     private static final String getFilteredBluetoothString(final String deviceName) {
         CharSequence filteredSequence = new BluetoothLengthDeviceNameFilter().filter(deviceName, 0,
@@ -161,7 +164,8 @@ public class DeviceNamePreferenceController extends BasePreferenceController
 
     private void setTetherSsidName(String deviceName) {
         final SoftApConfiguration config = mWifiManager.getSoftApConfiguration();
-        // TODO: If tether is running, turn off the AP and restart it after setting config.
+        // TODO: If tether is running, turn off the AP and restart it after setting
+        // config.
         mWifiManager.setSoftApConfiguration(
                 new SoftApConfiguration.Builder(config).setSsid(deviceName).build());
     }
