@@ -12277,4 +12277,10 @@
     <string name="fde_tips">Warning</string>
     <string name="fde_clean_tips">is all clean ?</string>
     <string name="fde_reset_tips">Restore the default configuration?</string>
+	<string name="fde_sync_config_from_gitee">Do you want to synchronize the latest configuration from Server?</string>
+    <string name="set_gps_info">Set GPS info</string>
+    <string name="set_success">Set success</string>
+    <string name="fde_country">Country</string>
+    <string name="fde_province">Province</string>
+    <string name="fde_city">City</string>
 </resources>

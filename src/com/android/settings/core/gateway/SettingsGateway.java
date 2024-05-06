@@ -116,6 +116,7 @@ import com.android.settings.network_fde.SetWifiFromHostFragment;
 import com.android.settings.network_fde.SetEthernetFromHostFragment;
 import com.android.settings.network_fde.SetNetworkFromHostFragment;
 import com.android.settings.compatible.SetCompatibleFragment;
+import com.android.settings.location.SetGpsFragment;
 import com.android.settings.nfc.AndroidBeam;
 import com.android.settings.nfc.PaymentSettings;
 import com.android.settings.notification.ConfigureNotificationSettings;
@@ -293,6 +294,7 @@ public class SettingsGateway {
                         SetWifiFromHostFragment.class.getName(),
                         SetNetworkFromHostFragment.class.getName(),
                         SetCompatibleFragment.class.getName(),
+                        SetGpsFragment.class.getName(),
                         SetEthernetFromHostFragment.class.getName(),
                         ConnectedDeviceDashboardFragment.class.getName(),
                         UsbDetailsFragment.class.getName(),

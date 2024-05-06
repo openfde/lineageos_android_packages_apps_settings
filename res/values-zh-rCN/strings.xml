@@ -5019,4 +5019,10 @@
     <string name="fde_tips">提示</string>
     <string name="fde_clean_tips">是否清空所有配置?</string>
     <string name="fde_reset_tips">是否恢复默认配置?</string>
+	  <string name="fde_sync_config_from_gitee">是否从服务器同步最新配置?</string>
+    <string name="set_gps_info">设置GPS信息</string>
+    <string name="set_success">设置成功</string>
+    <string name="fde_country">国家</string>
+    <string name="fde_province">省份</string>
+    <string name="fde_city">城市</string>
 </resources>
