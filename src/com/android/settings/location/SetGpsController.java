@@ -31,6 +31,7 @@ import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.LocalSocketAddress.Namespace;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 
 import android.provider.Settings;
 
@@ -51,11 +52,11 @@ public class SetGpsController {
     List<String> listProvinces;
     List<String> listCitys;
 
-    List<String> listCityIds;
+    List<String> listCityGps;
 
     Context context;
 
-    String cityId;
+    String gpsValue;
 
     int indexCountry = 0;
     int indexProvince = 0;
@@ -74,6 +75,23 @@ public class SetGpsController {
         spProvince = (Spinner) rootView.findViewById(R.id.spProvince);
         spCity = (Spinner) rootView.findViewById(R.id.spCity);
         imgSave = (ImageView) rootView.findViewById(R.id.imgSave);
+
+        spCountry.setDropDownVerticalOffset(30);
+        spProvince.setDropDownVerticalOffset(30);
+        spCity.setDropDownVerticalOffset(30);
+
+        try {
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+            android.widget.ListPopupWindow popupWindowPr = (android.widget.ListPopupWindow) popup.get(spProvince);
+            android.widget.ListPopupWindow popupWindowCo = (android.widget.ListPopupWindow) popup.get(spCountry);
+            android.widget.ListPopupWindow popupWindowCi = (android.widget.ListPopupWindow) popup.get(spCity);
+            popupWindowCi.setHeight(300);
+            popupWindowPr.setHeight(300);
+            popupWindowCo.setHeight(300);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initData() {
@@ -98,7 +116,7 @@ public class SetGpsController {
             String locationGps = spCountry.getSelectedItemId() + "~" + spProvince.getSelectedItemId() + "~"
                     + spCity.getSelectedItemId();
             Settings.Global.putString(context.getContentResolver(), "locationGps", locationGps);
-            setGps(cityId);
+            setGps(gpsValue);
         });
 
         String locationGps = Settings.Global.getString(context.getContentResolver(), "locationGps");
@@ -168,7 +186,7 @@ public class SetGpsController {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 LogTools.i("spCity onItemSelected: " + i);
-                cityId = listCityIds.get(i);
+                gpsValue = listCityGps.get(i);
             }
 
             @Override
@@ -292,8 +310,7 @@ public class SetGpsController {
         }
         String[] selectionArgs = { province };
         List<String> list = null;
-        listCityIds = new ArrayList<>();
-        listCityIds.clear();
+        listCityGps = new ArrayList<>();
 
         try {
             ContentResolver contentResolver = context.getContentResolver();
@@ -302,7 +319,8 @@ public class SetGpsController {
                 list = new ArrayList<>();
                 do {
                     String CITY_ID = cursor.getString(cursor.getColumnIndex("CITY_ID"));
-                    listCityIds.add(CITY_ID);
+                    String GPS = cursor.getString(cursor.getColumnIndex("GPS"));
+                    listCityGps.add(GPS);
                     if (isChineseLanguage) {
                         String CITY_NAME = cursor.getString(cursor.getColumnIndex("CITY_NAME"));
                         list.add(CITY_NAME);
@@ -313,7 +331,7 @@ public class SetGpsController {
 
                 } while (cursor.moveToNext());
             }
-            cityId = listCityIds.get(0);
+            gpsValue = listCityGps.get(0);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -326,7 +344,6 @@ public class SetGpsController {
 
     private void setGps(String value) {
         LogTools.i("setGps value: " + value);
-        String cityValue = value.replace("CI_", "");
         String address = "/tmp/unix.str";
         LocalSocket clientSocket = new LocalSocket();
         LocalSocketAddress locSockAddr = new LocalSocketAddress(address, Namespace.FILESYSTEM);
