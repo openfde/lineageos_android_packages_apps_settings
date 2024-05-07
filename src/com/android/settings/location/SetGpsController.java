@@ -34,6 +34,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 
 import android.provider.Settings;
+import android.graphics.PorterDuff;
 
 public class SetGpsController {
     public static final String REGION_URI = "content://com.boringdroid.systemuiprovider.region";
@@ -76,6 +77,8 @@ public class SetGpsController {
         spCity = (Spinner) rootView.findViewById(R.id.spCity);
         imgSave = (ImageView) rootView.findViewById(R.id.imgSave);
 
+        // imgSave.setColorFilter(R.color.blue, PorterDuff.Mode.SRC_IN);
+
         spCountry.setDropDownVerticalOffset(30);
         spProvince.setDropDownVerticalOffset(30);
         spCity.setDropDownVerticalOffset(30);
@@ -89,6 +92,7 @@ public class SetGpsController {
             popupWindowCi.setHeight(300);
             popupWindowPr.setHeight(300);
             popupWindowCo.setHeight(300);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -344,6 +348,7 @@ public class SetGpsController {
 
     private void setGps(String value) {
         LogTools.i("setGps value: " + value);
+        value = value.replace("\n", "").trim();
         String address = "/tmp/unix.str";
         LocalSocket clientSocket = new LocalSocket();
         LocalSocketAddress locSockAddr = new LocalSocketAddress(address, Namespace.FILESYSTEM);
