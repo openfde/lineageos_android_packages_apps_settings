@@ -326,6 +326,7 @@ public class SetGpsController {
 
     private void setGps(String value) {
         LogTools.i("setGps value: " + value);
+        String cityValue = value.replace("CI_", "");
         String address = "/tmp/unix.str";
         LocalSocket clientSocket = new LocalSocket();
         LocalSocketAddress locSockAddr = new LocalSocketAddress(address, Namespace.FILESYSTEM);
