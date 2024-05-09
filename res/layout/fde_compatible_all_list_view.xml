@@ -59,6 +59,13 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
+            android:id="@+id/imgRefresh"
+            android:layout_width="20dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/icon_sync"
+            android:layout_height="22dp"/>  
+
+        <ImageView
             android:id="@+id/imgRecovery"
             android:layout_width="20dp"
             android:layout_marginRight="8dp"

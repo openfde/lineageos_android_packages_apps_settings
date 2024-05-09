@@ -547,4 +547,13 @@ public class Settings extends SettingsActivity {
         }
 
     }
+
+    public static class GpsSetActivity extends SettingsActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setTheme(android.R.styleable.Theme_windowNoTitle);
+        }
+
+    }
 }

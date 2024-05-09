@@ -28,6 +28,7 @@ public class SetCompatibleController implements OnItemClickListener {
     private LinearLayout layoutAppName;
     private TextView txtAppName;
     private ImageView imgClean;
+    private ImageView imgRefresh;
     private ImageView imgApp;
     private ImageView imgRecovery;
 
@@ -50,6 +51,7 @@ public class SetCompatibleController implements OnItemClickListener {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         txtAppName = (TextView) view.findViewById(R.id.txtAppName);
         imgClean = (ImageView) view.findViewById(R.id.imgClean);
+        imgRefresh = (ImageView) view.findViewById(R.id.imgRefresh);
         imgApp = (ImageView) view.findViewById(R.id.imgApp);
         imgRecovery = (ImageView) view.findViewById(R.id.imgRecovery);
         layoutAppName = (LinearLayout) view.findViewById(R.id.layoutAppName);
@@ -61,9 +63,18 @@ public class SetCompatibleController implements OnItemClickListener {
         recyclerView.setAdapter(compatibleListAdapter);
 
         if (packageName == null) {
-            layoutAppName.setVisibility(View.GONE);
+            imgRefresh.setVisibility(View.VISIBLE);
+            imgClean.setVisibility(View.GONE);
+            imgApp.setVisibility(View.GONE);
+            imgRecovery.setVisibility(View.GONE);
+            txtAppName.setText(R.string.fde_compatible_set);
+            // layoutAppName.setVisibility(View.GONE);
         } else {
-            layoutAppName.setVisibility(View.VISIBLE);
+            imgRefresh.setVisibility(View.GONE);
+            imgClean.setVisibility(View.VISIBLE);
+            imgApp.setVisibility(View.VISIBLE);
+            imgRecovery.setVisibility(View.VISIBLE);
+            // layoutAppName.setVisibility(View.VISIBLE);
             txtAppName.setText(appName);
             AppData appData = CompUtils.getAppInfo(context, packageName);
             if (appData != null) {
@@ -110,6 +121,31 @@ public class SetCompatibleController implements OnItemClickListener {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         CompatibleConfig.deleteValueData(context, packageName);
+                                        getData();
+                                    }
+                                })
+                        .setNegativeButton(context.getString(R.string.fde_btn_cancel),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .show();
+            }
+        });
+
+        imgRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(context.getString(R.string.fde_tips))
+                        .setMessage(context.getString(R.string.fde_sync_config_from_gitee))
+                        .setPositiveButton(context.getString(R.string.fde_btn_confirm),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        CompatibleConfig.syncListData(context);
                                         getData();
                                     }
                                 })

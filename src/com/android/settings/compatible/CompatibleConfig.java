@@ -252,8 +252,8 @@ public class CompatibleConfig {
         Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_LIST");
         List<Map<String, Object>> list = null;
         Cursor cursor = null;
-        String selection = null;
-        String[] selectionArgs = null;
+        String selection = "IS_DEL != 1";
+        String[] selectionArgs = {};
         try {
 
             ContentResolver contentResolver = context.getContentResolver();
@@ -298,6 +298,18 @@ public class CompatibleConfig {
             ContentValues values = new ContentValues();
             values.put("PACKAGE_NAME", packageName);
             values.put("KEY_CODE", keycode);
+            values.put("IS_DEL", "0");
+            Uri resUri = context.getContentResolver()
+                    .insert(uri, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void syncListData(Context context) {
+        try {
+            Uri uri = Uri.parse(COMPATIBLE_URI + "/SYNC_LIST");
+            ContentValues values = new ContentValues();
             values.put("IS_DEL", "0");
             Uri resUri = context.getContentResolver()
                     .insert(uri, values);
