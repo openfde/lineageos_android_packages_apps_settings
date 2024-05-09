@@ -2,11 +2,11 @@ package com.android.settings.location;
 
 import android.view.View;
 import android.content.Context;
-import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import android.net.Uri;
 import android.database.Cursor;
@@ -35,19 +35,26 @@ import java.lang.reflect.Field;
 
 import android.provider.Settings;
 import android.graphics.PorterDuff;
+import android.widget.PopupWindow;
+import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
+import android.view.MotionEvent;
+import androidx.core.widget.PopupWindowCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 public class SetGpsController {
     public static final String REGION_URI = "content://com.boringdroid.systemuiprovider.region";
 
-    Spinner spCountry;
-    Spinner spProvince;
-    Spinner spCity;
-
     ImageView imgSave;
 
-    ArrayAdapter<String> countryAdapter;
-    ArrayAdapter<String> provinceAdapter;
-    ArrayAdapter<String> cityAdapter;
+    TextView txtCountry;
+    TextView txtProvince;
+    TextView txtCity;
 
     List<String> listCountrys;
     List<String> listProvinces;
@@ -64,6 +71,10 @@ public class SetGpsController {
     int indexCity = 0;
     boolean isChineseLanguage;
 
+    SimpleAdapter adapterCountry;
+    SimpleAdapter adapterProvince;
+    SimpleAdapter adapterCity;
+
     public SetGpsController(Context context, View rootView) {
         this.context = context;
         initView(rootView);
@@ -72,30 +83,31 @@ public class SetGpsController {
     }
 
     private void initView(View rootView) {
-        spCountry = (Spinner) rootView.findViewById(R.id.spCountry);
-        spProvince = (Spinner) rootView.findViewById(R.id.spProvince);
-        spCity = (Spinner) rootView.findViewById(R.id.spCity);
         imgSave = (ImageView) rootView.findViewById(R.id.imgSave);
-
+        txtCountry = (TextView) rootView.findViewById(R.id.txtCountry);
+        txtProvince = (TextView) rootView.findViewById(R.id.txtProvince);
+        txtCity = (TextView) rootView.findViewById(R.id.txtCity);
         // imgSave.setColorFilter(R.color.blue, PorterDuff.Mode.SRC_IN);
+        txtCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPopWindow(txtCountry, adapterCountry);
+            }
+        });
 
-        spCountry.setDropDownVerticalOffset(30);
-        spProvince.setDropDownVerticalOffset(30);
-        spCity.setDropDownVerticalOffset(30);
+        txtProvince.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPopWindow(txtProvince, adapterProvince);
+            }
+        });
 
-        try {
-            Field popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
-            android.widget.ListPopupWindow popupWindowPr = (android.widget.ListPopupWindow) popup.get(spProvince);
-            android.widget.ListPopupWindow popupWindowCo = (android.widget.ListPopupWindow) popup.get(spCountry);
-            android.widget.ListPopupWindow popupWindowCi = (android.widget.ListPopupWindow) popup.get(spCity);
-            popupWindowCi.setHeight(300);
-            popupWindowPr.setHeight(300);
-            popupWindowCo.setHeight(300);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        txtCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPopWindow(txtCity, adapterCity);
+            }
+        });
     }
 
     private void initData() {
@@ -103,22 +115,63 @@ public class SetGpsController {
         listProvinces = new ArrayList<>();
         listCitys = new ArrayList<>();
 
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item,
-                listCountrys);
-        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spCountry.setAdapter(countryAdapter);
+        adapterCountry = new SimpleAdapter(context, listCountrys, new SimpleAdapter.ItemClick() {
+            @Override
+            public void setOnItemClick(int pos) {
+                txtCountry.setText(listCountrys.get(pos));
+                popWindow.dismiss();
+                listProvinces.clear();
+                List<String> tempPList = queryProvincesByCountry(listCountrys.get(pos));
+                if (tempPList != null) {
+                    listProvinces.addAll(tempPList);
+                    adapterProvince.notifyDataSetChanged();
 
-        provinceAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listProvinces);
-        provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spProvince.setAdapter(provinceAdapter);
-
-        cityAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listCitys);
-        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spCity.setAdapter(cityAdapter);
+                    if (pos != indexCountry) {
+                        txtProvince.setText(listProvinces.get(0));
+                    }
+                    indexCountry = pos;
+                    List<String> tempCList = queryCitysByProvince(listProvinces.get(0));
+                    if (tempCList != null) {
+                        listCitys.clear();
+                        listCitys.addAll(tempCList);
+                        adapterCity.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+        adapterProvince = new SimpleAdapter(context, listProvinces, new SimpleAdapter.ItemClick() {
+            @Override
+            public void setOnItemClick(int pos) {
+                txtProvince.setText(listProvinces.get(pos));
+                popWindow.dismiss();
+                listCitys.clear();
+                List<String> tempCList = queryCitysByProvince(listProvinces.get(pos));
+                if (tempCList != null) {
+                    listCitys.addAll(tempCList);
+                    adapterCity.notifyDataSetChanged();
+                    if (pos != indexProvince) {
+                        txtCity.setText(listCitys.get(0));
+                    }
+                    indexProvince = pos;
+                }
+            }
+        });
+        adapterCity = new SimpleAdapter(context, listCitys, new SimpleAdapter.ItemClick() {
+            @Override
+            public void setOnItemClick(int pos) {
+                txtCity.setText(listCitys.get(pos));
+                popWindow.dismiss();
+                gpsValue = listCityGps.get(pos);
+                indexCity = pos;
+            }
+        });
 
         imgSave.setOnClickListener(view -> {
-            String locationGps = spCountry.getSelectedItemId() + "~" + spProvince.getSelectedItemId() + "~"
-                    + spCity.getSelectedItemId();
+            // String locationGps = spCountry.getSelectedItemId() + "~" +
+            // spProvince.getSelectedItemId() + "~"
+            // + spCity.getSelectedItemId();
+            String locationGps = indexCountry + "~" + indexProvince + "~"
+                    + indexCity;
             Settings.Global.putString(context.getContentResolver(), "locationGps", locationGps);
             setGps(gpsValue);
         });
@@ -136,69 +189,6 @@ public class SetGpsController {
             }
         }
 
-        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                LogTools.i("spCountry onItemSelected: " + i);
-                listProvinces.clear();
-                List<String> tempPList = queryProvincesByCountry(listCountrys.get(i));
-                if (tempPList != null) {
-                    listProvinces.addAll(tempPList);
-                    provinceAdapter.notifyDataSetChanged();
-
-                    if (i != indexCountry) {
-                        spProvince.setSelection(0);
-                    }
-
-                    List<String> tempCList = queryCitysByProvince(listProvinces.get(0));
-                    if (tempCList != null) {
-                        listCitys.clear();
-                        listCitys.addAll(tempCList);
-                        cityAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        spProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                LogTools.i("spProvince onItemSelected: " + i);
-                listCitys.clear();
-                List<String> tempCList = queryCitysByProvince(listProvinces.get(i));
-                if (tempCList != null) {
-                    listCitys.addAll(tempCList);
-                    cityAdapter.notifyDataSetChanged();
-                    if (i != indexProvince) {
-                        spCity.setSelection(0);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                LogTools.i("spCity onItemSelected: " + i);
-                gpsValue = listCityGps.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         try {
             LogTools.i("queryAllCountry  indexCountry: " + indexCountry + ",indexProvince: " + indexProvince
                     + ",indexCity:"
@@ -206,28 +196,66 @@ public class SetGpsController {
             List<String> tempList = queryAllCountry();
             if (tempList != null) {
                 listCountrys.addAll(queryAllCountry());
-                countryAdapter.notifyDataSetChanged();
+                adapterCountry.notifyDataSetChanged();
 
                 if (tempList.size() > 0) {
-                    List<String> tempPList = queryProvincesByCountry(listCountrys.get(0));
+                    List<String> tempPList = queryProvincesByCountry(listCountrys.get(indexCountry));
                     if (tempPList != null) {
                         listProvinces.addAll(tempPList);
-                        provinceAdapter.notifyDataSetChanged();
+                        adapterProvince.notifyDataSetChanged();
 
-                        List<String> tempCList = queryCitysByProvince(listProvinces.get(0));
+                        List<String> tempCList = queryCitysByProvince(listProvinces.get(indexProvince));
                         if (tempCList != null) {
                             listCitys.addAll(tempCList);
-                            cityAdapter.notifyDataSetChanged();
-
-                            spCountry.setSelection(indexCountry);
-                            spProvince.setSelection(indexProvince);
-                            spCity.setSelection(indexCity);
+                            adapterCity.notifyDataSetChanged();
+                            txtCountry.setText(listCountrys.get(indexCountry));
+                            txtProvince.setText(listProvinces.get(indexProvince));
+                            txtCity.setText(listCitys.get(indexCity));
                         }
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private PopupWindow popWindow;
+
+    @SuppressLint("WrongConstant")
+    private void initPopWindow(View v, SimpleAdapter simpleAdapter) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_popip, null, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        LinearLayoutManager lm = new LinearLayoutManager(context);
+        lm.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(simpleAdapter);
+
+        if (null == popWindow) {
+            popWindow = new PopupWindow(view,
+                    200, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+            popWindow.setFocusable(false);// 底部导航消失
+            popWindow.setSoftInputMode(popWindow.INPUT_METHOD_NEEDED);
+            popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            popWindow.setTouchable(true);
+            popWindow.setTouchInterceptor(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return false;
+                }
+            });
+            //
+            popWindow.setOutsideTouchable(true);//
+            popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {// 消失后的处理
+                @Override
+                public void onDismiss() {
+                    popWindow = null;
+                }
+            });
+            // 要为popWindow设置一个背景才有效
+            popWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+            PopupWindowCompat.showAsDropDown(popWindow, v, 0, 0, Gravity.START);
         }
 
     }
