@@ -46,6 +46,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.app.Activity;
 
 public class SetGpsController {
     public static final String REGION_URI = "content://com.boringdroid.systemuiprovider.region";
@@ -55,6 +56,7 @@ public class SetGpsController {
     TextView txtCountry;
     TextView txtProvince;
     TextView txtCity;
+    ImageView imgBack;
 
     List<String> listCountrys;
     List<String> listProvinces;
@@ -63,6 +65,8 @@ public class SetGpsController {
     List<String> listCityGps;
 
     Context context;
+
+    Activity activity;
 
     String gpsValue;
 
@@ -75,8 +79,9 @@ public class SetGpsController {
     SimpleAdapter adapterProvince;
     SimpleAdapter adapterCity;
 
-    public SetGpsController(Context context, View rootView) {
-        this.context = context;
+    public SetGpsController(Activity activity, View rootView) {
+        this.context = activity;
+        this.activity = activity;
         initView(rootView);
         isChineseLanguage = CompUtils.isChineseLanguage(context);
         initData();
@@ -87,7 +92,15 @@ public class SetGpsController {
         txtCountry = (TextView) rootView.findViewById(R.id.txtCountry);
         txtProvince = (TextView) rootView.findViewById(R.id.txtProvince);
         txtCity = (TextView) rootView.findViewById(R.id.txtCity);
+        imgBack = (ImageView) rootView.findViewById(R.id.imgBack);
         // imgSave.setColorFilter(R.color.blue, PorterDuff.Mode.SRC_IN);
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
         txtCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,10 +244,24 @@ public class SetGpsController {
         lm.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(simpleAdapter);
+        int height = FrameLayout.LayoutParams.WRAP_CONTENT;
 
         if (null == popWindow) {
+            if (v.getId() == R.id.txtCountry) {
+                if (listCountrys.size() > 10) {
+                    height = 200;
+                }
+            } else if (v.getId() == R.id.txtProvince) {
+                if (listProvinces.size() > 10) {
+                    height = 200;
+                }
+            } else {
+                if (listCitys.size() > 10) {
+                    height = 200;
+                }
+            }
             popWindow = new PopupWindow(view,
-                    200, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+                    200, height, true);
             popWindow.setFocusable(false);// 底部导航消失
             popWindow.setSoftInputMode(popWindow.INPUT_METHOD_NEEDED);
             popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -255,7 +282,8 @@ public class SetGpsController {
             });
             // 要为popWindow设置一个背景才有效
             popWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-            PopupWindowCompat.showAsDropDown(popWindow, v, 0, 0, Gravity.START);
+            // PopupWindowCompat.showAsDropDown(popWindow, v, 0, 0, Gravity.START);
+            PopupWindowCompat.showAsDropDown(popWindow, v, -50, 10, Gravity.RIGHT);
         }
 
     }

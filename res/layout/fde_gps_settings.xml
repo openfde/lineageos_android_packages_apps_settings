@@ -29,13 +29,25 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="#eee"
         android:paddingHorizontal="16dp"
         android:layout_height="48dp">
+
+        <ImageView
+            android:src="@drawable/icon_left"
+            android:layout_width="28dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/imgBack"
+            android:layout_height="24dp"/>
 
         <TextView
             android:text="@string/set_gps_info"
             android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@id/imgBack"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
