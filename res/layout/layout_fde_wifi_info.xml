@@ -61,6 +61,7 @@
         android:layout_width="match_parent"
         android:paddingVertical="8dp"
         android:paddingHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -96,6 +97,7 @@
         android:textSize="20sp"
         android:paddingVertical="6dp"
         android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content"/>
 
