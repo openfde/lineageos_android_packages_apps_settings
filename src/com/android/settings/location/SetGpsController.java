@@ -32,6 +32,9 @@ import android.net.LocalSocketAddress;
 import android.net.LocalSocketAddress.Namespace;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import android.provider.Settings;
 import android.graphics.PorterDuff;
@@ -403,8 +406,38 @@ public class SetGpsController {
     }
 
     private void setGps(String value) {
+        //setGps value: $GPGGA,,28.228304,N,112.938882,E,,,,58,M
         LogTools.i("setGps value: " + value);
         value = value.replace("\n", "").trim();
+        if(value.contains(",")){
+            try {
+                String[] arrAddress = value.split(",");
+                double longitude = StringUtils.ToDouble(arrAddress[4]);
+                double latitude = StringUtils.ToDouble(arrAddress[2]);
+    
+                BigDecimal bigLongitude = new BigDecimal(longitude);
+                bigLongitude = bigLongitude.setScale(2, RoundingMode.DOWN);
+    
+                BigDecimal bigLatitude = new BigDecimal(latitude);
+                bigLatitude = bigLatitude.setScale(2, RoundingMode.DOWN);
+    
+                double randomLong = Math.random() * 0.009999;
+                double randomLat = Math.random() * 0.009999;
+    
+                double newLongitude = StringUtils.ToDouble(bigLongitude.toString()) + randomLong;
+                double newLatitude = StringUtils.ToDouble(bigLatitude.toString()) + randomLat;
+    
+                DecimalFormat df = new DecimalFormat("0.000000");
+    
+                arrAddress[4] = df.format(newLongitude);
+                arrAddress[2] = df.format(newLatitude) ;
+    
+                value = String.join(",",arrAddress);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        LogTools.i("setGps2  value: " + value);
         String address = "/tmp/unix.str";
         LocalSocket clientSocket = new LocalSocket();
         LocalSocketAddress locSockAddr = new LocalSocketAddress(address, Namespace.FILESYSTEM);
