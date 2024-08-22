@@ -25,6 +25,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.SystemProperties;
 import android.text.BidiFormatter;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -78,7 +79,8 @@ public class BuildNumberPreferenceController extends BasePreferenceController im
 
     @Override
     public CharSequence getSummary() {
-        return BidiFormatter.getInstance().unicodeWrap(Build.DISPLAY);
+       // return BidiFormatter.getInstance().unicodeWrap(Build.DISPLAY);
+        return SystemProperties.get("ro.openfde.version", "Unknown");
     }
 
     @Override
