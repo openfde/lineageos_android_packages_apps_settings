@@ -36,7 +36,7 @@ import com.android.settings.R;
 import com.android.settings.core.InstrumentedFragment;
 import com.android.settings.core.SettingsBaseActivity;
 
-import lineageos.waydroid.Net;
+import android.openfde.Net;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import android.content.Context;
