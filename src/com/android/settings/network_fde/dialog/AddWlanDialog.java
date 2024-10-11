@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import lineageos.waydroid.Net;
+import android.openfde.Net;
 import androidx.annotation.NonNull;
 import com.android.settings.network_fde.AdapterItem;
 

@@ -16,7 +16,7 @@
 
 package com.android.settings.network_fde.api;
 
-import lineageos.waydroid.Net;
+import android.openfde.Net;
 
 import android.provider.Settings;
 import com.android.settings.utils.LogTools;
