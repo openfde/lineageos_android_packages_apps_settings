@@ -1,5 +1,6 @@
 package com.android.settings.compatible;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +14,11 @@ import android.content.pm.LauncherApps;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.content.Context;
-
+import com.android.settings.utils.LogTools;
 import org.json.JSONObject;
 
 import com.android.settings.utils.StringUtils;
-
+import java.lang.reflect.Method;
 public class CompUtils {
 
     public static List<AppData> getAllApps(Context context) {
@@ -74,6 +75,17 @@ public class CompUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static void setSystemProperty(String key, String value) {
+        try {
+            LogTools.i("setSystemProperty   key " + key + ",value "+ value);
+            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method setMethod = systemPropertiesClass.getDeclaredMethod("set", String.class, String.class);
+            setMethod.invoke(null, key, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

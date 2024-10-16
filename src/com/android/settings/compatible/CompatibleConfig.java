@@ -111,6 +111,7 @@ public class CompatibleConfig {
     public static void insertValueData(Context context, String appName, String packageName, String keycode,
             String value) {
         try {
+            CompUtils.setSystemProperty(packageName+"_"+keycode, value);                
             Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
             ContentValues values = new ContentValues();
             values.put("PACKAGE_NAME", packageName);
@@ -139,6 +140,7 @@ public class CompatibleConfig {
     public static int updateValueData(Context context, String appName, String packageName, String keycode,
             String newValue) {
         try {
+            CompUtils.setSystemProperty(packageName+"_"+keycode, newValue);                
             Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
             ContentValues values = new ContentValues();
             values.put("VALUE", newValue);
@@ -163,6 +165,7 @@ public class CompatibleConfig {
             String selection = "PACKAGE_NAME = ? AND KEY_CODE = ?";
             String[] selectionArgs = { packageName, keycode };
             int res = context.getContentResolver().delete(uri, selection, selectionArgs);
+            CompUtils.setSystemProperty(packageName+"_"+keycode, "");   
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,6 +191,13 @@ public class CompatibleConfig {
             int res = context.getContentResolver()
                     .update(uri, values, selection,
                             selectionArgs);
+
+            List<String> list = queryValueListALLKeyCodeByPackageName(context,packageName); 
+            if(list !=null){
+                for (String keycode : list) {
+                    CompUtils.setSystemProperty(packageName+"_"+keycode, "");  
+                }
+            }             
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,6 +211,12 @@ public class CompatibleConfig {
             String selection = null;
             String[] selectionArgs = null;
             int res = context.getContentResolver().delete(uri, selection, selectionArgs);
+            List<String> list = queryValueListALLKeyCode(context); 
+            // if(list !=null){
+            //     for (String keycode : list) {
+            //         CompUtils.setSystemProperty(packageName+"_"+keycode, "");  
+            //     }
+            // }   
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,6 +263,63 @@ public class CompatibleConfig {
         }
         return list;
     }
+
+    public static List<String> queryValueListALLKeyCodeByPackageName(Context context,String packageName) {
+        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        List<String> list = null;
+        Cursor cursor = null;
+        String selection = " PACKAGE_NAME = ?";
+        String[] selectionArgs = { packageName };
+        try {
+
+            ContentResolver contentResolver = context.getContentResolver();
+            cursor = contentResolver.query(uri, null, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                list = new ArrayList<>();
+                do {
+                    String KEY_CODE = cursor.getString(cursor.getColumnIndex("KEY_CODE"));
+                    list.add(KEY_CODE);
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+    public static List<String> queryValueListALLKeyCode(Context context) {
+        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        List<String> list = null;
+        Cursor cursor = null;
+        String selection = null;
+        String[] selectionArgs =null;
+        try {
+
+            ContentResolver contentResolver = context.getContentResolver();
+            cursor = contentResolver.query(uri, null, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                list = new ArrayList<>();
+                do {
+                    String KEY_CODE = cursor.getString(cursor.getColumnIndex("KEY_CODE"));
+                    list.add(KEY_CODE);
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
 
     public static List<Map<String, Object>> queryListData(Context context) {
         Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_LIST");

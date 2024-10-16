@@ -262,6 +262,7 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 // .show();
                 // return;
                 // }
+                    LogTools.i("txtConfirm packageName " + packageName + " ,keyCode " + keyCode);
                 if (TYPE_SELECT.equals(inputType)) {
                     Compatible compatible = list.get(position);
                     String content = StringUtils.ToString(compatible.getMp()).trim();
