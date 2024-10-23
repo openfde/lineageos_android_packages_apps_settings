@@ -176,15 +176,19 @@ public class CompatibleConfig {
 
     public static int deleteValueData(Context context, String packageName) {
         try {
+            // Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
+            // ContentValues values = new ContentValues();
+            // values.put("IS_DEL", "1");
+            // values.put("EDIT_DATE", getCurDateTime());
+            // String selection = "PACKAGE_NAME = ? ";
+            // String[] selectionArgs = { packageName };
+            // int res = context.getContentResolver()
+            //         .update(uri, values, selection,
+            //                 selectionArgs);
             Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
-            ContentValues values = new ContentValues();
-            values.put("IS_DEL", "1");
-            values.put("EDIT_DATE", getCurDateTime());
             String selection = "PACKAGE_NAME = ? ";
             String[] selectionArgs = { packageName };
-            int res = context.getContentResolver()
-                    .update(uri, values, selection,
-                            selectionArgs);
+            int res = context.getContentResolver().delete(uri, selection, selectionArgs);
 
             List<String> list = queryValueListALLKeyCodeByPackageName(context,packageName); 
             if(list !=null){
@@ -363,7 +367,7 @@ public class CompatibleConfig {
 
     public static void recoveryValueData(Context context, String packageName, String keycode) {
         try {
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/RECOVERY_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/RECOVERY_VALUE");
             ContentValues values = new ContentValues();
             values.put("PACKAGE_NAME", packageName);
             values.put("KEY_CODE", keycode);
