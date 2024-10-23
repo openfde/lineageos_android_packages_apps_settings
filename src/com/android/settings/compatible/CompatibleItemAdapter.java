@@ -45,7 +45,7 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Map<String, Object> itemMap = list.get(position);
         String packageName = StringUtils.ToString(itemMap.get("PACKAGE_NAME"));
-        String appName = StringUtils.ToString(itemMap.get("FIELDS1"));
+        String appName = StringUtils.ToString(itemMap.get("APP_NAME"));
 
         String valueStr = StringUtils.ToString(itemMap.get("VALUE"));
         // LogTools.i("mp " + mp.toString() + " , itemMap: " + itemMap + ",packageName "

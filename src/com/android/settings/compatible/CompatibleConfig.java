@@ -16,11 +16,11 @@ import android.content.Context;
 
 public class CompatibleConfig {
     public static final String COMPATIBLE_URI = "content://com.boringdroid.systemuiprovider";
-    public static final String KEY_CODE_IS_ALLOW_SCREENSHOT_AND_RECORD = "isAllowScreenshotAndRecord";
-    public static final String KEY_CODE_IS_ALLOW_HIDE_DECOR_CAPTION = "isAllowHideDecorCaption";
+    public static final String COMPATIBLE_VALUE_URI = "content://com.android.compatibleprovider";
+
 
     public static Map<String, Object> queryMapValueData(Context context, String packageName, String keycode) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         Cursor cursor = null;
         Map<String, Object> result = null;
         String selection = "PACKAGE_NAME = ? AND KEY_CODE = ? AND IS_DEL != 1 ";
@@ -53,7 +53,7 @@ public class CompatibleConfig {
     }
 
     public static Map<String, Object> queryMapValueDataHasDel(Context context, String packageName, String keycode) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         Cursor cursor = null;
         Map<String, Object> result = null;
         String selection = "PACKAGE_NAME = ? AND KEY_CODE = ? ";
@@ -86,7 +86,7 @@ public class CompatibleConfig {
     }
 
     public static String queryValueData(Context context, String packageName, String keycode) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         Cursor cursor = null;
         String result = null;
         String selection = "PACKAGE_NAME = ? AND KEY_CODE = ?  AND IS_DEL != 1";
@@ -112,14 +112,17 @@ public class CompatibleConfig {
             String value) {
         try {
             CompUtils.setSystemProperty(packageName+"_"+keycode, value);                
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             ContentValues values = new ContentValues();
+            String curTime = getCurDateTime();
             values.put("PACKAGE_NAME", packageName);
             values.put("KEY_CODE", keycode);
             values.put("VALUE", value);
-            values.put("EDIT_DATE", getCurDateTime());
-            values.put("FIELDS1", appName);
             values.put("IS_DEL", "0");
+            values.put("CREATE_DATE",curTime);
+            values.put("EDIT_DATE", curTime);
+            values.put("FIELDS1", curTime);
+            values.put("APP_NAME", appName);
             Uri resUri = context.getContentResolver()
                     .insert(uri, values);
         } catch (Exception e) {
@@ -141,10 +144,10 @@ public class CompatibleConfig {
             String newValue) {
         try {
             CompUtils.setSystemProperty(packageName+"_"+keycode, newValue);                
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             ContentValues values = new ContentValues();
             values.put("VALUE", newValue);
-            values.put("FIELDS1", appName);
+            values.put("APP_NAME", appName);
             values.put("IS_DEL", "0");
             values.put("EDIT_DATE", getCurDateTime());
             String selection = "PACKAGE_NAME = ? AND KEY_CODE = ?";
@@ -161,7 +164,7 @@ public class CompatibleConfig {
 
     public static void deleteValueData(Context context, String packageName, String keycode) {
         try {
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             String selection = "PACKAGE_NAME = ? AND KEY_CODE = ?";
             String[] selectionArgs = { packageName, keycode };
             int res = context.getContentResolver().delete(uri, selection, selectionArgs);
@@ -172,17 +175,8 @@ public class CompatibleConfig {
     }
 
     public static int deleteValueData(Context context, String packageName) {
-        // try {
-        // Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
-        // String selection = "PACKAGE_NAME = ?";
-        // String[] selectionArgs = { packageName };
-        // int res = context.getContentResolver().delete(uri, selection, selectionArgs);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
-
         try {
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             ContentValues values = new ContentValues();
             values.put("IS_DEL", "1");
             values.put("EDIT_DATE", getCurDateTime());
@@ -207,7 +201,7 @@ public class CompatibleConfig {
 
     public static void cleanValueData(Context context) {
         try {
-            Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+            Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             String selection = null;
             String[] selectionArgs = null;
             int res = context.getContentResolver().delete(uri, selection, selectionArgs);
@@ -223,7 +217,7 @@ public class CompatibleConfig {
     }
 
     public static List<Map<String, Object>> queryValueListData(Context context, String keycode) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         List<Map<String, Object>> list = null;
         Cursor cursor = null;
         String selection = " KEY_CODE = ?  AND IS_DEL != 1";
@@ -242,6 +236,7 @@ public class CompatibleConfig {
                     String VALUE = cursor.getString(cursor.getColumnIndex("VALUE"));
                     String NOTES = cursor.getString(cursor.getColumnIndex("NOTES"));
                     String FIELDS1 = cursor.getString(cursor.getColumnIndex("FIELDS1"));
+                    String APP_NAME = cursor.getString(cursor.getColumnIndex("APP_NAME"));
                     Map<String, Object> mp = new HashMap<>();
                     mp.put("_ID", _ID);
                     mp.put("PACKAGE_NAME", PACKAGE_NAME);
@@ -249,6 +244,7 @@ public class CompatibleConfig {
                     mp.put("KEY_CODE", KEY_CODE);
                     mp.put("NOTES", NOTES);
                     mp.put("FIELDS1", FIELDS1);
+                    mp.put("APP_NAME", APP_NAME);
                     mp.put("EDIT_DATE", EDIT_DATE);
                     list.add(mp);
                 } while (cursor.moveToNext());
@@ -265,7 +261,7 @@ public class CompatibleConfig {
     }
 
     public static List<String> queryValueListALLKeyCodeByPackageName(Context context,String packageName) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         List<String> list = null;
         Cursor cursor = null;
         String selection = " PACKAGE_NAME = ?";
@@ -293,7 +289,7 @@ public class CompatibleConfig {
     }
 
     public static List<String> queryValueListALLKeyCode(Context context) {
-        Uri uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE");
+        Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
         List<String> list = null;
         Cursor cursor = null;
         String selection = null;
