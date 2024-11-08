@@ -112,7 +112,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             for (Map<String, Object> mmm : listItem) {
                 AppData appData = CompUtils.getAppInfo(context, StringUtils.ToString(mmm.get("PACKAGE_NAME")));
                 if (appData == null) {
-                    if (StringUtils.ToString(mmm.get("FIELDS1")).contains("VNC_")) {
+                    if (StringUtils.ToString(mmm.get("APP_NAME")).contains("VNC_")) {
                         listTemp.add(mmm);
                     }
                 } else {
