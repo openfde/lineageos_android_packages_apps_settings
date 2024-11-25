@@ -76,6 +76,11 @@ public class SetGpsController {
     int indexCountry = 0;
     int indexProvince = 0;
     int indexCity = 0;
+
+    String curCountry = "";
+    String curProvince = "";
+    String curCity = "";
+
     boolean isChineseLanguage;
 
     SimpleAdapter adapterCountry;
@@ -189,10 +194,14 @@ public class SetGpsController {
             String locationGps = indexCountry + "~" + indexProvince + "~"
                     + indexCity;
             Settings.Global.putString(context.getContentResolver(), "locationGps", locationGps);
+            String locationGpsInfo = listCountrys.get(indexCountry) + "~" + listProvinces.get(indexProvince) + "~"
+            + listCitys.get(indexCity);
+            Settings.Global.putString(context.getContentResolver(), "locationGpsInfo", locationGpsInfo);
             setGps(gpsValue);
         });
 
         String locationGps = Settings.Global.getString(context.getContentResolver(), "locationGps");
+        String locationGpsInfo = Settings.Global.getString(context.getContentResolver(), "locationGpsInfo");
         LogTools.i("locationGps: " + locationGps);
         if (locationGps != null) {
             String[] arrLocationGps = locationGps.split("~");
@@ -200,6 +209,12 @@ public class SetGpsController {
                 indexCountry = StringUtils.ToInt(arrLocationGps[0]);
                 indexProvince = StringUtils.ToInt(arrLocationGps[1]);
                 indexCity = StringUtils.ToInt(arrLocationGps[2]);
+
+                String[] arrLocationGpsInfo = locationGpsInfo.split("~");
+                curCountry = arrLocationGpsInfo[0];
+                curProvince = arrLocationGpsInfo[1];
+                curCity = arrLocationGpsInfo[2];
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -213,20 +228,24 @@ public class SetGpsController {
             if (tempList != null) {
                 listCountrys.addAll(queryAllCountry());
                 adapterCountry.notifyDataSetChanged();
+                indexCountry = listCountrys.indexOf(curCountry);
+
 
                 if (tempList.size() > 0) {
                     List<String> tempPList = queryProvincesByCountry(listCountrys.get(indexCountry));
                     if (tempPList != null) {
                         listProvinces.addAll(tempPList);
                         adapterProvince.notifyDataSetChanged();
+                        indexProvince = listProvinces.indexOf(curProvince);
 
                         List<String> tempCList = queryCitysByProvince(listProvinces.get(indexProvince));
                         if (tempCList != null) {
                             listCitys.addAll(tempCList);
+                            indexCity = listCitys.indexOf(curCity);
                             adapterCity.notifyDataSetChanged();
-                            txtCountry.setText(listCountrys.get(indexCountry));
-                            txtProvince.setText(listProvinces.get(indexProvince));
-                            txtCity.setText(listCitys.get(indexCity));
+                            txtCountry.setText(curCountry);
+                            txtProvince.setText(curProvince);
+                            txtCity.setText(curCity);
                         }
                     }
                 }
