@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import com.android.settings.R;
+import android.util.Log;
 
 public class SetCompatibleController implements OnItemClickListener {
     private Context context;
@@ -34,6 +35,8 @@ public class SetCompatibleController implements OnItemClickListener {
 
     List<Map<String, Object>> list;
     CompatibleListAdapter compatibleListAdapter;
+
+    public static final String TAG = "SetCompatibleController";
 
     String packageName;
     String appName;

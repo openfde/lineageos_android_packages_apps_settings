@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.Log;
 
 public class CompatibleConfig {
     public static final String COMPATIBLE_URI = "content://com.boringdroid.systemuiprovider";
     public static final String COMPATIBLE_VALUE_URI = "content://com.android.compatibleprovider";
+    public static final String TAG = "CompatibleConfig";
 
 
     public static Map<String, Object> queryMapValueData(Context context, String packageName, String keycode) {
@@ -188,14 +190,16 @@ public class CompatibleConfig {
             Uri uri = Uri.parse(COMPATIBLE_VALUE_URI + "/COMPATIBLE_VALUE");
             String selection = "PACKAGE_NAME = ? ";
             String[] selectionArgs = { packageName };
-            int res = context.getContentResolver().delete(uri, selection, selectionArgs);
 
             List<String> list = queryValueListALLKeyCodeByPackageName(context,packageName); 
             if(list !=null){
                 for (String keycode : list) {
                     CompUtils.setSystemProperty(packageName+"_"+keycode, "");  
                 }
-            }             
+            } else{
+                Log.i(TAG,"bella deleteValueData list is null");
+            }   
+            int res = context.getContentResolver().delete(uri, selection, selectionArgs);    
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -271,7 +275,6 @@ public class CompatibleConfig {
         String selection = " PACKAGE_NAME = ?";
         String[] selectionArgs = { packageName };
         try {
-
             ContentResolver contentResolver = context.getContentResolver();
             cursor = contentResolver.query(uri, null, selection, selectionArgs, null);
             if (cursor != null && cursor.moveToFirst()) {
