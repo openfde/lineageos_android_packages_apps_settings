@@ -151,6 +151,8 @@ public class SetGpsController {
                         txtProvince.setText(listProvinces.get(0));
                     }
                     indexCountry = pos;
+                    indexProvince = 0;
+                    indexCity = 0;
                     List<String> tempCList = queryCitysByProvince(listProvinces.get(0));
                     if (tempCList != null) {
                         listCitys.clear();
@@ -174,6 +176,7 @@ public class SetGpsController {
                         txtCity.setText(listCitys.get(0));
                     }
                     indexProvince = pos;
+                    indexCity = 0;
                 }
             }
         });
