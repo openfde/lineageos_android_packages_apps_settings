@@ -39,5 +39,10 @@
     <color name="palette_list_color_blue">@color/palette_list_dark_mode_color_blue</color>
     <color name="palette_list_color_purple">@color/palette_list_dark_mode_color_purple</color>
     <color name="gestures_setting_background_color">@android:color/black</color>
+
+    <color name="page_bg"> #000 </color>
+    <color name="dark_text"> #fff </color>
+    <color name="mid_text"> #eee </color>
+    <color name="light_text"> #ccc </color>
 </resources>
 

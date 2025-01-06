@@ -22,7 +22,7 @@
     android:id="@+id/rootView"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="#fff"
+    android:background="@color/page_bg"
     android:layout_marginBottom="1dp"
     android:layout_height="@dimen/all_apps_item_height">
 
@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:gravity="center|left"
             android:textSize="@dimen/fde_light_text"
-            android:textColor="@color/app_black_light"
+            android:textColor="@color/dark_text"
             android:layout_height="match_parent"/>
 
         <TextView

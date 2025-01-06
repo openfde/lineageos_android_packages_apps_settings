@@ -33,6 +33,7 @@
         android:id="@+id/txtName"
         android:text=""
         android:singleLine="true"
+        android:textColor="#000"
         android:layout_width="match_parent"
         android:visibility="visible"
         android:layout_height="wrap_content"/>
