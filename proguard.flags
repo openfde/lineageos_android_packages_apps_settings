@@ -66,3 +66,8 @@
 -keepclasseswithmembers class * extends com.android.settings.slices.SliceBackgroundWorker {
     public <init>(android.content.Context, android.net.Uri);
 }
+
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
