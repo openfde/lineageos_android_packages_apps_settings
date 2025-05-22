@@ -197,6 +197,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
 
         mIsEmbeddingActivityEnabled = ActivityEmbeddingUtils.isEmbeddingActivityEnabled(this);
+        Log.w(TAG, "mIsEmbeddingActivityEnabled: " +  mIsEmbeddingActivityEnabled);
+
         if (mIsEmbeddingActivityEnabled) {
             final UserManager um = getSystemService(UserManager.class);
             final UserInfo userInfo = um.getUserInfo(getUserId());
@@ -326,6 +328,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         if (!mIsEmbeddingActivityEnabled) {
             return;
         }
+        Log.w(TAG, "updateSplitLayout mIsTwoPane: "+mIsTwoPane );
+
         if (mIsTwoPane) {
             if (mIsRegularLayout == ActivityEmbeddingUtils.isRegularHomepageLayout(this)) {
                 // Layout unchanged
@@ -388,10 +392,10 @@ public class SettingsHomepageActivity extends FragmentActivity implements
             avatarView.setVisibility(View.VISIBLE);
             getLifecycle().addObserver(new AvatarViewMixin(this, avatarView));
 
-            if (mIsEmbeddingActivityEnabled) {
-                avatarTwoPaneView.setVisibility(View.VISIBLE);
-                getLifecycle().addObserver(new AvatarViewMixin(this, avatarTwoPaneView));
-            }
+            // if (mIsEmbeddingActivityEnabled) {
+            //     avatarTwoPaneView.setVisibility(View.VISIBLE);
+            //     getLifecycle().addObserver(new AvatarViewMixin(this, avatarTwoPaneView));
+            // }
         }
     }
 
@@ -433,6 +437,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         mSuggestionView = findViewById(R.id.suggestion_content);
         mTwoPaneSuggestionView = findViewById(R.id.two_pane_suggestion_content);
         mHomepageView = findViewById(R.id.settings_homepage_container);
+        // CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mHomepageView.getLayoutParams();
+        // layoutParams.setBehavior(null);
         // Hide the homepage for preparing the suggestion. If scrolling is needed, the list views
         // should be initialized in the invisible homepage view to prevent a scroll flicker.
         mHomepageView.setVisibility(scrollNeeded ? View.INVISIBLE : View.GONE);
@@ -516,6 +522,9 @@ public class SettingsHomepageActivity extends FragmentActivity implements
             finish();
             return;
         }
+
+        Log.w(TAG, "targetComponentName: " +  targetComponentName.getClassName());
+       
 
         ActivityInfo targetActivityInfo;
         try {
@@ -611,6 +620,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         if (TextUtils.equals(callerPkg, getPackageName())) {
             return true;
         }
+
+        Log.w(TAG, "hasPrivilegedAccess: callerPkg " +  callerPkg + ", targetPackage: "+targetPackage);
 
         int targetUid = -1;
         try {
@@ -787,9 +798,12 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
         @Override
         public void accept(List<SplitInfo> splitInfoList) {
+            Log.w(TAG, "SplitInfoCallback: " );
+
             if (!splitInfoList.isEmpty() && !mIsSplitUpdatedUI && !mActivity.isFinishing()
                     && ActivityEmbeddingUtils.isAlreadyEmbedded(mActivity)) {
                 mIsSplitUpdatedUI = true;
+                Log.w(TAG, "SplitInfoCallback updateUI" );
                 mActivity.updateHomepageUI();
             }
         }

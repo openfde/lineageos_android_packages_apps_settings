@@ -77,14 +77,14 @@
 
     <!-- Search bar -->
     <dimen name="search_bar_margin">16dp</dimen>
-    <dimen name="search_bar_height">52dp</dimen>
-    <dimen name="search_bar_text_size">20sp</dimen>
-    <dimen name="search_bar_corner_radius">28dp</dimen>
+    <dimen name="search_bar_height">28dp</dimen>
+    <dimen name="search_bar_text_size">14sp</dimen>
+    <dimen name="search_bar_corner_radius">5dp</dimen>
     <dimen name="search_bar_content_inset">56dp</dimen>
     <dimen name="search_bar_padding_start">4dp</dimen>
     <dimen name="search_bar_padding_start_two_pane">8dp</dimen>
     <dimen name="search_bar_padding_end">16dp</dimen>
-    <dimen name="search_bar_padding_end_two_pane">24dp</dimen>
+    <dimen name="search_bar_padding_end_two_pane">12dp</dimen>
     <dimen name="search_bar_title_padding_start">-4dp</dimen>
     <dimen name="search_bar_title_padding_start_regular_two_pane">8dp</dimen>
 
@@ -98,19 +98,19 @@
     <!-- Homepage -->
     <dimen name="homepage_title_margin_bottom">8dp</dimen>
     <dimen name="homepage_title_margin_horizontal">24dp</dimen>
-    <dimen name="homepage_padding_horizontal_two_pane">24dp</dimen>
+    <dimen name="homepage_padding_horizontal_two_pane">12dp</dimen>
     <dimen name="homepage_preference_corner_radius">28dp</dimen>
-    <dimen name="homepage_preference_min_height">88sp</dimen>
+    <dimen name="homepage_preference_min_height">38dp</dimen>
     <dimen name="homepage_preference_icon_padding_start">32dp</dimen>
     <dimen name="homepage_preference_icon_padding_start_two_pane">8dp</dimen>
-    <dimen name="homepage_preference_text_padding_start">16dp</dimen>
-    <dimen name="homepage_preference_text_padding_start_two_pane">24dp</dimen>
+    <dimen name="homepage_preference_text_padding_start">8dp</dimen>
+    <dimen name="homepage_preference_text_padding_start_two_pane">12dp</dimen>
     <dimen name="homepage_app_bar_corner_radius">32dp</dimen>
-    <dimen name="homepage_app_bar_padding_two_pane">6dp</dimen>
+    <dimen name="homepage_app_bar_padding_two_pane">12dp</dimen>
     <!-- bottom: search_bar_margin - homepage_app_bar_padding_two_pane -->
     <dimen name="homepage_app_bar_margin_bottom_two_pane">10dp</dimen>
     <!-- horizontal: homepage_padding_horizontal_two_pane - homepage_app_bar_padding_two_pane -->
-    <dimen name="homepage_app_bar_margin_horizontal_two_pane">18dp</dimen>
+    <dimen name="homepage_app_bar_margin_horizontal_two_pane">0dp</dimen>
 
     <!-- SIM Dialog padding -->
     <dimen name="sim_color_spinner_padding">12dip</dimen>
@@ -488,4 +488,18 @@
     <dimen name="contrast_button_text_size">14sp</dimen>
     <dimen name="contrast_button_text_spacing">4dp</dimen>
     <dimen name="contrast_button_horizontal_spacing">16dp</dimen>
+
+
+    <!-- Text padding for EmptyTextSettings -->
+    <dimen name="all_apps_item_height">48dp</dimen>
+    <dimen name="settings_item_height">60dp</dimen>
+    <dimen name="compatible_icon_size">32dp</dimen>
+    <dimen name="compatible_padding">16dp</dimen>
+    <dimen name="compatible_icon_small_size">28dp</dimen>
+
+    <dimen name="fde_medium_text">16sp</dimen>
+    <dimen name="fde_min_text">12sp</dimen>
+    <dimen name="fde_max_text">20sp</dimen>
+    <dimen name="fde_large_text">18sp</dimen>
+    <dimen name="fde_light_text">14sp</dimen>
 </resources>

@@ -245,4 +245,14 @@
         <item name="colorPrimary">@*android:color/primary_device_default_settings_light</item>
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
     </style>
+
+    <style name="noTitleTheme" parent="Theme.Settings.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:spinnerStyle">@style/ShadowSpinnerStyle</item>
+    </style>
+
+    <style name="ShadowSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/spinner_popup_shadow</item>
+    </style>
 </resources>

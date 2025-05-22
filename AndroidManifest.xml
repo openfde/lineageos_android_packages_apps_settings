@@ -212,17 +212,32 @@
                        android:value="true" />
         </activity>
 
+
+        <activity android:name=".LauncherActivity"
+            android:label="@string/settings_label_launcher"
+            android:theme="@style/Theme.Settings.Home.NoAnimation"
+            android:taskAffinity=""
+            android:launchMode="singleTask"
+            android:exported="false"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|smallestScreenSize">
+            <layout
+            android:minWidth="760dp"
+            android:minHeight="612dp" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
         <!-- Alias for launcher activity only, as this belongs to each profile. -->
         <activity-alias android:name="Settings"
                 android:label="@string/settings_label_launcher"
                 android:taskAffinity="com.android.settings.root"
                 android:exported="true"
                 android:targetActivity=".homepage.SettingsHomepageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
         </activity-alias>
 
@@ -271,7 +286,7 @@
                 <category android:name="android.intent.category.VOICE_LAUNCH" />
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.android.settings.network.NetworkDashboardFragment"/>
+                android:value="com.android.settings.network.fde.FdeNetworkDashboardFragment"/>
             <meta-data android:name="com.android.settings.HIGHLIGHT_MENU_KEY"
                 android:value="@string/menu_key_network"/>
             <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
@@ -2151,7 +2166,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                       android:value="com.android.settings.privacy.PrivacyDashboardFragment" />
+                       android:value="com.android.settings.compatible.SetCompatibleFragment" />
             <meta-data android:name="com.android.settings.HIGHLIGHT_MENU_KEY"
                        android:value="@string/menu_key_privacy"/>
             <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
@@ -5056,6 +5071,14 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".compatible.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="com.android.settings.bluetooth.QrCodeScanModeActivity"
             android:permission="android.permission.BLUETOOTH_CONNECT"

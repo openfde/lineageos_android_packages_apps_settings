@@ -24,7 +24,7 @@
         <item name="android:contentInsetStart">@dimen/actionbar_contentInsetStart</item>
     </style>
 
-    <style name="Widget.ActionBar.SubSettings" parent="Widget.ActionBar">
+    <style name="Widget.ActionBar.SubSettings" parent="Theme.AppCompat.Light">
         <item name="android:contentInsetStart">@dimen/actionbar_subsettings_contentInsetStart</item>
     </style>
 
@@ -246,7 +246,7 @@
     </style>
 
     <style name="TextAppearance.SearchBar">
-        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_gravity">center|left</item>
         <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
         <item name="android:textSize">@dimen/search_bar_text_size</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
@@ -582,11 +582,15 @@
         <item name="android:background">@drawable/volume_dialog_button_background_solid</item>
     </style>
 
-    <style name="SetupWizardPartnerResource">
+    <style name="SetupWizardPartnerResource" parent="Theme.AppCompat.Light">
         <!-- Disable to use partner overlay theme for outside setupwizard flow. -->
         <item name="sucUsePartnerResource">@bool/config_suc_use_partner_resource</item>
         <!-- Enable heavy theme style inside setupwizard flow. -->
         <item name="sudUsePartnerHeavyTheme">true</item>
+    </style>
+
+    <style name="MySpinnerTheme"  parent="Theme.AppCompat.Light">
+ 
     </style>
 
     <style name="TextAppearance.NotificationImportanceDetail">

@@ -114,16 +114,18 @@ public class ActivityEmbeddingUtils {
 
     /** Whether to show the regular or simplified homepage layout. */
     public static boolean isRegularHomepageLayout(Activity activity) {
-        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
-        return dm.widthPixels >= (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, MIN_REGULAR_HOMEPAGE_LAYOUT_WIDTH_DP, dm);
+        return false ;
+        // DisplayMetrics dm = activity.getResources().getDisplayMetrics();
+        // return dm.widthPixels >= (int) TypedValue.applyDimension(
+        //         TypedValue.COMPLEX_UNIT_DIP, MIN_REGULAR_HOMEPAGE_LAYOUT_WIDTH_DP, dm);
     }
 
     /**
      * Check if activity is already embedded
      */
     public static boolean isAlreadyEmbedded(Activity activity) {
-        return isEmbeddingActivityEnabled(activity) && ActivityEmbeddingController.getInstance(
-                activity).isActivityEmbedded(activity);
+        return true;
+        // return isEmbeddingActivityEnabled(activity) && ActivityEmbeddingController.getInstance(
+        //         activity).isActivityEmbedded(activity);
     }
 }

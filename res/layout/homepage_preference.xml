@@ -30,10 +30,9 @@
         android:id="@+id/icon_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="48dp"
+        android:minWidth="24dp"
         android:gravity="end|center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/homepage_preference_icon_padding_start"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
 
@@ -51,8 +50,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
         android:paddingStart="@dimen/homepage_preference_text_padding_start"
         android:paddingEnd="24dp">
 
@@ -63,6 +60,8 @@
             android:layout_gravity="start"
             android:textAlignment="viewStart"
             android:singleLine="true"
+            android:textSize="14sp"
+            android:textColor="#bf000000"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:hyphenationFrequency="normalFast"
             android:lineBreakWordStyle="phrase"
@@ -70,8 +69,8 @@
 
         <TextView
             android:id="@android:id/summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_below="@android:id/title"
             android:layout_alignStart="@android:id/title"
             android:layout_gravity="start"

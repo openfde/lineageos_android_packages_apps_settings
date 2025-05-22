@@ -28,6 +28,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/txtTitle"
+        android:paddingHorizontal="32dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="#262626"
+        android:textSize="14sp"
+        android:gravity="center|left"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"/>
+
     <FrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"

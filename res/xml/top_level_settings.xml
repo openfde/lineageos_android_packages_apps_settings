@@ -21,7 +21,7 @@
     android:key="top_level_settings">
 
     <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.network.NetworkDashboardFragment"
+        android:fragment="com.android.settings.network.fde.FdeNetworkDashboardFragment"
         android:icon="@drawable/ic_settings_wireless"
         android:key="top_level_network"
         android:order="-150"
@@ -40,7 +40,7 @@
         settings:highlightableMenuKey="@string/menu_key_communal"
         settings:controller="com.android.settings.communal.CommunalPreferenceController"/>
 
-    <com.android.settings.widget.HomepagePreference
+    <!-- <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.connecteddevice.ConnectedDeviceDashboardFragment"
         android:icon="@drawable/ic_devices_other"
         android:key="top_level_connected_devices"
@@ -48,11 +48,11 @@
         android:title="@string/connected_devices_dashboard_title"
         android:summary="@string/connected_devices_dashboard_default_summary"
         settings:highlightableMenuKey="@string/menu_key_connected_devices"
-        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/>
+        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/> -->
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.applications.AppDashboardFragment"
-        android:icon="@drawable/ic_apps"
+        android:icon="@drawable/ic_apps_test"
         android:key="top_level_apps"
         android:order="-130"
         android:title="@string/apps_dashboard_title"
@@ -68,7 +68,7 @@
         android:summary="@string/notification_dashboard_summary"
         settings:highlightableMenuKey="@string/menu_key_notifications"/>
 
-    <com.android.settings.widget.HomepagePreference
+    <!-- <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
         android:icon="@drawable/ic_settings_battery_white"
         android:key="top_level_battery"
@@ -76,7 +76,16 @@
         android:title="@string/power_usage_summary_title"
         android:summary="@string/summary_placeholder"
         settings:highlightableMenuKey="@string/menu_key_battery"
-        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
+        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/> -->
+
+    <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.compatible.SetCompatibleFragment"
+        android:icon="@drawable/ic_settings_compatible"
+        android:key="top_level_battery"
+        android:order="-110"
+        android:title="@string/fde_compatible_set"
+        android:summary="@string/summary_placeholder"
+        settings:highlightableMenuKey="@string/menu_key_battery"/>    
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
@@ -88,18 +97,18 @@
         settings:highlightableMenuKey="@string/menu_key_storage"
         settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
 
-    <com.android.settings.widget.HomepagePreference
+    <!-- <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.notification.SoundSettings"
         android:icon="@drawable/ic_volume_up_24dp"
         android:key="top_level_sound"
         android:order="-90"
         android:title="@string/sound_settings"
         android:summary="@string/sound_dashboard_summary"
-        settings:highlightableMenuKey="@string/menu_key_sound"/>
+        settings:highlightableMenuKey="@string/menu_key_sound"/> -->
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.DisplaySettings"
-        android:icon="@drawable/ic_settings_display_white"
+        android:icon="@drawable/ic_settings_display"
         android:key="top_level_display"
         android:order="-80"
         android:title="@string/display_settings"
@@ -165,7 +174,7 @@
         settings:highlightableMenuKey="@string/menu_key_location"
         settings:controller="com.android.settings.location.TopLevelLocationPreferenceController"/>
 
-    <com.android.settings.widget.HomepagePreference
+    <!-- <com.android.settings.widget.HomepagePreference
         android:key="top_level_emergency"
         android:title="@string/emergency_settings_preference_title"
         android:summary="@string/emergency_dashboard_summary"
@@ -173,7 +182,7 @@
         android:order="-20"
         android:fragment="com.android.settings.emergency.EmergencyDashboardFragment"
         settings:isPreferenceVisible="@bool/config_show_emergency_settings"
-        settings:highlightableMenuKey="@string/menu_key_emergency"/>
+        settings:highlightableMenuKey="@string/menu_key_emergency"/> -->
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.accounts.AccountDashboardFragment"

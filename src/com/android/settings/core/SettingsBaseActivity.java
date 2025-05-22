@@ -17,6 +17,8 @@ package com.android.settings.core;
 
 import static android.text.Layout.HYPHENATION_FREQUENCY_NORMAL_FAST;
 
+import java.util.List;
+
 import android.annotation.LayoutRes;
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -33,6 +35,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toolbar;
+import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +57,15 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.transition.TransitionHelper;
 import com.google.android.setupdesign.util.ThemeHelper;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+import android.view.KeyEvent;
+import android.app.Instrumentation;
+import android.app.ActivityManager;
+import android.content.Context;
+
 /** Base activity for Settings pages */
 public class SettingsBaseActivity extends FragmentActivity implements CategoryHandler {
 
@@ -70,6 +83,9 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
     protected AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
+    private TextView txtMenuTitle;
+    private ImageView imgLeft,imgRight, imgFullscreen,imgMinimize,imgMaximize,imgClose;
+    private  boolean isMax = false;
 
     @Override
     public CategoryMixin getCategoryMixin() {
@@ -79,6 +95,8 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         final boolean isAnySetupWizard = WizardManagerHelper.isAnySetupWizard(getIntent());
+        setWindowDecorationStatus(Window.WINDOW_DECORATION_FORCE_HIDE);
+
         if (isAnySetupWizard) {
             TransitionHelper.applyForwardTransition(this);
             TransitionHelper.applyBackwardTransition(this);
@@ -114,6 +132,39 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
                     com.android.settingslib.collapsingtoolbar.R.layout.collapsing_toolbar_base_layout);
             mCollapsingToolbarLayout =
                     findViewById(com.android.settingslib.collapsingtoolbar.R.id.collapsing_toolbar);
+
+            imgLeft =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgLeft);
+            imgRight =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgRight);
+            imgFullscreen =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgFullscreen);
+            imgMinimize =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgMinimize);
+            imgMaximize =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgMaximize);
+            imgClose =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgClose);
+            txtMenuTitle =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.txtMenuTitle);
+
+            imgMaximize.setOnClickListener(view -> {
+                Intent inte = new Intent("com.fde.fullscreen.ENABLE_OR_DISABLE");
+                inte.putExtra("mode", isMax ? 0 : 1);
+                sendBroadcast(inte);
+                isMax = !isMax ;
+            });
+            imgMinimize.setOnClickListener(view -> {
+                simulateKeyPress(KeyEvent.KEYCODE_F9);
+            });
+            imgFullscreen.setOnClickListener(view -> {
+                simulateKeyPress(KeyEvent.KEYCODE_F11);
+            });
+            imgClose.setOnClickListener(view -> {
+                try{
+                    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                    List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
+                    tasks.get(0).finishAndRemoveTask();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            });
+
+
+
             mAppBarLayout = findViewById(R.id.app_bar);
             if (mCollapsingToolbarLayout != null) {
                 mCollapsingToolbarLayout.setLineSpacingMultiplier(TOOLBAR_LINE_SPACING_MULTIPLIER);
@@ -132,10 +183,11 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
 
         // This is to hide the toolbar from those pages which don't need a toolbar originally.
         final Toolbar toolbar = findViewById(R.id.action_bar);
-        if (!isToolbarEnabled() || isAnySetupWizard) {
-            toolbar.setVisibility(View.GONE);
-            return;
-        }
+        // if (!isToolbarEnabled() || isAnySetupWizard || theme.getBoolean(android.R.styleable.Theme_windowNoTitle, false)) {
+        //     toolbar.setVisibility(View.GONE);
+        //     return;
+        // }
+        
         setActionBar(toolbar);
 
         if (DEBUG_TIMING) {
@@ -143,11 +195,26 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         }
     }
 
+     private void simulateKeyPress(int keyCode) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Instrumentation instrumentation = new Instrumentation();
+                instrumentation.sendKeyDownUpSync(keyCode);
+            }
+        }).start();
+    }
+
     @Override
     public void setActionBar(@androidx.annotation.Nullable Toolbar toolbar) {
         super.setActionBar(toolbar);
 
         mToolbar = toolbar;
+    }
+
+    public void showTitle(boolean isShow) {
+        final Toolbar toolbar = findViewById(R.id.action_bar);
+        toolbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -207,6 +274,11 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         super.setTitle(title);
         if (mCollapsingToolbarLayout != null) {
             mCollapsingToolbarLayout.setTitle(title);
+            // mCollapsingToolbarLayout.setVisibility(View.INVISIBLE);
+           
+        }
+        if(txtMenuTitle !=null){
+            txtMenuTitle.setText(title.toString());
         }
     }
 
@@ -215,6 +287,12 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         super.setTitle(getText(titleId));
         if (mCollapsingToolbarLayout != null) {
             mCollapsingToolbarLayout.setTitle(getText(titleId));
+            // mCollapsingToolbarLayout.setVisibility(View.INVISIBLE);
+           
+        }
+
+        if(txtMenuTitle !=null){
+            txtMenuTitle.setText(getText(titleId));
         }
     }
 

@@ -39,9 +39,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.window.embedding.ActivityEmbeddingController;
 
 import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.activityembedding.ActivityEmbeddingRulesController;
 import com.android.settings.activityembedding.ActivityEmbeddingUtils;
+import com.android.settings.core.InstrumentedPreferenceFragment;
 import com.android.settings.core.SubSettingLauncher;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.overlay.FeatureFactory;
@@ -52,6 +54,8 @@ import com.android.settings.widget.HomepagePreferenceLayoutHelper.HomepagePrefer
 import com.android.settingslib.core.instrumentation.Instrumentable;
 import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.search.SearchIndexable;
+import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
+
 
 @SearchIndexable(forTarget = MOBILE)
 public class TopLevelSettings extends DashboardFragment implements SplitLayoutListener,
@@ -100,8 +104,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        HighlightableMenu.fromXml(context, getPreferenceScreenResId());
-        use(SupportPreferenceController.class).setActivity(getActivity());
+        // HighlightableMenu.fromXml(context, getPreferenceScreenResId());
+        // use(SupportPreferenceController.class).setActivity(getActivity());
     }
 
     @Override
@@ -117,6 +121,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
+        Log.w(TAG, "onPreferenceTreeClick");
+
         if (isDuplicateClick(preference)) {
             return true;
         }
@@ -192,7 +198,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     }
 
     private boolean isOnlyOneActivityInTask() {
-        final ActivityManager.RunningTaskInfo taskInfo = getSystemService(ActivityManager.class)
+        final ActivityManager.RunningTaskInfo taskInfo = getActivity().getSystemService(ActivityManager.class)
                 .getRunningTasks(1).get(0);
         return taskInfo.numActivities == 1;
     }
@@ -208,25 +214,28 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        int tintColor = Utils.getHomepageIconColor(getContext());
-        iteratePreferences(preference -> {
-            Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
-            }
-        });
+        // setPreferencesFromResource(R.xml.top_level_settings, rootKey);
+        // int tintColor = Utils.getHomepageIconColor(getContext());
+        // iteratePreferences(preference -> {
+        //     Drawable icon = preference.getIcon();
+        //     if (icon != null) {
+        //         icon.setTint(tintColor);
+        //     }
+        // });
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        highlightPreferenceIfNeeded();
+        // highlightPreferenceIfNeeded();
     }
 
     @Override
     public void onSplitLayoutChanged(boolean isRegularLayout) {
+        Log.w(TAG, "onSplitLayoutChanged 1 "+isRegularLayout);
         iteratePreferences(preference -> {
             if (preference instanceof HomepagePreferenceLayout) {
+                Log.w(TAG, "onSplitLayoutChanged 2 "+isRegularLayout);
                 ((HomepagePreferenceLayout) preference).getHelper().setIconVisible(isRegularLayout);
             }
         });
@@ -294,7 +303,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     public void setHighlightPreferenceKey(String prefKey) {
         // Skip Tips & support since it's full screen
         if (mHighlightMixin != null && !TextUtils.equals(prefKey, PREF_KEY_SUPPORT)) {
-            mHighlightMixin.setHighlightPreferenceKey(prefKey);
+            // mHighlightMixin.setHighlightPreferenceKey(prefKey);
         }
     }
 
@@ -312,14 +321,14 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     /** Show/hide the highlight on the menu entry for the search page presence */
     public void setMenuHighlightShowed(boolean show) {
         if (mHighlightMixin != null) {
-            mHighlightMixin.setMenuHighlightShowed(show);
+            // mHighlightMixin.setMenuHighlightShowed(show);
         }
     }
 
     /** Highlight and scroll to a preference with specified menu key */
     public void setHighlightMenuKey(String menuKey, boolean scrollNeeded) {
         if (mHighlightMixin != null) {
-            mHighlightMixin.setHighlightMenuKey(menuKey, scrollNeeded);
+            // mHighlightMixin.setHighlightMenuKey(menuKey, scrollNeeded);
         }
     }
 
@@ -331,10 +340,12 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
-        if (!mIsEmbeddingActivityEnabled || !(getActivity() instanceof SettingsHomepageActivity)) {
-            return super.onCreateAdapter(preferenceScreen);
-        }
-        return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
+        // if (!mIsEmbeddingActivityEnabled || !(getActivity() instanceof SettingsHomepageActivity)) {
+        //     return super.onCreateAdapter(preferenceScreen);
+        // }
+        // return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
+        Log.w(TAG,"onCreateAdapter "+mIsEmbeddingActivityEnabled);
+        return super.onCreateAdapter(preferenceScreen);
     }
 
     @Override
@@ -344,7 +355,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     void reloadHighlightMenuKey() {
         if (mHighlightMixin != null) {
-            mHighlightMixin.reloadHighlightMenuKey(getArguments());
+            // mHighlightMixin.reloadHighlightMenuKey(getArguments());
         }
     }
 

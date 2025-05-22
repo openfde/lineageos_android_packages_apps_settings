@@ -35,7 +35,7 @@ import com.android.settings.safetycenter.SafetyCenterManagerWrapper;
 import com.android.settings.security.SecuritySettingsFeatureProvider;
 
 import com.google.android.setupdesign.util.ThemeHelper;
-
+import com.android.settings.R;
 /**
  * Top-level Settings activity
  */
@@ -489,4 +489,14 @@ public class Settings extends SettingsActivity {
 
     /** Activity for the Reset mobile network settings. */
     public static class ResetMobileNetworkSettingsActivity extends SettingsActivity { /* empty */ }
+
+    public static class CompatibleSetActivity extends SettingsActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setTheme(android.R.styleable.Theme_windowNoTitle);
+            showTitle(false);
+            setTitle(R.string.fde_compatible_set);
+        }
+    }
 }

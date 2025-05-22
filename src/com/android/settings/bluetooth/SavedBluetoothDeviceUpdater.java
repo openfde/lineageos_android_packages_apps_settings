@@ -58,7 +58,7 @@ public class SavedBluetoothDeviceUpdater extends BluetoothDeviceUpdater
 
     @Override
     public void forceUpdate() {
-        if (mBluetoothAdapter.isEnabled()) {
+        if (mBluetoothAdapter !=null && mBluetoothAdapter.isEnabled()) {
             final CachedBluetoothDeviceManager cachedManager =
                     mLocalManager.getCachedDeviceManager();
             final List<BluetoothDevice> bluetoothDevices =

@@ -181,24 +181,24 @@ public class DashboardFeatureProviderImpl implements DashboardFeatureProvider {
                     intent.setAction(action);
                 }
                 // Register the rule for injected apps.
-                if (fragment instanceof TopLevelSettings) {
-                    ActivityEmbeddingRulesController.registerTwoPanePairRuleForSettingsHome(
-                            mContext,
-                            new ComponentName(tile.getPackageName(), tile.getComponentName()),
-                            action,
-                            true /* clearTop */);
-                }
+                // if (fragment instanceof TopLevelSettings) {
+                //     ActivityEmbeddingRulesController.registerTwoPanePairRuleForSettingsHome(
+                //             mContext,
+                //             new ComponentName(tile.getPackageName(), tile.getComponentName()),
+                //             action,
+                //             true /* clearTop */);
+                // }
                 pref.setOnPreferenceClickListener(preference -> {
                     TopLevelHighlightMixin highlightMixin = null;
                     boolean isDuplicateClick = false;
-                    if (fragment instanceof TopLevelSettings
-                            && ActivityEmbeddingUtils.isEmbeddingActivityEnabled(mContext)) {
-                        // Highlight the preference whenever it's clicked
-                        final TopLevelSettings topLevelSettings = (TopLevelSettings) fragment;
-                        highlightMixin = topLevelSettings.getHighlightMixin();
-                        isDuplicateClick = topLevelSettings.isDuplicateClick(preference);
-                        topLevelSettings.setHighlightPreferenceKey(key);
-                    }
+                    // if (fragment instanceof TopLevelSettings
+                    //         && ActivityEmbeddingUtils.isEmbeddingActivityEnabled(mContext)) {
+                    //     // Highlight the preference whenever it's clicked
+                    //     final TopLevelSettings topLevelSettings = (TopLevelSettings) fragment;
+                    //     highlightMixin = topLevelSettings.getHighlightMixin();
+                    //     isDuplicateClick = topLevelSettings.isDuplicateClick(preference);
+                    //     topLevelSettings.setHighlightPreferenceKey(key);
+                    // }
                     launchIntentOrSelectProfile(activity, tile, intent, sourceMetricsCategory,
                             highlightMixin, isDuplicateClick);
                     return true;

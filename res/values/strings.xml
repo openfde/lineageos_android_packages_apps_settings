@@ -9748,6 +9748,7 @@
     <!-- Write Settings settings -->
     <!-- Settings title in main settings screen for WRITE_SETTINGS [CHAR LIMIT=30] -->
     <string name="write_settings">Modify system settings</string>
+    <string name="settings" msgid="6864794401614425894">"settings"</string>
     <!-- Keyword for WRITE_SETTINGS -->
     <string name="keywords_write_settings">write modify system settings</string>
 
@@ -13017,4 +13018,79 @@
 
     <!--Text for Stylus Pointer Icon preference -->
     <string name="show_stylus_pointer_icon">Show pointer while hovering</string>
+
+     <!-- fde net text  -->
+     <string name="fde_wifi_name">"Network SSID"</string>
+     <string name="fde_wifi_password">"password"</string>
+     <string name="fde_wifi_encryption">"encryption"</string>
+     <string name="fde_enter_wifi_name">"Enter Network SSID"</string>
+     <string name="fde_enter_wifi_password">"Enter password"</string>
+     <string name="fde_enter_wifi_name_and_password">"Enter Network SSID And password"</string>
+     <string name="fde_wifi">WIFI</string>
+     <string name="fde_ethernet">Ethernet</string>
+     <string name="fde_ethernet_and_wifi">Ethernet and WIFI</string>
+     <string name="fde_add_wifi">ADD NETWORK</string>
+     <string name="fde_manuals_add_wifi">ADD NETWORK...</string>
+     <string name="fde_choose_nearby_wifi">AVAILABLE NETWORKS</string>
+     <string name="fde_btn_cancel">Cancel</string>
+     <string name="fde_btn_confirm">OK</string>
+     <string name="fde_btn_operating_error">You are operating too fast</string>
+     <string name="fde_scanning">Scanning</string>
+     <string name="fde_connecting">Connecting</string>
+     <string name="fde_wifi_connect" >"connect"</string>
+     <string name="fde_wifi_disconnect" >"disconnect"</string>
+     <string name="fde_forget">Forget</string>
+     <string name="fde_del_network">delete network</string>
+     <string name="fde_unconnect">disconnect network</string>
+     <string name="fde_no_save">Do not save</string>
+     <string name="fde_has_connected">connected</string>
+     <string name="fde_has_disconnected">disconnected</string>
+     <string name="fde_has_saved">saved</string>
+     <string name="fde_no_wifi_module">no wifi module</string>
+     <string name="fde_net_mask" >"mask"</string>
+     <string name="fde_net_input_mask" >"enter mask"</string>
+     <string name="fde_net_invalid_mask" >"invalid mask"</string>
+     <string name="fde_net_disconnect_tips" >"Do you want to disconnect the network?"</string>
+     <string name="fde_net_connect_tips" >"Do you want to connect to this network?"</string>
+     <string name="fde_net_connect_wifi" >"Wifi"</string>
+     <string name="fde_net_connect_wired" >"Wired"</string>
+     <string name="open_wifi" >"Open Wi-Fi"</string>
+     <string name="fde_net_saved_network" >"Saved Network"</string>
+     <string name="fde_net_none" >"None"</string>
+     <string name="fde_net_other_networks" >"Other Network"</string>
+     <string name="fde_net_add_networks" >"Add Network"</string>
+     <string name="fde_net_networks" >"Network"</string>
+     <string name="fde_net_config" >"Config"</string>
+
+     <string name="fde_compatible_set">Compatible Set</string>
+     <string name="fde_compatible_summary">App Compatible Set</string>
+     <string name="fde_input_hint">please input data</string>
+     <string name="fde_input_appname_hint">please input App Name</string>
+     <string name="fde_app_name_title">appName</string>
+     <string name="fde_data_value">value</string>
+     <string name="fde_switch">switch</string>
+     <string name="fde_tips">Warning</string>
+     <string name="fde_clean_tips">is all clean ?</string>
+     <string name="fde_reset_tips">Restore the default configuration?</string>
+     <string name="fde_sync_config_from_gitee">Do you want to synchronize the latest configuration from Server?</string>
+     <string name="set_gps_info">Set GPS info</string>
+     <string name="set_success">Set success</string>
+     <string name="fde_country">Country</string>
+     <string name="fde_province">Province</string>
+     <string name="fde_city">City</string>
+
+     <string name="configurable_interfaces">Configurable interfaces</string>
+     <string name="ip_settings">IP Settings</string>
+     <string name="ip_address">IP Address</string>
+     <string name="default_gateway">default gateway</string>
+     <string name="subnet_mask">Subnet Mask</string>
+     <string name="preferred_dns">Preferred DNS</string>
+     <string name="alternative_dns">Alternative DNS</string>
+
+     <string-array name="spinner_ip">
+          <item>"        DHCP"</item>
+          <item>"Manual Input"</item>
+      </string-array>
+  
+
 </resources>

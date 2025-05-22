@@ -43,6 +43,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -63,6 +65,7 @@ import com.android.settings.core.SettingsBaseActivity;
 import com.android.settings.core.SubSettingLauncher;
 import com.android.settings.core.gateway.SettingsGateway;
 import com.android.settings.dashboard.DashboardFeatureProvider;
+import com.android.settings.dashboard.profileselector.ProfileSelectFragment;
 import com.android.settings.homepage.SettingsHomepageActivity;
 import com.android.settings.homepage.TopLevelSettings;
 import com.android.settings.nfc.PaymentSettings;
@@ -194,6 +197,8 @@ public class SettingsActivity extends SettingsBaseActivity
     private SettingsMainSwitchBar mMainSwitch;
 
     private Button mNextButton;
+
+    private TextView txtTitle ;
 
     // Categories
     private ArrayList<DashboardCategory> mCategories = new ArrayList<>();
@@ -329,6 +334,8 @@ public class SettingsActivity extends SettingsBaseActivity
             mMainSwitch.setMetricsCategory(lookupMetricsCategory());
             mMainSwitch.setTranslationZ(findViewById(R.id.main_content).getTranslationZ() + 1);
         }
+
+        txtTitle = findViewById(R.id.txtTitle);
 
         // see if we should show Back/Next buttons
         if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR, false)) {
@@ -558,6 +565,24 @@ public class SettingsActivity extends SettingsBaseActivity
     }
 
     @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        if(txtTitle !=null){
+            txtTitle.setVisibility(View.VISIBLE);
+            txtTitle.setText(title.toString());
+        }
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(getText(titleId));
+        if(txtTitle !=null){
+            txtTitle.setVisibility(View.VISIBLE);
+            txtTitle.setText(getText(titleId));
+        }
+    }
+
+    @Override
     public void onBackStackChanged() {
         setTitleFromBackStack();
     }
@@ -703,7 +728,7 @@ public class SettingsActivity extends SettingsBaseActivity
      */
     private void switchToFragment(String fragmentName, Bundle args, boolean validate,
             int titleResId, CharSequence title) {
-        Log.d(LOG_TAG, "Switching to fragment " + fragmentName);
+        Log.d(LOG_TAG, "Switching to fragment " + fragmentName + ",validate "+validate);
         if (validate && !isValidFragment(fragmentName)) {
             throw new IllegalArgumentException("Invalid fragment for this activity: "
                     + fragmentName);
