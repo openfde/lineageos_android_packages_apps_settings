@@ -94,7 +94,7 @@ object CompatibleConfig {
         context: Context,
         packageName: String,
         keyCode: String
-    ): List<CompatibleValue>? {
+    ): MutableList<CompatibleValue>? {
         val uri = Uri.parse(COMPATIBLE_URI + "/COMPATIBLE_VALUE")
         var cursor: Cursor? = null
         val selection = "PACKAGE_NAME = ? AND KEY_CODE = ? AND IS_DEL != 1"
@@ -102,7 +102,7 @@ object CompatibleConfig {
         try {
             val contentResolver = context.contentResolver
             cursor = contentResolver.query(uri, null, selection, selectionArgs, null)
-            var list = ArrayList<CompatibleValue>()
+            var list : MutableList<CompatibleValue> = mutableListOf() 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     val id = cursor.getInt(cursor.getColumnIndexOrThrow("_ID"))

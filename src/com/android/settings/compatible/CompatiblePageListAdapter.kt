@@ -73,7 +73,7 @@ class CompatiblePageListAdapter(
             holder.layoutSwitch.visibility = View.VISIBLE
             holder.txtSpinner.visibility = View.GONE
             holder.txtInput.visibility = View.GONE
-            holder.switchComp.isChecked = item.value == "true"
+            // holder.switchComp.isChecked = item.value == "true"
             holder.switchComp.isChecked = "true".equals(item.value)
             holder.switchComp.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
                 when {

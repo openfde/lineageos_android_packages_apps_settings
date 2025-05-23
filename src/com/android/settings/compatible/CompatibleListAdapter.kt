@@ -50,14 +50,6 @@ class CompatibleListAdapter(
         holder.recyclerView?.layoutManager = LinearLayoutManager(context);
   
         if (packageName != null && !"".equals(packageName)) {
-            if(keyCode == null){
-                //from systemui start menu 
-
-            }else {
-                //from systemui add activity page
-
-            }
-
             val adapter = CompatiblePageListAdapter(context, packageName, item)
             holder.recyclerView?.adapter = adapter;
             GlobalScope.launch(Dispatchers.IO) {
@@ -68,16 +60,34 @@ class CompatibleListAdapter(
                 );
                 Log.w(TAG,"queryValueListByKeyCodeAndPackageName packageName "+packageName + ",item.keyCode : "+item.keyCode +",inputType: "+item.inputType)
 
-                if(uniqueList == null || uniqueList.size  == 0){
-                    uniqueList = ArrayList()
-                    var compatibleValue: CompatibleValue = CompatibleValue();
-                    compatibleValue.packageName = packageName
-                    compatibleValue.keyCode = item.keyCode
-                    compatibleValue.value = ""
-                    compatibleValue.activityName = activityName
-                    uniqueList.add(compatibleValue);
+                if(keyCode !=null && !"".equals(keyCode)){
+                    //如果是从底部状态栏跳转过来
+                    if(uniqueList == null || uniqueList.size  == 0){
+                        uniqueList =  mutableListOf()
+                    }
+                    val containsItem = uniqueList.any {it.packageName == packageName && it.keyCode == keyCode && it.activityName == activityName}
+                    if(!containsItem){
+                        var compatibleValue: CompatibleValue = CompatibleValue();
+                        compatibleValue.packageName = packageName
+                        compatibleValue.keyCode = keyCode
+                        compatibleValue.value = "false"
+                        compatibleValue.activityName = activityName
+                        uniqueList.add(compatibleValue);
+                    }
+                }else{
+                    //从开始菜单跳转过来
+                    if(uniqueList == null || uniqueList.size  == 0){
+                        uniqueList =  mutableListOf()
+                        var compatibleValue: CompatibleValue = CompatibleValue();
+                        compatibleValue.packageName = packageName
+                        compatibleValue.keyCode = item.keyCode
+                        compatibleValue.value = ""
+                        compatibleValue.activityName = activityName
+                        uniqueList.add(compatibleValue);
+                    }
                 }
-
+                
+                
                 withContext(Dispatchers.Main) {
                     adapter?.setData(uniqueList!!)
                 }

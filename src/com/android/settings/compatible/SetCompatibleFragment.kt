@@ -71,7 +71,6 @@ class SetCompatibleFragment : InstrumentedFragment(),CompatibleListAdapter.OnIte
             }
             txtAppName?.visibility = View.VISIBLE
             imgAppIcon?.visibility = View.VISIBLE
-           
         }
 
         Log.w(TAG,"packageName "+packageName + ",keyCode : "+keyCode + ",activityName: "+activityName)
