@@ -33,6 +33,7 @@
         android:key="recent_apps_category"
         android:title="@string/recent_app_category_title"
         android:order="-998"
+        android:layout="@layout/preference_square_title"
         settings:searchable="false">
         <!-- Placeholder for a list of recent apps -->
 
@@ -51,18 +52,19 @@
         android:key="general_category"
         android:title="@string/category_name_general"
         android:order="-997"
+        android:layout="@layout/preference_square_title"
         android:visibility="gone"
         settings:searchable="false"/>
 
-    <Preference
+    <com.android.settings.CustomTopPreference
         android:key="default_apps"
         android:title="@string/app_default_dashboard_title"
         android:order="-996"
         settings:controller="com.android.settings.applications.DefaultAppsPreferenceController">
         <intent android:action="android.settings.MANAGE_DEFAULT_APPS_SETTINGS"/>
-    </Preference>
+    </com.android.settings.CustomTopPreference>
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="cloned_apps"
         android:title="@string/cloned_apps_dashboard_title"
         android:summary="@string/summary_placeholder"
@@ -73,13 +75,14 @@
             android:name="classname"
             android:value="com.android.settings.Settings$ClonedAppsListActivity"/>
         <intent android:action="android.settings.MANAGE_CLONED_APPS_SETTINGS"/>
-    </Preference>
+    </com.android.settings.CustomPreference>
 
     <PreferenceCategory
         android:key="dashboard_tile_placeholder"
+        android:layout="@layout/preference_square_corners"
         android:order="10"/>
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="hibernated_apps"
         android:title="@string/unused_apps"
         android:summary="@string/summary_placeholder"
@@ -87,21 +90,20 @@
         settings:keywords="app_hibernation_key"
         settings:controller="com.android.settings.applications.HibernatedAppsPreferenceController">
         <intent android:action="android.intent.action.MANAGE_UNUSED_APPS"/>
-    </Preference>
+    </com.android.settings.CustomPreference>
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="app_battery_usage"
         android:order="17"
         android:title="@string/app_battery_usage_title"
         android:summary="@string/app_battery_usage_summary"
-        settings:controller="com.android.settings.applications.AppBatteryUsagePreferenceController"
-        android:fragment="com.android.settings.applications.manageapplications.ManageApplications">
+        >
         <extra
             android:name="classname"
             android:value="com.android.settings.Settings$AppBatteryUsageActivity"/>
-    </Preference>
+    </com.android.settings.CustomPreference>
 
-    <Preference
+    <com.android.settings.CustomBottomPreference
         android:key="special_access"
         android:fragment="com.android.settings.applications.specialaccess.SpecialAccessSettings"
         android:title="@string/special_access"
@@ -111,6 +113,7 @@
         android:key="advanced_category"
         android:title="@string/advanced_apps"
         android:order="21"
+        android:layout="@layout/preference_square_title"
         settings:searchable="false">
 
         <Preference

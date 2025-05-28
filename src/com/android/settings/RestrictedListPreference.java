@@ -43,15 +43,30 @@ import com.android.settingslib.RestrictedPreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 public class RestrictedListPreference extends CustomListPreference {
     private final RestrictedPreferenceHelper mHelper;
     private final List<RestrictedItem> mRestrictedItems = new ArrayList<>();
     private boolean mRequiresActiveUnlockedProfile = false;
     private int mProfileUserId;
+    private final String TAG = "RestrictedListPreference";
 
     public RestrictedListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLayoutResource(R.layout.preference_square_corners);
+        if(attrs !=null ){
+            // int count = attrs.getAttributeCount();
+            // for(int i = 0 ; i < count ;i++){
+            //     Log.w(TAG,"RestrictedListPreference getAttributeNamespace: "+attrs.getAttributeNamespace(i) + ",getAttributeValue: "+attrs.getAttributeNameResource(i));
+            //     Log.w(TAG,"RestrictedListPreference getAttributeName: "+attrs.getAttributeName(i) + ",getAttributeValue: "+attrs.getAttributeValue(i));
+            // }
+            String value = attrs.getAttributeValue("http://schemas.android.com/apk/res/android","key");
+            Log.w(TAG,"RestrictedListPreference getAttributeValue: "+value);
+            if("lock_screen_notifications".equals(value)){
+                 setLayoutResource(R.layout.preference_rounded_bottom_corners);
+            }
+        }
         mHelper = new RestrictedPreferenceHelper(context, this, attrs);
     }
 

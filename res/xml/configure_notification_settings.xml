@@ -20,9 +20,10 @@
 
     <PreferenceCategory
         android:key="general_notifications_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/general_notification_header">
         <!-- See all apps button -->
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="all_notifications"
             android:order="10"
             android:title="@string/app_notification_field"
@@ -31,8 +32,8 @@
             <extra
                 android:name="classname"
                 android:value="com.android.settings.Settings$NotificationAppListActivity"/>
-        </Preference>
-        <Preference
+        </com.android.settings.CustomTopPreference>
+        <com.android.settings.CustomBottomPreference
             android:key="notification_history"
             android:order="11"
             android:title="@string/notification_history"
@@ -41,13 +42,14 @@
                 android:action="android.intent.action.MAIN"
                 android:targetPackage="com.android.settings"
                 android:targetClass="com.android.settings.notification.history.NotificationHistoryActivity" />
-        </Preference>
+        </com.android.settings.CustomBottomPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="conversation_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/conversation_notifs_category">
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="conversations"
             android:order="1"
             android:title="@string/conversations_category_title"
@@ -55,7 +57,7 @@
             settings:controller="com.android.settings.notification.ConversationListSummaryPreferenceController"
             android:fragment="com.android.settings.notification.app.ConversationListSettings"
         />
-        <Preference
+        <com.android.settings.CustomBottomPreference
             android:key="notification_bubbles"
             android:order="2"
             android:title="@string/notification_bubbles_title"
@@ -67,8 +69,9 @@
 
     <PreferenceCategory
         android:key="configure_notifications_lock"
+        android:layout="@layout/preference_square_title"
         android:title="@string/lock_screen_notifications_title">
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="notification_access"
             android:order="12"
             android:title="@string/manage_notification_access_title"
@@ -79,6 +82,7 @@
         <com.android.settings.RestrictedListPreference
             android:key="lock_screen_notifications"
             android:order="13"
+            android:layout="@layout/preference_rounded_bottom_corners"
             android:title="@string/lock_screen_notifs_title"
             android:singleLineTitle="false"
             android:summary="@string/summary_placeholder" />
@@ -106,36 +110,37 @@
             settings:controller="com.android.settings.biometrics.face.FaceSettingsLockscreenBypassPreferenceController" />
 
     </PreferenceCategory>
-
+<!-- 
     <PreferenceCategory
         android:key="advanced_section_header"
-        android:title="@string/advanced_section_header">
-        <com.android.settingslib.RestrictedPreference
+        android:layout="@layout/preference_square_title"
+        android:title="@string/advanced_section_header"> -->
+        <!-- <com.android.settingslib.RestrictedPreference
             android:key="zen_mode_notifications"
             android:order="17"
             android:title="@string/zen_mode_settings_title"
             settings:useAdminDisabledSummary="true"
             android:fragment="com.android.settings.notification.zen.ZenModeSettings"
             settings:controller="com.android.settings.notification.zen.ZenModePreferenceController"
-        />
+        /> -->
 
-        <SwitchPreferenceCompat
+        <!-- <SwitchPreferenceCompat
             android:key="lock_screen_show_only_unseen_notifs"
             android:order="18"
             android:title="@string/unseen_notifs_lock_screen"
             android:summary="@string/unseen_notifs_lock_screen_summary"
             settings:controller="com.android.settings.notification.ShowOnlyUnseenNotificationsOnLockscreenPreferenceController"
-        />
+        /> -->
 
-        <Preference
+        <!-- <com.android.settings.CustomPreference
             android:fragment="com.android.settings.accessibility.FlashNotificationsPreferenceFragment"
             android:key="flash_notifications_preference"
             android:order="19"
             android:persistent="false"
             android:title="@string/flash_notifications_title"
             settings:searchable="false"
-            settings:controller="com.android.settings.accessibility.FlashNotificationsPreferenceController" />
-
+            settings:controller="com.android.settings.accessibility.FlashNotificationsPreferenceController" /> -->
+<!-- 
         <com.android.settingslib.RestrictedPreference
             android:key="app_and_notif_cell_broadcast_settings"
             android:order="20"
@@ -145,9 +150,9 @@
                 android:action="android.intent.action.MAIN"
                 android:targetPackage="@string/config_cell_broadcast_receiver_package"
                 android:targetClass="com.android.cellbroadcastreceiver.CellBroadcastSettings"/>
-        </com.android.settingslib.RestrictedPreference>
+        </com.android.settingslib.RestrictedPreference> -->
 
-        <SwitchPreferenceCompat
+        <!-- <SwitchPreferenceCompat
              android:key="silent_icons"
              android:order="21"
              android:title="@string/silent_notifications_status_bar"
@@ -157,17 +162,17 @@
             android:key="show_snooze_options"
             android:order="22"
             android:title="@string/snooze_options_title"
-            settings:controller="com.android.settings.notification.SnoozeNotificationPreferenceController" />
+            settings:controller="com.android.settings.notification.SnoozeNotificationPreferenceController" /> -->
 
         <!-- Notification badging -->
-        <SwitchPreferenceCompat
+        <!-- <SwitchPreferenceCompat
             android:key="notification_badging"
             android:order="23"
             android:title="@string/notification_badging_title"
-            settings:controller="com.android.settings.notification.BadgingNotificationPreferenceController"/>
+            settings:controller="com.android.settings.notification.BadgingNotificationPreferenceController"/> -->
 
         <!-- Pulse notification light, on devices that support it -->
-        <SwitchPreferenceCompat
+        <!-- <SwitchPreferenceCompat
             android:key="notification_pulse"
             android:order="24"
             android:title="@string/notification_pulse_title"
@@ -178,27 +183,27 @@
             android:order="25"
             android:title="@string/notification_assistant_title"
             android:summary="@string/notification_assistant_summary"
-            settings:controller="com.android.settings.notification.NotificationAssistantPreferenceController"/>
+            settings:controller="com.android.settings.notification.NotificationAssistantPreferenceController"/> -->
 
-        <Preference
+        <!-- <com.android.settings.CustomPreference
             android:fragment="com.android.settings.notification.PoliteNotificationsPreferenceFragment"
             android:key="polite_notifications_preference"
             android:order="26"
             android:persistent="false"
             android:title="@string/notification_polite_title"
-            settings:controller="com.android.settings.notification.PoliteNotificationsPreferenceController" />
+            settings:controller="com.android.settings.notification.PoliteNotificationsPreferenceController" /> -->
 
         <!-- Heads up -->
-        <lineageos.preference.GlobalSettingSwitchPreference
+        <!-- <lineageos.preference.GlobalSettingSwitchPreference
             android:key="heads_up_notifications_enabled"
             android:order="24"
             android:title="@string/heads_up_notifications_enabled_title"
-            android:summary="@string/heads_up_notifications_enabled_summary" />
+            android:summary="@string/heads_up_notifications_enabled_summary" /> -->
 
         <!-- Notification lights -->
-        <lineageos.preference.LineagePartsPreference
+        <!-- <lineageos.preference.LineagePartsPreference
             android:key="notification_lights"
             settings:requiresConfig="@*android:bool/config_intrusiveNotificationLed"
             settings:replacesKey="notification_pulse" />
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 </PreferenceScreen>

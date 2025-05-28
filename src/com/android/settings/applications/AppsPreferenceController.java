@@ -145,6 +145,7 @@ public class AppsPreferenceController extends BasePreferenceController implement
                 if (!mRecentApps.isEmpty()) {
                     mSeeAllPref.setTitle(StringUtil.getIcuPluralsString(mContext, num,
                             R.string.see_all_apps_title));
+                    mSeeAllPref.setLayoutResource(R.layout.preference_rounded_bottom_corners);        
                 } else {
                     mAllAppsInfoPref.setSummary(mContext.getString(R.string.apps_summary, num));
                 }
@@ -208,11 +209,21 @@ public class AppsPreferenceController extends BasePreferenceController implement
                         System.currentTimeMillis() - stats.getLastTimeUsed(), false,
                         RelativeDateTimeFormatter.Style.SHORT));
                 pref.setOrder(showAppsCount++);
+                
                 pref.setOnPreferenceClickListener(preference -> {
                     startAppInfoSettings(pkgName, appEntry.info.uid,
                             mHost, 1001 /*RequestCode*/, getMetricsCategory());
                     return true;
                 });
+               
+                if(showAppsCount == 1){
+                    pref.setLayoutResource(R.layout.preference_rounded_top_corners);
+                // }else if(showAppsCount == mRecentApps.size()){
+                //     pref.setLayoutResource(R.layout.preference_rounded_bottom_corners);
+                }else{
+                    pref.setLayoutResource(R.layout.preference_square_corners);   
+                }
+                
 
                 if (!rebindPref) {
                     mRecentAppsCategory.addPreference(pref);

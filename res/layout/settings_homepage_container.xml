@@ -20,13 +20,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settings_homepage_container"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_left_menu"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/main_content_scrollable_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d9F0F2F5"
         app:layout_behavior="com.android.settings.widget.HomepageAppBarScrollingViewBehavior">
 
         <LinearLayout
