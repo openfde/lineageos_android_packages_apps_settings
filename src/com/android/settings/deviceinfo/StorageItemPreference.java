@@ -27,7 +27,7 @@ import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
 import com.android.settings.deviceinfo.storage.StorageUtils;
-
+import android.util.Log;
 public class StorageItemPreference extends Preference {
     public int userHandle;
 
@@ -38,6 +38,7 @@ public class StorageItemPreference extends Preference {
     private static final int PROGRESS_MAX = 100;
     private int mProgressPercent = UNINITIALIZED;
     private long mStorageSize;
+    private final String TAG = "RestrictedListPreference";
 
     public StorageItemPreference(Context context) {
         this(context, null);
@@ -45,7 +46,16 @@ public class StorageItemPreference extends Preference {
 
     public StorageItemPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(R.layout.storage_item);
+         setLayoutResource(R.layout.storage_item);
+         if(attrs !=null ){
+            String value = attrs.getAttributeValue("http://schemas.android.com/apk/res/android","key");
+            Log.w(TAG,"StorageItemPreference getAttributeValue: "+value);
+            if("pref_system".equals(value)){
+                setLayoutResource(R.layout.storage_item_top);
+            }else if("pref_videos".equals(value)){
+                setLayoutResource(R.layout.storage_item_bottom);
+            }
+        }
     }
 
     public void setStorageSize(long size, long total) {

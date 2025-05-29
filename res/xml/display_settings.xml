@@ -22,6 +22,7 @@
     settings:keywords="@string/keywords_display">
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/category_name_brightness">
 
         <com.android.settingslib.RestrictedPreference
@@ -44,9 +45,10 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/category_name_lock_display">
 
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="lockscreen_from_display_settings"
             android:title="@string/lockscreen_settings_title"
             android:fragment="com.android.settings.security.LockscreenDashboardFragment"
@@ -69,6 +71,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/category_name_appearance">
 
         <com.android.settings.display.darkmode.DarkModePreference
@@ -80,7 +83,7 @@
             settings:controller="com.android.settings.display.DarkUIPreferenceController"
             settings:keywords="@string/keywords_dark_ui_mode"/>
 
-        <Preference
+        <com.android.settings.CustomBottomPreference
             android:fragment="com.android.settings.accessibility.TextReadingPreferenceFragment"
             android:key="text_reading_options"
             android:persistent="false"
@@ -89,6 +92,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/category_name_color">
 
         <com.android.settingslib.PrimarySwitchPreference
@@ -98,9 +102,9 @@
             settings:controller="com.android.settings.display.NightDisplayPreferenceController"
             settings:keywords="@string/keywords_display_night_display"/>
 
-        <lineageos.preference.LineagePartsPreference
+        <!-- <lineageos.preference.LineagePartsPreference
             android:key="livedisplay"
-            settings:requiresConfig="@*lineageos.platform:bool/config_enableLiveDisplay" />
+            settings:requiresConfig="@*lineageos.platform:bool/config_enableLiveDisplay" /> -->
 
         <Preference
             android:key="color_mode"
@@ -111,6 +115,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/category_name_display_controls">
 
         <!--
@@ -127,7 +132,7 @@
             Auto-rotation preference that will be shown when device state based auto-rotation
             settings are available.
           -->
-        <Preference
+        <com.android.settings.CustomPreference
             android:key="device_state_auto_rotate"
             android:title="@string/accelerometer_title"
             android:fragment="com.android.settings.display.DeviceStateAutoRotateDetailsFragment"
@@ -180,7 +185,7 @@
             android:key="long_screen_settings"
             settings:requiresConfig="@*lineageos.platform:bool/config_haveHigherAspectRatioScreen" />
 
-        <Preference
+        <com.android.settings.CustomRoundPreference
             android:key="screensaver"
             android:title="@string/screensaver_settings_title"
             android:fragment="com.android.settings.dream.DreamSettings"
@@ -210,7 +215,7 @@
             settings:requiresConfig="@*lineageos.platform:bool/config_proximityCheckOnWake" />
 
         <!-- Double tap to sleep -->
-        <lineageos.preference.LineageSystemSettingSwitchPreference
+        <!-- <lineageos.preference.LineageSystemSettingSwitchPreference
             android:key="double_tap_sleep_gesture"
             android:title="@string/status_bar_double_tap_to_sleep_title"
             android:summary="@string/status_bar_double_tap_to_sleep_summary"
@@ -222,7 +227,7 @@
             android:title="@string/wake_when_plugged_or_unplugged_title"
             android:summary="@string/wake_when_plugged_or_unplugged_summary"
             android:defaultValue="@*android:bool/config_unplugTurnsOnScreen"
-            settings:requiresConfig="@bool/config_show_top_level_battery" />
+            settings:requiresConfig="@bool/config_show_top_level_battery" /> -->
 
         <lineageos.preference.LineageSystemSettingSwitchPreference
             android:key="high_touch_polling_rate_enable"
