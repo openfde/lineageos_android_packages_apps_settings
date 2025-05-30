@@ -20,7 +20,13 @@
     android:key="system_dashboard_screen"
     android:title="@string/header_category_system">
 
-    <Preference
+    <PreferenceCategory
+        android:key="test1"
+        android:title="@string/trusted_credentials_system_tab"
+        android:order="-300"
+        android:layout="@layout/preference_square_title"/>
+
+    <com.android.settings.CustomTopPreference
         android:key="language_input_settings"
         android:title="@string/language_settings"
         android:icon="@drawable/ic_settings_language"
@@ -28,7 +34,7 @@
         android:fragment="com.android.settings.language.LanguageAndInputSettings"
         settings:controller="com.android.settings.language.LanguageAndInputPreferenceController"/>
 
-    <Preference
+    <com.android.settings.CustomTopPreference
         android:key="language_settings"
         android:title="@string/languages_settings"
         android:summary="@string/languages_setting_summary"
@@ -36,8 +42,11 @@
         android:order="-260"
         android:fragment="com.android.settings.language.LanguageSettings"
         settings:controller="com.android.settings.language.LanguagePreferenceController"/>
+   
+    <com.android.settings.CustomDividerPreference
+        android:order="-259"/>    
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="Keyboard_settings"
         android:title="@string/keyboard_settings"
         android:icon="@drawable/ic_settings_keyboards"
@@ -45,7 +54,7 @@
         android:fragment="com.android.settings.inputmethod.KeyboardSettings"
         settings:controller="com.android.settings.inputmethod.KeyboardPreferenceController"/>
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="trackpad_settings"
         android:title="@string/trackpad_settings"
         android:summary="@string/trackpad_settings_summary"
@@ -53,8 +62,9 @@
         android:order="-254"
         android:fragment="com.android.settings.inputmethod.TrackpadSettings"
         settings:controller="com.android.settings.inputmethod.TrackpadSettingsController"/>
+    
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_settings"
         android:title="@string/gesture_preference_title"
         android:icon="@drawable/ic_settings_gestures"
@@ -62,7 +72,10 @@
         android:fragment="com.android.settings.gestures.GestureSettings"
         settings:controller="com.android.settings.gestures.GesturesSettingPreferenceController"/>
 
-    <Preference
+    <com.android.settings.CustomDividerPreference
+        android:order="-249"/>    
+
+    <com.android.settings.CustomPreference
         android:key="date_time_settings"
         android:title="@string/date_and_time"
         android:icon="@drawable/ic_settings_date_time"
@@ -70,8 +83,10 @@
         android:fragment="com.android.settings.datetime.DateTimeSettings"
         settings:controller="com.android.settings.datetime.DateTimePreferenceController"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="-255"/> 
     <!-- System updates -->
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="additional_system_update_settings"
         android:title="@string/additional_system_update_settings_list_item_title"
         android:order="-59"
@@ -79,20 +94,24 @@
         <intent android:action="android.intent.action.MAIN"
                 android:targetPackage="@string/additional_system_update"
                 android:targetClass="@string/additional_system_update_menu"/>
-    </Preference>
+    </com.android.settings.CustomPreference>
 
-    <Preference
+
+    <com.android.settings.CustomPreference
         android:key="system_update_settings"
         android:title="@string/system_update_settings_list_item_title"
         android:summary="@string/summary_placeholder"
         android:icon="@drawable/ic_system_update"
-        android:order="-58"
+        android:order="-57"
         settings:keywords="@string/keywords_system_update_settings"
         settings:controller="com.android.settings.system.SystemUpdatePreferenceController">
         <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"/>
-    </Preference>
+    </com.android.settings.CustomPreference>
 
-    <Preference
+    <com.android.settings.CustomDividerPreference
+        android:order="-46"/> 
+
+    <com.android.settings.CustomPreference
         android:key="system_multiuser"
         android:title="@string/user_settings_title"
         android:icon="@drawable/ic_settings_multiuser"
@@ -100,12 +119,18 @@
         android:fragment="com.android.settings.users.UserSettings"
         settings:controller="com.android.settings.users.MultiUserPreferenceController"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="-44"/>     
+
     <com.android.settings.spa.preference.ComposePreference
         android:key="developer_options"
         android:order="-40"
         settings:controller="com.android.settings.system.DeveloperOptionsController"/>
 
-    <Preference
+    <com.android.settings.CustomDividerPreference
+        android:order="-39"/>     
+
+    <com.android.settings.CustomBottomPreference
         android:key="reset_dashboard"
         android:title="@string/reset_dashboard_title"
         android:icon="@drawable/ic_restore"

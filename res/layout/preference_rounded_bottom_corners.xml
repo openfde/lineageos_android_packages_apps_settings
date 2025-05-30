@@ -60,7 +60,7 @@
             android:id="@android:id/icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="12dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

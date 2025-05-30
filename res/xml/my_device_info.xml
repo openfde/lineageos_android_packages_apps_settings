@@ -27,31 +27,32 @@
         android:layout="@layout/settings_entity_header"
         android:selectable="false"/>
 
-    <PreferenceCategory
+    <!-- <PreferenceCategory
         android:key="basic_info_category"
         android:selectable="false"
-        android:title="@string/my_device_info_basic_info_category_title">
+        android:title="@string/my_device_info_basic_info_category_title"> -->
 
         <!-- Device name -->
         <com.android.settings.widget.ValidatedEditTextPreference
             android:key="device_name"
             android:order="1"
+            android:layout="@layout/preference_rounded_top_corners"
             android:title="@string/my_device_info_device_name_preference_title"
             android:summary="@string/summary_placeholder"
             settings:controller="com.android.settings.deviceinfo.DeviceNamePreferenceController"
             settings:enableCopying="true"/>
 
         <!-- Account name -->
-        <Preference
+        <!-- <Preference
             android:key="branded_account"
             android:order="2"
             android:title="@string/my_device_info_account_preference_title"
             android:summary="@string/summary_placeholder"
             settings:enableCopying="true"
-            settings:controller="com.android.settings.deviceinfo.BrandedAccountPreferenceController"/>
+            settings:controller="com.android.settings.deviceinfo.BrandedAccountPreferenceController"/> -->
 
         <!-- Phone number -->
-        <com.android.settings.deviceinfo.PhoneNumberSummaryPreference
+        <!-- <com.android.settings.deviceinfo.PhoneNumberSummaryPreference
             android:key="phone_number"
             android:order="3"
             android:title="@string/status_number"
@@ -59,37 +60,14 @@
             settings:isPreferenceVisible="@bool/config_show_sim_info"
             settings:controller="com.android.settings.deviceinfo.PhoneNumberPreferenceController"
             settings:enableCopying="true"/>
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 
-    <PreferenceCategory
-        android:title="@string/my_device_info_legal_category_title">
+  
 
-        <!-- Legal information -->
-        <Preference
-            android:key="legal_container"
-            android:order="15"
-            android:title="@string/legal_information"
-            android:fragment="com.android.settings.LegalSettings"/>
-
-        <!-- Regulatory labels -->
-        <Preference
-            android:key="regulatory_info"
-            android:order="16"
-            android:title="@string/regulatory_labels">
-            <intent android:action="android.settings.SHOW_REGULATORY_INFO"/>
-        </Preference>
-
-        <!-- Safety & regulatory manual -->
-        <Preference
-            android:key="safety_info"
-            android:order="17"
-            android:title="@string/safety_and_regulatory_info"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
+    <!-- <PreferenceCategory
         android:key="device_detail_category"
         android:selectable="false"
-        android:title="@string/my_device_info_device_details_category_title">
+        android:title="@string/my_device_info_device_details_category_title"> -->
 
         <!-- SIM status -->
         <Preference
@@ -102,7 +80,7 @@
             settings:controller="com.android.settings.deviceinfo.simstatus.SimStatusPreferenceController"/>
 
         <!-- Model & hardware -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="device_model"
             android:order="30"
             android:title="@string/model_info"
@@ -136,7 +114,7 @@
             settings:controller="com.android.settings.deviceinfo.imei.ImeiInfoPreferenceController"/>
 
         <!-- Android version -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="firmware_version"
             android:order="42"
             android:title="@string/firmware_version"
@@ -145,20 +123,20 @@
             settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
 
         <!-- Lineage version -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="lineage_os_version"
             android:order="43"
-            android:title="@*lineageos.platform:string/lineage_version"
+            android:title="@string/fde_version"
             android:summary="@string/summary_placeholder"
             settings:enableCopying="true"
             settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/>
-    </PreferenceCategory>
+    <!-- </PreferenceCategory> -->
 
-    <PreferenceCategory
-        android:title="@string/my_device_info_device_identifiers_category_title">
+    <!-- <PreferenceCategory
+        android:title="@string/my_device_info_device_identifiers_category_title"> -->
 
         <!--IP address -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="wifi_ip_address"
             android:order="44"
             android:title="@string/wifi_ip_address"
@@ -167,7 +145,7 @@
             settings:enableCopying="true"/>
 
         <!-- Wi-Fi MAC address -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="saved_accesspoints_wifi_mac_address"
             android:order="45"
             android:title="@string/status_wifi_mac_address"
@@ -176,7 +154,7 @@
             settings:enableCopying="false"/>
 
         <!-- Factory Wi-Fi MAC address -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="wifi_mac_address"
             android:order="46"
             android:title="@string/status_device_wifi_mac_address"
@@ -185,7 +163,7 @@
             settings:enableCopying="true"/>
 
         <!-- Bluetooth address -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="bt_address"
             android:order="47"
             android:title="@string/status_bt_address"
@@ -194,7 +172,7 @@
             settings:enableCopying="true"/>
 
         <!-- Device up time -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="up_time"
             android:order="48"
             android:title="@string/status_up_time"
@@ -202,35 +180,69 @@
             android:selectable="false"/>
 
         <!-- Manual -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="manual"
             android:order="50"
             android:title="@string/manual">
             <intent android:action="android.settings.SHOW_MANUAL"/>
-        </Preference>
+        </com.android.settings.CustomDeviceInfoPreference>
 
         <!-- Feedback on the device -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="device_feedback"
             android:order="51"
             android:title="@string/device_feedback"
             settings:keywords="@string/keywords_device_feedback"/>
 
         <!-- Device FCC equipment id -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="fcc_equipment_id"
             android:order="52"
             android:title="@string/fcc_equipment_id"
             android:summary="@string/summary_placeholder"/>
 
         <!-- Build number -->
-        <Preference
+        <com.android.settings.CustomDeviceInfoPreference
             android:key="build_number"
             android:order="53"
             android:title="@string/build_number"
             android:summary="@string/summary_placeholder"
             settings:enableCopying="true"
             settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+    <!-- </PreferenceCategory> -->
+
+
+      <PreferenceCategory
+        android:order="100"
+        android:layout="@layout/preference_square_title"
+        android:title="@string/my_device_info_legal_category_title">
+
+        <!-- Legal information -->
+        <com.android.settings.CustomRoundPreference
+            android:key="legal_container"
+            android:order="100"
+            android:title="@string/legal_information"
+            android:fragment="com.android.settings.LegalSettings"/>
+
+        <!-- Regulatory labels -->
+        <Preference
+            android:key="regulatory_info"
+            android:order="101"
+            android:title="@string/regulatory_labels">
+            <intent android:action="android.settings.SHOW_REGULATORY_INFO"/>
+        </Preference>
+
+        <!-- Safety & regulatory manual -->
+        <Preference
+            android:key="safety_info"
+            android:order="102"
+            android:title="@string/safety_and_regulatory_info"/>
     </PreferenceCategory>
+
+     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="200"
+        android:title=""
+        android:summary=""/>
 
 </PreferenceScreen>

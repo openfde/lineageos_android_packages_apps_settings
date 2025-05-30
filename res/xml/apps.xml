@@ -64,6 +64,7 @@
         <intent android:action="android.settings.MANAGE_DEFAULT_APPS_SETTINGS"/>
     </com.android.settings.CustomTopPreference>
 
+
     <com.android.settings.CustomPreference
         android:key="cloned_apps"
         android:title="@string/cloned_apps_dashboard_title"
@@ -82,6 +83,9 @@
         android:layout="@layout/preference_square_corners"
         android:order="10"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="14"/>     
+
     <com.android.settings.CustomPreference
         android:key="hibernated_apps"
         android:title="@string/unused_apps"
@@ -91,6 +95,9 @@
         settings:controller="com.android.settings.applications.HibernatedAppsPreferenceController">
         <intent android:action="android.intent.action.MANAGE_UNUSED_APPS"/>
     </com.android.settings.CustomPreference>
+
+     <com.android.settings.CustomDividerPreference
+        android:order="16"/>  
 
     <com.android.settings.CustomPreference
         android:key="app_battery_usage"
@@ -103,10 +110,14 @@
             android:value="com.android.settings.Settings$AppBatteryUsageActivity"/>
     </com.android.settings.CustomPreference>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="18"/>  
+
     <com.android.settings.CustomBottomPreference
         android:key="special_access"
         android:fragment="com.android.settings.applications.specialaccess.SpecialAccessSettings"
         android:title="@string/special_access"
+        android:summary=""
         android:order="20"/>
 
     <PreferenceCategory

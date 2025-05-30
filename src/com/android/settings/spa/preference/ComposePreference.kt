@@ -26,6 +26,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.android.settings.R
 import com.android.settingslib.spa.framework.theme.SettingsTheme
+import com.android.settingslib.spa.widget.card.CardButton
+import com.android.settingslib.spa.widget.card.CardModel
+import com.android.settingslib.spa.widget.card.SettingsCard
 
 open class ComposePreference @JvmOverloads constructor(
     context: Context,
@@ -57,9 +60,7 @@ open class ComposePreference @JvmOverloads constructor(
         (holder.itemView as ComposeView).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                SettingsTheme {
-                    content()
-                }
+                   content()
             }
         }
     }

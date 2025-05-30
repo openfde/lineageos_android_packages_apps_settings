@@ -95,4 +95,10 @@
         android:key="pref_non_current_users"
         android:title="@string/storage_other_users"
         android:order="201" />
+
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="998"
+        android:title=""
+        android:summary=""/>    
 </PreferenceScreen>

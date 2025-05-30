@@ -50,10 +50,14 @@
 
         <com.android.settings.CustomTopPreference
             android:key="lockscreen_from_display_settings"
+            android:order="1"
             android:title="@string/lockscreen_settings_title"
             android:fragment="com.android.settings.security.LockscreenDashboardFragment"
             settings:keywords="@string/keywords_ambient_display_screen"
             settings:controller="com.android.settings.security.screenlock.LockScreenPreferenceController"/>
+
+        <com.android.settings.CustomDividerPreference
+            android:order="2"/>  
 
         <com.android.settingslib.RestrictedPreference
             android:fragment="com.android.settings.display.FoldLockBehaviorSettings"
@@ -64,6 +68,7 @@
 
         <com.android.settingslib.RestrictedPreference
             android:key="screen_timeout"
+            android:order="4"
             android:title="@string/screen_timeout"
             android:summary="@string/summary_placeholder"
             android:fragment="com.android.settings.display.ScreenTimeoutSettings"
@@ -76,6 +81,7 @@
 
         <com.android.settings.display.darkmode.DarkModePreference
             android:key="dark_ui_mode"
+            android:order="1"
             android:title="@string/dark_ui_mode"
             android:fragment="com.android.settings.display.darkmode.DarkModeSettingsFragment"
             android:widgetLayout="@null"
@@ -83,9 +89,13 @@
             settings:controller="com.android.settings.display.DarkUIPreferenceController"
             settings:keywords="@string/keywords_dark_ui_mode"/>
 
+        <com.android.settings.CustomDividerPreference
+            android:order="2"/>  
+
         <com.android.settings.CustomBottomPreference
             android:fragment="com.android.settings.accessibility.TextReadingPreferenceFragment"
             android:key="text_reading_options"
+            android:order="3"
             android:persistent="false"
             android:title="@string/accessibility_text_reading_options_title"
             settings:controller="com.android.settings.accessibility.TextReadingFragmentForDisplaySettingsController"/>
@@ -253,4 +263,10 @@
             android:title="@string/display_vr_pref_title"
             android:fragment="com.android.settings.display.VrDisplayPreferencePicker"/>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="998"
+        android:title=""
+        android:summary=""/>
 </PreferenceScreen>

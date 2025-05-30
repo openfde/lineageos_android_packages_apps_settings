@@ -184,7 +184,7 @@
         settings:isPreferenceVisible="@bool/config_show_emergency_settings"
         settings:highlightableMenuKey="@string/menu_key_emergency"/> -->
 
-    <com.android.settings.widget.HomepagePreference
+    <!-- <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.accounts.AccountDashboardFragment"
         android:icon="@drawable/ic_settings_accounts"
         android:key="top_level_accounts"
@@ -192,7 +192,7 @@
         android:title="@string/account_dashboard_title_with_passkeys"
         android:summary="@string/summary_placeholder"
         settings:highlightableMenuKey="@string/menu_key_accounts"
-        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
+        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/> -->
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.system.SystemDashboardFragment"

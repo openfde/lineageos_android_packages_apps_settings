@@ -19,39 +19,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp">
 
 
     <RelativeLayout
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:layout_gravity="center"
-        android:background="@drawable/card_round_top_white"
-        android:gravity="center"
-        android:padding="12dp">
+        android:background="#fff"
+        android:gravity="center">
 
         <TextView
             android:id="@android:id/title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@android:id/icon"
+            android:layout_alignParentLeft="true"
             android:background="#fff"
-            android:text="11"
+            android:text=""
+            android:paddingLeft="16dp"
+            android:layout_centerVertical="true"
             android:textColor="#ff1A1A1A"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@android:id/summary"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@android:id/title"
-            android:layout_toRightOf="@android:id/icon"
+            android:paddingRight="16dp"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
             android:background="#fff"
-            android:text="222"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@android:id/title"
+            android:text=""
             android:textColor="#991A1A1A"
             android:textSize="12sp" />
 
@@ -60,11 +66,12 @@
             android:id="@android:id/icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_apps_test" />
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_apps_test"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@android:id/progress"
@@ -73,7 +80,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:max="100"
-            android:visibility="gone"/>    
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#14000000" />
 
 
     </RelativeLayout>

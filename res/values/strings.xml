@@ -13087,6 +13087,8 @@
      <string name="preferred_dns">Preferred DNS</string>
      <string name="alternative_dns">Alternative DNS</string>
 
+     <string name="fde_version">OpenFDE Version</string>
+
      <string-array name="spinner_ip">
           <item>"        DHCP"</item>
           <item>"Manual Input"</item>

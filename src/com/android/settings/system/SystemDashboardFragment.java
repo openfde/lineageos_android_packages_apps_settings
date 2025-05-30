@@ -26,6 +26,7 @@ import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
+import android.util.Log;
 
 @SearchIndexable
 public class SystemDashboardFragment extends DashboardFragment {
@@ -73,6 +74,7 @@ public class SystemDashboardFragment extends DashboardFragment {
                 visibleCount++;
             }
         }
+        Log.w(TAG,"visibleCount "+visibleCount);
         return visibleCount;
     }
 

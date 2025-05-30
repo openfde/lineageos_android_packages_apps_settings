@@ -33,9 +33,13 @@
                 android:name="classname"
                 android:value="com.android.settings.Settings$NotificationAppListActivity"/>
         </com.android.settings.CustomTopPreference>
+
+        <com.android.settings.CustomDividerPreference
+        android:order="11"/>  
+
         <com.android.settings.CustomBottomPreference
             android:key="notification_history"
-            android:order="11"
+            android:order="12"
             android:title="@string/notification_history"
             android:summary="@string/notification_history_summary">
             <intent
@@ -57,9 +61,13 @@
             settings:controller="com.android.settings.notification.ConversationListSummaryPreferenceController"
             android:fragment="com.android.settings.notification.app.ConversationListSettings"
         />
+
+        <com.android.settings.CustomDividerPreference
+        android:order="2"/>  
+
         <com.android.settings.CustomBottomPreference
             android:key="notification_bubbles"
-            android:order="2"
+            android:order="3"
             android:title="@string/notification_bubbles_title"
             android:summary="@string/notifications_bubble_setting_on_summary"
             settings:controller="com.android.settings.notification.BubbleSummaryNotificationPreferenceController"
@@ -78,10 +86,14 @@
             android:summary="@string/manage_notification_access_summary"
             android:fragment="com.android.settings.notification.NotificationAccessSettings"
             settings:controller="com.android.settings.applications.specialaccess.notificationaccess.NotificationAccessController" />
+
+        <com.android.settings.CustomDividerPreference
+        android:order="13"/>      
+
         <!-- When device is locked -->
         <com.android.settings.RestrictedListPreference
             android:key="lock_screen_notifications"
-            android:order="13"
+            android:order="14"
             android:layout="@layout/preference_rounded_bottom_corners"
             android:title="@string/lock_screen_notifs_title"
             android:singleLineTitle="false"
@@ -89,21 +101,21 @@
 
         <com.android.settingslib.RestrictedSwitchPreference
             android:key="lock_screen_redact"
-            android:order="14"
+            android:order="15"
             android:title="@string/lock_screen_notifs_redact"
             android:summary="@string/lock_screen_notifs_redact_summary"
             settings:controller="com.android.settings.notification.RedactNotificationPreferenceController" />
 
         <com.android.settingslib.RestrictedSwitchPreference
             android:key="lock_screen_work_redact"
-            android:order="15"
+            android:order="16"
             android:title="@string/lock_screen_notifs_redact_work"
             android:summary="@string/lock_screen_notifs_redact_work_summary"
             settings:controller="com.android.settings.notification.RedactNotificationPreferenceController" />
 
         <SwitchPreferenceCompat
             android:key="notification_lockscreen_bypass"
-            android:order="16"
+            android:order="17"
             android:title="@string/lockscreen_bypass_title"
             android:summary="@string/lockscreen_bypass_summary"
             settings:searchable="false"

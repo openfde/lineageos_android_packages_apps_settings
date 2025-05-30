@@ -25,6 +25,7 @@
     <PreferenceCategory
         android:key="user_installed_services_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/user_installed_services_category_title"/>
 
     <PreferenceCategory
@@ -35,9 +36,10 @@
     <PreferenceCategory
         android:key="display_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/display_category_title">
 
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:fragment="com.android.settings.accessibility.TextReadingPreferenceFragment"
             android:icon="@drawable/ic_adaptive_font_download"
             android:key="text_reading_options"
@@ -45,13 +47,17 @@
             android:title="@string/accessibility_text_reading_options_title"
             settings:controller="com.android.settings.accessibility.TextReadingFragmentForA11ySettingsController"/>
 
-        <Preference
+        <com.android.settings.CustomDividerPreference />      
+
+        <com.android.settings.CustomPreference
             android:fragment="com.android.settings.accessibility.ColorAndMotionFragment"
             android:key="color_and_motion"
             android:icon="@drawable/ic_color_and_motion"
             android:persistent="false"
             android:title="@string/accessibility_color_and_motion_title"
             settings:searchable="true"/>
+
+        <com.android.settings.CustomDividerPreference />          
 
         <com.android.settingslib.PrimarySwitchPreference
             android:fragment="com.android.settings.accessibility.ToggleReduceBrightColorsPreferenceFragment"
@@ -62,7 +68,9 @@
             settings:keywords="@string/keywords_reduce_bright_colors"
             settings:controller="com.android.settings.accessibility.ReduceBrightColorsPreferenceController"/>
 
-        <Preference
+        <com.android.settings.CustomDividerPreference />          
+
+        <com.android.settings.CustomBottomPreference
             android:fragment="com.android.settings.accessibility.ToggleScreenMagnificationPreferenceFragment"
             android:key="magnification_preference_screen"
             android:icon="@drawable/ic_accessibility_magnification"
@@ -76,9 +84,10 @@
     <PreferenceCategory
         android:key="interaction_control_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/interaction_control_category_title">
 
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:fragment="com.android.settings.accessibility.TapAssistanceFragment"
             android:key="tap_assistance_preference_screen"
             android:icon="@drawable/ic_tap_assistance"
@@ -86,14 +95,16 @@
             android:title="@string/accessibility_tap_assistance_title"
             settings:searchable="true"/>
 
-        <Preference
+        <com.android.settings.CustomDividerPreference />          
+
+        <com.android.settings.CustomBottomPreference
             android:fragment="com.android.settings.accessibility.SystemControlsFragment"
             android:key="system_controls_preference_screen"
             android:icon="@drawable/ic_system_controls"
             android:title="@string/accessibility_system_controls_title"
             settings:searchable="true"/>
 
-        <Preference
+        <com.android.settings.CustomPreference
             android:fragment="com.android.settings.accessibility.VibrationSettings"
             android:key="vibration_preference_screen"
             android:icon="@drawable/ic_vibration"
@@ -108,9 +119,10 @@
     <PreferenceCategory
         android:key="physical_keyboard_options_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/keyboard_category_title">
 
-        <SwitchPreferenceCompat
+        <com.android.settingslib.PrimarySwitchPreference
             android:icon="@drawable/ic_sticky_keys"
             android:key="toggle_keyboard_sticky_keys"
             android:persistent="false"
@@ -119,7 +131,9 @@
             settings:controller="com.android.settings.accessibility.KeyboardStickyKeyPreferenceController"
             settings:searchable="true" />
 
-        <SwitchPreferenceCompat
+        <com.android.settings.CustomDividerPreference />          
+
+        <com.android.settingslib.PrimarySwitchPreference
             android:icon="@drawable/ic_bounce_keys"
             android:key="toggle_keyboard_bounce_keys"
             android:persistent="false"
@@ -127,7 +141,7 @@
             settings:controller="com.android.settings.accessibility.KeyboardBounceKeyPreferenceController"
             settings:searchable="true" />
 
-        <SwitchPreferenceCompat
+        <com.android.settingslib.PrimarySwitchPreference
             android:icon="@drawable/ic_slow_keys"
             android:key="toggle_keyboard_slow_keys"
             android:persistent="false"
@@ -139,6 +153,7 @@
     <PreferenceCategory
         android:key="captions_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/captions_category_title">
 
         <Preference
@@ -150,7 +165,7 @@
             settings:keywords="@string/keywords_live_caption"
             settings:controller="com.android.settings.accessibility.LiveCaptionPreferenceController"/>
 
-        <Preference
+        <com.android.settings.CustomRoundPreference
             android:fragment="com.android.settings.accessibility.CaptioningPropertiesFragment"
             android:key="captioning_preference_screen"
             android:icon="@drawable/ic_captioning"
@@ -170,9 +185,10 @@
     <PreferenceCategory
         android:key="audio_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/audio_category_title">
 
-        <SwitchPreferenceCompat
+        <com.android.settingslib.PrimarySwitchPreference
             android:key="toggle_audio_description"
             android:persistent="false"
             android:icon="@drawable/ic_audio_description"
@@ -181,8 +197,10 @@
             settings:keywords="@string/keywords_audio_description"
             settings:searchable="true"
             settings:controller="com.android.settings.accessibility.AudioDescriptionPreferenceController"/>
+        
+        <com.android.settings.CustomDividerPreference />          
 
-        <Preference
+        <com.android.settings.CustomPreference
             android:fragment="com.android.settings.accessibility.FlashNotificationsPreferenceFragment"
             android:key="flash_notifications_preference_accessibility"
             android:icon="@drawable/ic_flash_notification"
@@ -200,8 +218,10 @@
             android:title="@string/accessibility_hearingaid_title"
             settings:keywords="@string/keywords_hearing_aids"
             settings:controller="com.android.settings.accessibility.AccessibilityHearingAidPreferenceController"/>
+        
+        <com.android.settings.CustomDividerPreference />          
 
-        <Preference
+        <com.android.settings.CustomBottomPreference
             android:fragment="com.android.settings.accessibility.AudioAdjustmentFragment"
             android:key="audio_adjustment_preference_screen"
             android:icon="@drawable/ic_audio_adjustment"
@@ -214,13 +234,15 @@
     <PreferenceCategory
         android:key="speech_category"
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/speech_category_title"/>
 
     <PreferenceCategory
         android:persistent="false"
+        android:layout="@layout/preference_square_title"
         android:title="@string/general_category_title">
 
-        <Preference
+        <com.android.settings.CustomRoundPreference
             android:fragment="com.android.settings.accessibility.ShortcutsSettingsFragment"
             android:key="accessibility_shortcuts_preference_screen"
             android:persistent="false"
@@ -235,5 +257,11 @@
             settings:controller="com.android.settings.language.TtsPreferenceController"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="998"
+        android:title=""
+        android:summary=""/>
 
 </PreferenceScreen>

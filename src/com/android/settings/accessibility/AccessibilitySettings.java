@@ -457,8 +457,8 @@ public class AccessibilitySettings extends DashboardFragment implements
                 preferenceHelper.createAccessibilityServicePreferenceList(installedServiceList);
 
         final List<RestrictedPreference> preferenceList = new ArrayList<>();
-        preferenceList.addAll(activityList);
-        preferenceList.addAll(serviceList);
+        // preferenceList.addAll(activityList);
+        // preferenceList.addAll(serviceList);
 
         return preferenceList;
     }
