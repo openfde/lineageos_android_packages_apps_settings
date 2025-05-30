@@ -98,6 +98,7 @@
             android:order="3"
             android:persistent="false"
             android:title="@string/accessibility_text_reading_options_title"
+            android:summary=""
             settings:controller="com.android.settings.accessibility.TextReadingFragmentForDisplaySettingsController"/>
     </PreferenceCategory>
 

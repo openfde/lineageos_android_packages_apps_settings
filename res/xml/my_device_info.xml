@@ -36,7 +36,6 @@
         <com.android.settings.widget.ValidatedEditTextPreference
             android:key="device_name"
             android:order="1"
-            android:layout="@layout/preference_rounded_top_corners"
             android:title="@string/my_device_info_device_name_preference_title"
             android:summary="@string/summary_placeholder"
             settings:controller="com.android.settings.deviceinfo.DeviceNamePreferenceController"
@@ -78,6 +77,7 @@
             android:summary="@string/summary_placeholder"
             settings:isPreferenceVisible="@bool/config_show_sim_info"
             settings:controller="com.android.settings.deviceinfo.simstatus.SimStatusPreferenceController"/>
+  
 
         <!-- Model & hardware -->
         <com.android.settings.CustomDeviceInfoPreference

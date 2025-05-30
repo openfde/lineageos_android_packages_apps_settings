@@ -31,6 +31,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.settingslib.CustomEditTextPreferenceCompat;
+import com.android.settings.R;
 
 /**
  * {@code EditTextPreference} that supports input validation.
@@ -49,18 +50,22 @@ public class ValidatedEditTextPreference extends CustomEditTextPreferenceCompat 
     public ValidatedEditTextPreference(Context context, AttributeSet attrs,
             int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        setLayoutResource(R.layout.preference_rounded_devicename_corners);
     }
 
     public ValidatedEditTextPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setLayoutResource(R.layout.preference_rounded_devicename_corners);
     }
 
     public ValidatedEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLayoutResource(R.layout.preference_rounded_devicename_corners);
     }
 
     public ValidatedEditTextPreference(Context context) {
         super(context);
+        setLayoutResource(R.layout.preference_rounded_devicename_corners);
     }
 
     @Override

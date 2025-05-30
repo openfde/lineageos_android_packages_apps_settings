@@ -25,7 +25,7 @@ import android.view.View;
 
 class CustomDeviceInfoPreference(context: Context, val attrs: AttributeSet) :Preference(context,attrs) {
     private val arrayTop =
-        arrayOf("device_model")
+        arrayOf("")
     private val arrayBottom = arrayOf( "build_number")
     private val arrayRound = arrayOf("bottom")
     private var key: String = ""

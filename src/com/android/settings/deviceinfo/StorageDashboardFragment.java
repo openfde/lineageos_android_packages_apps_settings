@@ -328,9 +328,9 @@ public class StorageDashboardFragment extends DashboardFragment
         });
         mStorageUsageProgressBarController = use(StorageUsageProgressBarPreferenceController.class);
 
-        ManageStoragePreferenceController manageStoragePreferenceController =
-                use(ManageStoragePreferenceController.class);
-        manageStoragePreferenceController.setUserId(mUserId);
+        // ManageStoragePreferenceController manageStoragePreferenceController =
+        //         use(ManageStoragePreferenceController.class);
+        // manageStoragePreferenceController.setUserId(mUserId);
     }
 
     @VisibleForTesting
