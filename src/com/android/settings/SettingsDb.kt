@@ -7,13 +7,17 @@ import androidx.room.RoomDatabase
 import com.android.settings.compatible.CompatibleList
 import com.android.settings.compatible.CompatibleListDao
 
+import com.android.settings.location.fde.RegionInfo
+import com.android.settings.location.fde.RegionDao
+
 @Database(
-    entities = [ CompatibleList::class],
-    version = 1,
+    entities = [ CompatibleList::class,RegionInfo::class],
+    version = 2,
     exportSchema = false
 )
 abstract class SettingsDb : RoomDatabase() {
     abstract fun compatibleListDao(): CompatibleListDao
+    abstract fun regionDao(): RegionDao
 
     companion object {
         private var instance: SettingsDb? = null

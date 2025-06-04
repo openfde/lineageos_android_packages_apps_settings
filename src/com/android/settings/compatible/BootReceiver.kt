@@ -9,6 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import com.android.settings.R;
+import com.android.settings.location.fde.LocationUtils;
 
 class BootReceiver : BroadcastReceiver() {
     private val TAG = "BootReceiver"
@@ -19,6 +20,7 @@ class BootReceiver : BroadcastReceiver() {
         GlobalScope.launch {
             val inputStream: InputStream = context.getResources().openRawResource(R.raw.comp_config_list)
             CompUtils.parseList(context, inputStream)
+            LocationUtils.parseGpsData(context)
         }
     }
 }

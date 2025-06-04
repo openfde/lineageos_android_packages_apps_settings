@@ -165,14 +165,13 @@
         settings:controller="com.android.settings.privacy.TopLevelPrivacyEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.location.LocationSettings"
+        android:fragment="com.android.settings.location.fde.LocationSettings"
         android:icon="@drawable/ic_settings_location"
         android:key="top_level_location"
         android:order="-30"
         android:title="@string/location_settings_title"
         android:summary="@string/location_settings_loading_app_permission_stats"
-        settings:highlightableMenuKey="@string/menu_key_location"
-        settings:controller="com.android.settings.location.TopLevelLocationPreferenceController"/>
+        settings:highlightableMenuKey="@string/menu_key_location"/>
 
     <!-- <com.android.settings.widget.HomepagePreference
         android:key="top_level_emergency"
