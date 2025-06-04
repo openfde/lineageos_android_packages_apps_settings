@@ -38,8 +38,7 @@
                         android:layout_alignParentLeft="true"
                         android:gravity="left|center"
                         android:text="@string/fde_country"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -52,8 +51,7 @@
                         android:gravity="center|right"
                         android:paddingRight="16dp"
                         android:spinnerMode="dropdown"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/item_child_value"
                         android:visibility="visible" />
                 </RelativeLayout>
 
@@ -71,8 +69,7 @@
                         android:layout_alignParentLeft="true"
                         android:gravity="left|center"
                         android:text="@string/fde_province"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -85,8 +82,7 @@
                         android:gravity="center|right"
                         android:paddingRight="14dp"
                         android:spinnerMode="dropdown"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/item_child_value"
                         android:visibility="visible" />
 
                 </RelativeLayout>
@@ -105,8 +101,7 @@
                         android:layout_alignParentLeft="true"
                         android:gravity="left|center"
                         android:text="@string/fde_city"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title"/>
 
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -119,8 +114,7 @@
                         android:gravity="center|right"
                         android:paddingRight="14dp"
                         android:spinnerMode="dropdown"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/item_child_value"
                         android:visibility="visible" />
 
                 </RelativeLayout>

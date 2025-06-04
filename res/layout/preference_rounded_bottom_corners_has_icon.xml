@@ -28,9 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
-        android:background="@drawable/card_round_top_white"
+        android:background="@drawable/card_round_bottom_white"
         android:gravity="center"
-        android:paddingLeft="16dp"
         android:paddingTop="12dp">
 
         <TextView
@@ -40,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@android:id/icon"
             android:background="#fff"
-            android:textAppearance="@style/item_child_title" />
+            android:textAppearance="@style/item_child_title"  />
 
         <TextView
             android:id="@android:id/summary"
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:max="100"
-            android:visibility="gone"/>    
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

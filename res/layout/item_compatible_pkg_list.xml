@@ -65,9 +65,7 @@
                 android:layout_marginLeft="8dp"
                 android:gravity="center|left"
                 android:lineHeight="@dimen/settings_item_height"
-                android:text="33"
-                android:textColor="@color/dark_text"
-                android:textSize="@dimen/fde_light_text" />
+                android:textAppearance="@style/item_child_title" />
 
         </LinearLayout>
 

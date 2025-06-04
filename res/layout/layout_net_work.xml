@@ -75,6 +75,7 @@
                     android:gravity="center|left"
                     android:textColor="#d9000000"
                     android:textSize="14sp"
+                    android:fontFamily="@font/alibaba_puhui_65_medium_65_medium"
                     android:text="@string/open_wifi"  />
 
 
@@ -105,9 +106,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/fde_net_saved_network"
-                android:textColor="#ff262626"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/item_title" />
 
             <ImageView
                 android:id="@+id/imgSavedLoading"
@@ -143,6 +142,7 @@
                     android:text="@string/fde_net_none"
                     android:textColor="#4d000000"
                     android:textSize="14sp"
+                    android:fontFamily="@font/alibaba_puhui_55_regular_55_regular"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -175,9 +175,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/fde_net_other_networks"
-                android:textColor="#ff262626"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/item_title" />
 
             <ImageView
                 android:id="@+id/imgOtherLoading"
@@ -213,6 +211,7 @@
                     android:text="@string/fde_net_none"
                     android:textColor="#4d000000"
                     android:textSize="14sp"
+                    android:fontFamily="@font/alibaba_puhui_55_regular_55_regular"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/txtAddWifi"/>
 
@@ -234,7 +233,7 @@
                     android:padding="14dp"
                     android:textColor="#d9000000"
                     android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/alibaba_puhui_55_regular_85_bold"
                     android:background="#FFF"
                     android:layout_width="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -282,6 +281,7 @@
                     android:gravity="center|left"
                     android:text="@string/fde_net_networks"
                     android:textColor="#d9000000"
+                    android:fontFamily="@font/alibaba_puhui_55_regular_55_regular"
                     android:textSize="14sp" />
 
                 <TextView
@@ -290,6 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|right"
+                    android:fontFamily="@font/alibaba_puhui_55_regular_55_regular"
                     android:text="@string/fde_has_connected"
                     android:textColor="#ff318BF3"
                     android:textSize="14sp" />
@@ -305,9 +306,7 @@
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
             android:text="@string/fde_net_config"
-            android:textColor="#ff262626"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/item_title" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -337,8 +336,7 @@
                         android:layout_alignParentLeft="true"
                         android:gravity="left|center"
                         android:text="@string/configurable_interfaces"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -351,8 +349,7 @@
                         android:gravity="center|right"
                         android:paddingRight="16dp"
                         android:spinnerMode="dropdown"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/item_child_value"
                         android:visibility="visible" />
                 </RelativeLayout>
 
@@ -370,8 +367,7 @@
                         android:layout_alignParentLeft="true"
                         android:gravity="left|center"
                         android:text="@string/ip_settings"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -385,8 +381,7 @@
                         android:gravity="center|right"
                         android:paddingRight="14dp"
                         android:spinnerMode="dropdown"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp"
+                        android:textAppearance="@style/item_child_value"
                         android:visibility="visible" />
                 </RelativeLayout>
 
@@ -406,8 +401,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center"
                         android:text="@string/ip_address"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editIpAddress"
@@ -417,8 +411,7 @@
                         android:background="#fff"
                         android:gravity="right|center"
                         android:hint="input"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_value" />
                 </LinearLayout>
 
 
@@ -437,8 +430,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center"
                         android:text="@string/default_gateway"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editDefaultGateway"
@@ -448,8 +440,7 @@
                         android:background="#fff"
                         android:gravity="right|center"
                         android:hint="input"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_value" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -467,8 +458,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center"
                         android:text="@string/subnet_mask"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editSubnetMask"
@@ -478,8 +468,7 @@
                         android:background="#fff"
                         android:gravity="right|center"
                         android:hint="input"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_value" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -497,8 +486,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center"
                         android:text="@string/preferred_dns"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editPreferredDns"
@@ -507,9 +495,8 @@
                         android:layout_weight="1"
                         android:background="#fff"
                         android:gravity="right|center"
-                        android:hint="input"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_value"
+                        android:hint="input" />
                 </LinearLayout>
 
 
@@ -528,8 +515,7 @@
                         android:layout_weight="1"
                         android:gravity="left|center"
                         android:text="@string/alternative_dns"
-                        android:textColor="#ff1A1A1A"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_title" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editAlternativeDns"
@@ -539,8 +525,7 @@
                         android:background="#fff"
                         android:gravity="right|center"
                         android:hint="input"
-                        android:textColor="#ff333333"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/item_child_value" />
                 </LinearLayout>
 
 
@@ -568,6 +553,7 @@
                 android:visibility="gone"
                 android:text="@string/fde_btn_cancel"
                 android:textColor="#d9000000"
+                android:fontFamily="@font/alibaba_puhui_65_medium_65_medium"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -579,6 +565,7 @@
                 android:background="@drawable/btn_blue_background_selector"
                 android:text="@string/fde_btn_confirm"
                 android:textColor="#e6FFFFFF"
+                android:fontFamily="@font/alibaba_puhui_65_medium_65_medium"
                 android:textSize="14sp" />
 
 

@@ -58,9 +58,8 @@
                 android:layout_marginLeft="-8dp"
                 android:gravity="center|left"
                 android:lineHeight="@dimen/settings_item_height"
-                android:text=""
-                android:textColor="@color/dark_text"
-                android:textSize="@dimen/fde_light_text" />
+                android:text="" 
+                android:textAppearance="@style/item_child_title" />
 
             <ImageView
                 android:id="@+id/imgRemarks"

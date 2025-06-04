@@ -145,7 +145,7 @@ public class AppsPreferenceController extends BasePreferenceController implement
                 if (!mRecentApps.isEmpty()) {
                     mSeeAllPref.setTitle(StringUtil.getIcuPluralsString(mContext, num,
                             R.string.see_all_apps_title));
-                    mSeeAllPref.setLayoutResource(R.layout.preference_rounded_bottom_corners);        
+                    mSeeAllPref.setLayoutResource(R.layout.preference_rounded_bottom_corners_has_icon);        
                 } else {
                     mAllAppsInfoPref.setSummary(mContext.getString(R.string.apps_summary, num));
                 }
@@ -217,11 +217,11 @@ public class AppsPreferenceController extends BasePreferenceController implement
                 });
                
                 if(showAppsCount == 1){
-                    pref.setLayoutResource(R.layout.preference_rounded_top_corners);
+                    pref.setLayoutResource(R.layout.preference_rounded_top_corners_app);
                 // }else if(showAppsCount == mRecentApps.size()){
                 //     pref.setLayoutResource(R.layout.preference_rounded_bottom_corners);
                 }else{
-                    pref.setLayoutResource(R.layout.preference_square_corners);   
+                    pref.setLayoutResource(R.layout.preference_square_corners_app);   
                 }
                 
 

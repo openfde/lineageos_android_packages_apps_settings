@@ -30,7 +30,6 @@
         android:layout_gravity="center"
         android:background="@drawable/card_round_top_white"
         android:gravity="center"
-        android:paddingLeft="16dp"
         android:paddingTop="12dp">
 
         <TextView

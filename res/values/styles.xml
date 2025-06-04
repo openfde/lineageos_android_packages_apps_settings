@@ -722,7 +722,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:paddingTop">36dp</item>
         <item name="android:paddingBottom">16dp</item>
     </style>
@@ -788,14 +788,14 @@
     </style>
 
     <style name="RequestManageCredentialsAllowButton" parent="@style/ActionPrimaryButton">
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="RequestManageCredentialsDontAllowButton"
            parent="@style/Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
@@ -928,7 +928,7 @@
     </style>
 
     <style name="CardPreferencePrimaryButton" parent="@style/ActionPrimaryButton">
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:singleLine">true</item>
@@ -937,7 +937,7 @@
 
     <style name="CardPreferenceBorderlessButton"
         parent="@style/Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:singleLine">true</item>
@@ -970,7 +970,7 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
     </style>
 
     <style name="PrivateSpaceSetupBulletPointLayoutStyle">
@@ -995,7 +995,7 @@
     </style>
 
     <style name="CredentialManagerChangeButton" parent="@style/ActionPrimaryButton">
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:singleLine">true</item>
@@ -1005,11 +1005,46 @@
     <style name="CredentialManagerOpenButton"
         parent="@style/Widget.AppCompat.Button">
         <item name="android:theme">@style/RoundedCornerThemeOverlay</item>
-        <item name="android:fontFamily">google-sans-medium</item>
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:singleLine">true</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="item_title" >
+        <item name="android:fontFamily">@font/alibaba_puhui_55_regular_85_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ff262626</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="item_child_title" >
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ff1A1A1A</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="item_child_summary" >
+        <item name="android:fontFamily">@font/alibaba_puhui_55_regular_55_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#991A1A1A</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="item_child_value" >
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ff333333</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="item_spinner_text" >
+        <item name="android:fontFamily">@font/alibaba_puhui_65_medium_65_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#e6000000</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 </resources>

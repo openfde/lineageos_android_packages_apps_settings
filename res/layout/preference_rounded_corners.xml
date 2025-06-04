@@ -20,18 +20,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
     android:layout_marginHorizontal="16dp">
 
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="56dp"
             android:layout_gravity="center"
             android:background="@drawable/card_round_white"
             android:gravity="center"
-            android:padding="12dp">
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@android:id/title"
@@ -40,10 +41,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@android:id/icon"
                 android:background="#fff"
-                android:text="11"
-                android:textColor="#ff1A1A1A"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/item_child_title" />
 
             <TextView
                 android:id="@android:id/summary"
@@ -52,9 +50,7 @@
                 android:layout_below="@android:id/title"
                 android:layout_toRightOf="@android:id/icon"
                 android:background="#fff"
-                android:text="222"
-                android:textColor="#991A1A1A"
-                android:textSize="12sp" />
+                android:textAppearance="@style/item_child_summary" />
 
 
             <ImageView
@@ -63,7 +59,7 @@
                 android:layout_height="32dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="12dp"
                 android:src="@drawable/ic_apps_test" />
 

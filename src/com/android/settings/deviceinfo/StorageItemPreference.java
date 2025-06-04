@@ -52,7 +52,7 @@ public class StorageItemPreference extends Preference {
             Log.w(TAG,"StorageItemPreference getAttributeValue: "+value);
             if("pref_system".equals(value)){
                 setLayoutResource(R.layout.storage_item_top);
-            }else if("pref_videos".equals(value)){
+            }else if("pref_images".equals(value)){
                 setLayoutResource(R.layout.storage_item_bottom);
             }
         }

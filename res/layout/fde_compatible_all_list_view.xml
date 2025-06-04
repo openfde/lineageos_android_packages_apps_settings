@@ -39,9 +39,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:text="@string/fde_app_name_title"
-        android:textColor="@color/dark_text"
-        android:textSize="@dimen/fde_medium_text"
-        android:textStyle="bold"
+        android:textAppearance="@style/item_title"
         app:layout_constraintLeft_toRightOf="@id/imgAppIcon"
         android:visibility="gone" />
 

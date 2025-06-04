@@ -30,7 +30,6 @@
         android:layout_gravity="center"
         android:background="@drawable/card_round_top_white"
         android:gravity="center"
-        android:paddingLeft="16dp"
         android:paddingTop="12dp">
 
         <TextView
@@ -70,6 +69,13 @@
             android:layout_marginTop="4dp"
             android:max="100"
             android:visibility="gone"/>    
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#14000000" />    
 
 
     </RelativeLayout>

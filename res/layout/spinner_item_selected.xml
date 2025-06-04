@@ -6,5 +6,4 @@
     android:gravity="center_vertical|right"
     android:paddingRight="24dp"
     android:layout_gravity="right|center"
-    android:textColor="#e6000000"
-    android:textSize="14sp" />
+    android:textAppearance="@style/item_spinner_text" />

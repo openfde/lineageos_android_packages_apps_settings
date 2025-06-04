@@ -38,9 +38,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         android:gravity="center|left"
-        android:text="acitvity1"
-        android:textColor="@color/dark_text"
-        android:textSize="@dimen/fde_light_text" />
+        android:text="acitvity1" 
+        android:textAppearance="@style/item_child_title" />
 
 
     <LinearLayout

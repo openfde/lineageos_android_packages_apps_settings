@@ -24,20 +24,12 @@
     android:layout_marginHorizontal="16dp">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="#4d000000"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="6dp"
-        app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_gravity="center"
-            android:background="#fff"
+            android:background="@drawable/card_round_white"
             android:gravity="center"
             android:paddingTop="12dp">
 
@@ -48,7 +40,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@android:id/icon"
                 android:background="#fff"
-                android:textAppearance="@style/item_child_title"  />
+                android:textAppearance="@style/item_child_title" />
 
             <TextView
                 android:id="@android:id/summary"
@@ -82,7 +74,5 @@
 
 
         </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

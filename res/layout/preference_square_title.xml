@@ -37,9 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@android:id/icon"
-            android:text="11"
-            android:textColor="#ff262626"
-            android:textSize="14sp" />
+            android:text=""
+            android:textAppearance="@style/item_title" />
 
         <TextView
             android:id="@android:id/summary"
@@ -47,10 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
             android:layout_toRightOf="@android:id/icon"
-            android:text="222"
-            android:textColor="#991A1A1A"
-            android:textSize="12sp"
-            android:visibility="gone" />
+            android:textAppearance="@style/item_child_summary" />
 
 
         <ImageView

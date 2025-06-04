@@ -39,7 +39,7 @@
         android:layout="@layout/preference_square_title"
         android:title="@string/display_category_title">
 
-        <com.android.settings.CustomTopPreference
+        <com.android.settings.CustomTopPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.TextReadingPreferenceFragment"
             android:icon="@drawable/ic_adaptive_font_download"
             android:key="text_reading_options"
@@ -49,7 +49,7 @@
 
         <com.android.settings.CustomDividerPreference />      
 
-        <com.android.settings.CustomPreference
+        <com.android.settings.CustomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.ColorAndMotionFragment"
             android:key="color_and_motion"
             android:icon="@drawable/ic_color_and_motion"
@@ -70,7 +70,7 @@
 
         <com.android.settings.CustomDividerPreference />          
 
-        <com.android.settings.CustomBottomPreference
+        <com.android.settings.CustomBottomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.ToggleScreenMagnificationPreferenceFragment"
             android:key="magnification_preference_screen"
             android:icon="@drawable/ic_accessibility_magnification"
@@ -87,7 +87,7 @@
         android:layout="@layout/preference_square_title"
         android:title="@string/interaction_control_category_title">
 
-        <com.android.settings.CustomTopPreference
+        <com.android.settings.CustomTopPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.TapAssistanceFragment"
             android:key="tap_assistance_preference_screen"
             android:icon="@drawable/ic_tap_assistance"
@@ -97,14 +97,14 @@
 
         <com.android.settings.CustomDividerPreference />          
 
-        <com.android.settings.CustomBottomPreference
+        <com.android.settings.CustomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.SystemControlsFragment"
             android:key="system_controls_preference_screen"
             android:icon="@drawable/ic_system_controls"
             android:title="@string/accessibility_system_controls_title"
             settings:searchable="true"/>
 
-        <com.android.settings.CustomPreference
+        <com.android.settings.CustomBottomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.VibrationSettings"
             android:key="vibration_preference_screen"
             android:icon="@drawable/ic_vibration"
@@ -165,7 +165,7 @@
             settings:keywords="@string/keywords_live_caption"
             settings:controller="com.android.settings.accessibility.LiveCaptionPreferenceController"/>
 
-        <com.android.settings.CustomRoundPreference
+        <com.android.settings.CustomRoundPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.CaptioningPropertiesFragment"
             android:key="captioning_preference_screen"
             android:icon="@drawable/ic_captioning"
@@ -200,7 +200,7 @@
         
         <com.android.settings.CustomDividerPreference />          
 
-        <com.android.settings.CustomPreference
+        <com.android.settings.CustomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.FlashNotificationsPreferenceFragment"
             android:key="flash_notifications_preference_accessibility"
             android:icon="@drawable/ic_flash_notification"
@@ -221,7 +221,7 @@
         
         <com.android.settings.CustomDividerPreference />          
 
-        <com.android.settings.CustomBottomPreference
+        <com.android.settings.CustomBottomPreferenceHasIcon
             android:fragment="com.android.settings.accessibility.AudioAdjustmentFragment"
             android:key="audio_adjustment_preference_screen"
             android:icon="@drawable/ic_audio_adjustment"
