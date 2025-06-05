@@ -54,7 +54,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@android:id/title"
-            android:textAppearance="@style/item_child_summary" />
+            android:textAppearance="@style/item_child_value" />
 
 
         <ImageView

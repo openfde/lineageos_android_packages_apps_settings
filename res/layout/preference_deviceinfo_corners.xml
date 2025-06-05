@@ -42,9 +42,7 @@
             android:text=""
             android:paddingLeft="16dp"
             android:layout_centerVertical="true"
-            android:textColor="#ff1A1A1A"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+             android:textAppearance="@style/item_child_title" />
 
         <TextView
             android:id="@android:id/summary"
@@ -57,9 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@android:id/title"
-            android:text=""
-            android:textColor="#ff333333"
-            android:textSize="14sp" />
+             android:textAppearance="@style/item_child_value" />
 
 
         <ImageView
