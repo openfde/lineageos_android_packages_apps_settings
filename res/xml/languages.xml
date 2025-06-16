@@ -26,6 +26,7 @@
         android:selectable="false"/>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:title="@string/language_picker_category_title">
         <com.android.settingslib.widget.LayoutPreference
             android:key="languages_picker"

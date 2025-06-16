@@ -63,6 +63,8 @@ import com.android.settingslib.widget.LayoutPreference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.core.content.ContextCompat;
 
 /**
  * Drag-and-drop editor for the user-ordered locale lists.
@@ -482,6 +484,14 @@ public class LocaleListEditor extends RestrictedSettingsFragment implements View
         list.setAdapter(mAdapter);
         list.setOnTouchListener(this);
         list.requestFocus();
+
+        // DividerItemDecoration divider = new DividerItemDecoration(
+        //         getContext(), // Context
+        //         DividerItemDecoration.HORIZONTAL // 分隔线的方向
+        // );
+        // divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        // list.addItemDecoration(divider);
+
 
         mAddLanguage = layout.findViewById(R.id.add_language);
         mAddLanguage.setOnClickListener(new View.OnClickListener() {

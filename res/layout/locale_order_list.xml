@@ -25,6 +25,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="true"
         android:clipChildren="true"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/card_round_white"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -32,6 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"/>
+
+        
+    
 
         <Button
             android:id="@+id/add_language"
@@ -43,6 +48,9 @@
             android:drawablePadding="32dp"
             android:textAlignment="textStart"
             android:text="@string/add_a_language"
+            android:textColor="#ff1A1A1A"
+            android:textSize="14sp"
+            android:minHeight="56dp"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:textAppearance="?android:attr/textAppearanceListItem"/>
 

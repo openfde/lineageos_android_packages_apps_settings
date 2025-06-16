@@ -21,38 +21,45 @@
     android:title="@string/keyboard_settings">
     <PreferenceCategory
         android:key="keyboards_category">
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="virtual_keyboard_pref"
             android:title="@string/virtual_keyboard_category"
             android:fragment="com.android.settings.inputmethod.AvailableVirtualKeyboardFragment"
             settings:keywords="@string/keywords_virtual_keyboard"/>
 
-        <Preference
+        <com.android.settings.CustomDividerPreference/>     
+
+        <com.android.settings.CustomBottomPreference
             android:key="physical_keyboard_pref"
             android:title="@string/physical_keyboard_title"
             android:summary="@string/summary_placeholder"/>
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout="@layout/preference_square_title"
         android:key="input_assistance_category"
         android:title="@string/input_assistance">
         <!-- Spell checker preference title, summary and fragment will be set programmatically. -->
         <!-- Note: Mark this as persistent="false" to remove unnecessarily saved shared preference.
              See: InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference. -->
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="spellcheckers_settings"
             android:title="@string/spellcheckers_settings_title"
             android:persistent="false"
             android:fragment="com.android.settings.inputmethod.SpellCheckersSettings" />
 
+        <com.android.settings.CustomDividerPreference/>       
+
         <!-- User dictionary preference title and fragment will be set programmatically. -->
-        <Preference
+        <com.android.settings.CustomPreference
             android:key="key_user_dictionary_settings"
             android:title="@string/user_dict_settings_title"
             android:summary="@string/user_dict_settings_summary"
             android:fragment="com.android.settings.inputmethod.UserDictionaryList"
             settings:controller="com.android.settings.language.UserDictionaryPreferenceController" />
     </PreferenceCategory>
+
+    <com.android.settings.CustomDividerPreference/>   
 
     <PreferenceCategory
         android:key="pointer_category"

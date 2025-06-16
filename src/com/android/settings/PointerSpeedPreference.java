@@ -57,6 +57,7 @@ public class PointerSpeedPreference extends SeekBarDialogPreference implements
     public PointerSpeedPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mIm = (InputManager)getContext().getSystemService(Context.INPUT_SERVICE);
+        setLayoutResource(R.layout.preference_rounded_bottom_corners);
     }
 
     @Override

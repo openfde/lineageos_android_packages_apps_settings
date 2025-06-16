@@ -19,4 +19,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/virtual_keyboard_category">
 
+     <PreferenceCategory
+        android:key="test1"
+        android:title="@string/virtual_keyboard_category"
+        android:order="-999"
+        android:layout="@layout/preference_square_title"/>
+
 </PreferenceScreen>

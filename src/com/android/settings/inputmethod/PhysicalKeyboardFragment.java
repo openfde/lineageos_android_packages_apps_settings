@@ -50,10 +50,12 @@ import com.android.settings.R;
 import com.android.settings.Settings;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.core.SubSettingLauncher;
+import com.android.settings.inputmethod.PhysicalKeyboardFragment.HardKeyboardDeviceInfo;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 import com.android.settingslib.utils.ThreadUtils;
+import com.android.settings.CustomRoundPreference;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -286,11 +288,12 @@ public final class PhysicalKeyboardFragment extends SettingsPreferenceFragment
         final PreferenceCategory category = new PreferenceCategory(getPrefContext());
         category.setTitle(R.string.builtin_keyboard_settings_title);
         category.setOrder(0);
+        category.setLayoutResource(R.layout.preference_square_title);
         preferenceScreen.addPreference(category);
 
         for (HardKeyboardDeviceInfo hardKeyboardDeviceInfo : newHardKeyboards) {
             // TODO(yukawa): Consider using com.android.settings.widget.GearPreference
-            final Preference pref = new Preference(getPrefContext());
+            final CustomRoundPreference pref = new CustomRoundPreference(getPrefContext());
             pref.setTitle(hardKeyboardDeviceInfo.mDeviceName);
             if (mIsNewKeyboardSettings) {
                 String currentLayout =

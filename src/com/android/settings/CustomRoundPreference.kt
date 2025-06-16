@@ -21,7 +21,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.android.settings.R;
 
-class CustomRoundPreference(context: Context, attrs: AttributeSet) :Preference(context,attrs) {
+class CustomRoundPreference:Preference {
+    constructor(context: Context, attrs: AttributeSet) : super(context,attrs)
+    constructor(context: Context) : super(context)
+
     init{
         layoutResource = R.layout.preference_rounded_corners
     }

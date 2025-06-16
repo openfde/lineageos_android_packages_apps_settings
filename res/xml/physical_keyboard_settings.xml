@@ -21,19 +21,24 @@
          with low order values to set the key map of each attached keyboard. -->
     <PreferenceCategory
         android:key="keyboard_options_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/keyboard_options_category">
-        <SwitchPreferenceCompat
+        <com.android.settings.CustomSwitchPreferenceCompat
             android:key="show_virtual_keyboard_switch"
             android:title="@string/show_ime"
             android:summary="@string/show_ime_summary"
             android:defaultValue="false" />
 
-        <Preference
+        <com.android.settings.CustomDividerPreference/>           
+
+        <com.android.settings.CustomPreference
             android:key="keyboard_shortcuts_helper"
             android:title="@string/keyboard_shortcuts_helper"
             android:summary="@string/keyboard_shortcuts_helper_summary" />
 
-        <Preference
+        <com.android.settings.CustomDividerPreference/>       
+
+        <com.android.settings.CustomBottomPreference
             android:key="modifier_keys_settings"
             android:title="@string/modifier_keys_settings"
             android:summary="@string/modifier_keys_settings_summary"
@@ -42,18 +47,22 @@
 
     <PreferenceCategory
         android:key="keyboard_a11y_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/keyboard_a11y_category">
 
-        <SwitchPreferenceCompat
+        <com.android.settings.CustomSwitchPreferenceCompat
             android:key="accessibility_sticky_keys"
             android:title="@string/sticky_keys"
             android:summary="@string/sticky_keys_summary"
             android:defaultValue="false" />
 
-        <SwitchPreferenceCompat
+        <com.android.settings.CustomDividerPreference/>           
+
+        <com.android.settings.CustomSwitchPreferenceCompat
             android:key="accessibility_bounce_keys"
             android:title="@string/bounce_keys"
             android:defaultValue="false" />
+
 
         <SwitchPreferenceCompat
             android:key="accessibility_slow_keys"
@@ -65,6 +74,7 @@
     <!-- Device-specific keyboard settings. -->
     <PreferenceCategory
         android:key="keyboard_extras_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/keyboard_extras_title" >
 
         <lineageos.preference.RemotePreference

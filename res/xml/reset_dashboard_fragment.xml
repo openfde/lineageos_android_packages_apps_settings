@@ -20,6 +20,11 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:title="@string/reset_dashboard_title">
 
+    <PreferenceCategory
+            android:layout="@layout/preference_square_title"
+            android:title=""
+            android:summary=""/>  
+
     <!-- Mobile Network reset -->
     <com.android.settingslib.RestrictedPreference
         android:key="network_reset_mobile_network_settings_pref"
@@ -35,6 +40,8 @@
         android:title="@string/reset_bluetooth_wifi_title"
         settings:controller="com.android.settings.network.BluetoothWiFiResetPreferenceController" />
 
+    <com.android.settings.CustomDividerPreference/>      
+
     <!-- Reset app preferences -->
     <com.android.settingslib.RestrictedPreference
         android:key="reset_app_prefs"
@@ -47,6 +54,8 @@
         android:title="@string/reset_esim_title"
         settings:isPreferenceVisible="@bool/config_show_sim_info"
         settings:controller="com.android.settings.network.EraseEuiccDataController" />
+
+    <com.android.settings.CustomDividerPreference/>      
 
     <!-- Factory reset -->
     <com.android.settingslib.RestrictedPreference

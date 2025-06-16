@@ -61,12 +61,17 @@ public class DateTimeSettings extends DashboardFragment implements
         use(AutoTimePreferenceController.class).setDateAndTimeCallback(this);
         use(DatePreferenceController.class).setHost(this);
         use(TimePreferenceController.class).setHost(this);
-        use(AutoTimeZonePreferenceController.class)
+        
+        try {
+            use(AutoTimeZonePreferenceController.class)
                 .setTimeAndDateCallback(this)
                 .setFromSUW(isFromSUW);
-        use(TimeFormatPreferenceController.class)
+            use(TimeFormatPreferenceController.class)
                 .setTimeAndDateCallback(this)
                 .setFromSUW(isFromSUW);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

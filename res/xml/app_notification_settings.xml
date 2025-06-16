@@ -87,7 +87,7 @@
         settings:allowDividerBelow="false" />
 
     <!-- Show badge -->
-    <com.android.settingslib.RestrictedSwitchPreference
+    <!-- <com.android.settingslib.RestrictedSwitchPreference
         android:key="badge"
         android:title="@string/notification_badge_title"
         android:icon="@drawable/ic_notification_dot"
@@ -95,7 +95,7 @@
         settings:restrictedSwitchSummary="@string/enabled_by_admin"
         android:order="1001"
         settings:allowDividerAbove="true"
-        settings:allowDividerBelow="false" />
+        settings:allowDividerBelow="false" /> -->
 
     <com.android.settings.RestrictedListPreference
         android:key="sound_timeout"

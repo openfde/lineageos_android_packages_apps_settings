@@ -22,4 +22,10 @@
     settings:searchable="false"
     settings:controller="com.android.settings.inputmethod.UserDictionaryListPreferenceController">
 
+   <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="-999"
+        android:title=""
+        android:summary=""/>
+
 </PreferenceScreen>

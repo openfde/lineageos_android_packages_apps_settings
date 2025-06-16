@@ -29,6 +29,11 @@ import com.android.settingslib.spa.framework.theme.SettingsTheme
 import com.android.settingslib.spa.widget.card.CardButton
 import com.android.settingslib.spa.widget.card.CardModel
 import com.android.settingslib.spa.widget.card.SettingsCard
+import android.widget.TextView;
+import android.graphics.Color
+import android.graphics.Typeface
+
+
 
 open class ComposePreference @JvmOverloads constructor(
     context: Context,
@@ -45,18 +50,26 @@ open class ComposePreference @JvmOverloads constructor(
     @VisibleForTesting
     @Composable
     fun Content() {
-        content()
+         content()
     }
 
     init {
         layoutResource = R.layout.preference_compose
+
+
+
     }
+
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
         holder.isDividerAllowedAbove = false
         holder.isDividerAllowedBelow = false
 
+        holder.itemView.findViewById<TextView>(android.R.id.title)?.apply {
+            textSize = 10.0f
+        }
+    
         (holder.itemView as ComposeView).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {

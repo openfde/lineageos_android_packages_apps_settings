@@ -49,11 +49,16 @@
         android:order="10"
         settings:searchable="false"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="19"/>        
+
     <com.android.settingslib.RestrictedPreference
         android:key="user_add"
         android:title="@string/user_add_user_or_profile_menu"
         android:icon="@drawable/ic_add_40dp"
         android:order="20"/>
+    
+      
 
     <com.android.settingslib.RestrictedPreference
         android:key="supervised_user_add"
@@ -72,6 +77,9 @@
         android:icon="@drawable/ic_add_40dp"
         android:order="55"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="59"/>       
+
     <com.android.settingslib.RestrictedSwitchPreference
         android:key="remove_guest_on_exit"
         android:title="@string/remove_guest_on_exit"
@@ -86,17 +94,21 @@
         android:singleLineTitle="false"
         android:order="65"/>
 
+    <com.android.settings.CustomDividerPreference
+        android:order="104"/>    
+
     <com.android.settingslib.RestrictedSwitchPreference
         android:key="user_settings_add_users_when_locked"
         android:title="@string/user_add_on_lockscreen_menu"
         android:singleLineTitle="false"
-        android:order="105"
-        settings:allowDividerAbove="true"/>
+        android:order="105"/>
+    
+        
 
     <com.android.settingslib.RestrictedPreference
         android:key="timeout_to_dock_user_preference"
         android:title="@string/switch_to_dock_user_when_docked"
-        android:order="106"
+        android:order="107"
         android:fragment="com.android.settings.users.TimeoutToDockUserSettings"
         settings:controller="com.android.settings.users.TimeoutToDockUserPreferenceController"/>
 

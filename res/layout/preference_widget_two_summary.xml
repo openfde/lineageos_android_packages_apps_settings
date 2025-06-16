@@ -25,14 +25,12 @@
         android:id="@+id/widget_summary1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary"/>
+        android:textAppearance="@style/item_child_summary"/>
 
     <TextView
         android:id="@+id/widget_summary2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary"/>
+        android:textAppearance="@style/item_child_summary"/>
 </LinearLayout>

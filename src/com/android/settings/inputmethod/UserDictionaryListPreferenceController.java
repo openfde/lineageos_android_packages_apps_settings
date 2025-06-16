@@ -39,6 +39,7 @@ import com.android.settingslib.core.lifecycle.events.OnStart;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
+import com.android.settings.CustomPreference;
 
 public class UserDictionaryListPreferenceController extends BasePreferenceController implements
         LifecycleObserver, OnStart {
@@ -190,7 +191,8 @@ public class UserDictionaryListPreferenceController extends BasePreferenceContro
      */
     private Preference createUserDictionaryPreference(String locale) {
         final String KEY_LOCALE = "locale";
-        final Preference newPref = new Preference(mScreen.getContext());
+
+        final CustomPreference newPref = new CustomPreference(mScreen.getContext());
         final Intent intent = new Intent(USER_DICTIONARY_SETTINGS_INTENT_ACTION);
         if (locale == null) {
             newPref.setTitle(Locale.getDefault().getDisplayName());

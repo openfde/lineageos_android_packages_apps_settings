@@ -90,7 +90,7 @@ class LocaleDragCell extends RelativeLayout {
     }
 
     public void setLocalized(boolean localized) {
-        mLocalized.setVisibility(localized ? GONE : VISIBLE);
+        // mLocalized.setVisibility(localized ? GONE : VISIBLE);
         invalidate();
     }
 

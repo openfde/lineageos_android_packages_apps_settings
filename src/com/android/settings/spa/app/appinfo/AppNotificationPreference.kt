@@ -36,6 +36,7 @@ import com.android.settingslib.spaprivileged.model.app.installed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import com.android.settings.CustomPreference;
 
 @Composable
 fun AppNotificationPreference(

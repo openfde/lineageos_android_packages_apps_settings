@@ -17,8 +17,10 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/spellcheckers_settings_title">
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="spellchecker_language"
         android:title="@string/phone_language"
         android:persistent="false" />
+
+     <com.android.settings.CustomDividerPreference/>        
 </PreferenceScreen>

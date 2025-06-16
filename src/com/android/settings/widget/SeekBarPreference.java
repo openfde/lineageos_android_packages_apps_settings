@@ -38,6 +38,7 @@ import androidx.preference.PreferenceViewHolder;
 
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.settingslib.RestrictedPreference;
+import com.android.settings.R;
 
 /**
  * Based on android.preference.SeekBarPreference, but uses support preference as base.
@@ -81,12 +82,12 @@ public class SeekBarPreference extends RestrictedPreference
                 com.android.internal.R.styleable.SeekBarPreference, defStyleAttr, defStyleRes);
         final int layoutResId = a.getResourceId(
                 com.android.internal.R.styleable.SeekBarPreference_layout,
-                com.android.internal.R.layout.preference_widget_seekbar);
+                R.layout.preference_widget_seekbar);
         a.recycle();
 
         setSelectable(false);
 
-        setLayoutResource(layoutResId);
+        setLayoutResource( R.layout.preference_widget_seekbar);
     }
 
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -130,8 +131,10 @@ public class SeekBarPreference extends RestrictedPreference
         super.onBindViewHolder(view);
         view.itemView.setOnKeyListener(this);
         view.itemView.setOnHoverListener(this);
-        mSeekBar = (SeekBar) view.findViewById(
-                com.android.internal.R.id.seekbar);
+       
+        try {
+             mSeekBar = (SeekBar) view.findViewById(
+                R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setMax(mMax);
         mSeekBar.setMin(mMin);
@@ -178,6 +181,9 @@ public class SeekBarPreference extends RestrictedPreference
                 }
             }
         });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

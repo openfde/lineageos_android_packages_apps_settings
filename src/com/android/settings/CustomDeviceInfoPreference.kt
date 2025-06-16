@@ -22,17 +22,21 @@ import androidx.preference.PreferenceViewHolder
 import com.android.settings.R;
 import android.widget.RelativeLayout;
 import android.view.View;
+import android.util.Log;
 
 class CustomDeviceInfoPreference(context: Context, val attrs: AttributeSet) :Preference(context,attrs) {
     private val arrayTop =
-        arrayOf("")
-    private val arrayBottom = arrayOf( "build_number")
+        arrayOf("hardware_info_device_model")
+    private val arrayBottom = arrayOf( "build_number","hardware_info_device_serial")
     private val arrayRound = arrayOf("bottom")
     private var key: String = ""
+
+
 
     init{
         layoutResource = R.layout.preference_deviceinfo_corners
         key = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "key").toString()
+        Log.w("TwoTargetPreference","init key: "+key);
     }
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {

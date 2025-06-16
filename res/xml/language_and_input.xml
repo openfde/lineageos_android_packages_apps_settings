@@ -21,14 +21,17 @@
     android:title="@string/language_settings">
     <PreferenceCategory
         android:key="languages_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/locale_picker_category_title">
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="phone_language"
             android:title="@string/phone_language"
             android:fragment="com.android.settings.localepicker.LocaleListEditor"
             settings:controller="com.android.settings.language.PhoneLanguagePreferenceController" />
 
-        <Preference
+        <com.android.settings.CustomDividerPreference/>       
+
+        <com.android.settings.CustomPreference
             android:key="apps_language"
             android:title="@string/app_locales_picker_menu_title"
             android:summary="@string/app_locale_picker_summary"
@@ -37,28 +40,33 @@
             <extra
                 android:name="classname"
                 android:value="com.android.settings.applications.appinfo.AppLocaleDetails" />
-        </Preference>
+        </com.android.settings.CustomPreference>
 
-        <Preference
+        
+        <com.android.settings.CustomDividerPreference/>   
+
+        <com.android.settings.CustomBottomPreference
             android:key="regional_preferences"
             android:title="@string/regional_preferences_title"
             android:summary="@string/regional_preferences_summary"
             android:fragment="com.android.settings.regionalpreferences.RegionalPreferencesEntriesFragment"
-            settings:controller="com.android.settings.regionalpreferences.RegionalPreferencesController">
-        </Preference>
+            settings:controller="com.android.settings.regionalpreferences.RegionalPreferencesController"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="keyboards_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/keyboard_and_input_methods_category">
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="virtual_keyboard_pref"
             android:title="@string/virtual_keyboard_category"
             android:fragment="com.android.settings.inputmethod.AvailableVirtualKeyboardFragment"
             settings:keywords="@string/keywords_virtual_keyboard"/>
 
-        <Preference
+        <com.android.settings.CustomDividerPreference/>   
+
+        <com.android.settings.CustomBottomPreference
             android:key="physical_keyboard_pref"
             android:title="@string/physical_keyboard_title"
             android:summary="@string/summary_placeholder"
@@ -67,6 +75,7 @@
 
     <PreferenceCategory
         android:key="speech_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/speech_category_title">
         <com.android.settings.widget.GearPreference
             android:key="voice_input_settings"
@@ -82,24 +91,29 @@
 
     <PreferenceCategory
         android:key="input_assistance_category"
+        android:layout="@layout/preference_square_title"
         android:title="@string/input_assistance">
         <!-- Spell checker preference title, summary and fragment will be set programmatically. -->
         <!-- Note: Mark this as persistent="false" to remove unnecessarily saved shared preference.
              See: InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference. -->
-        <Preference
+        <com.android.settings.CustomTopPreference
             android:key="spellcheckers_settings"
             android:title="@string/spellcheckers_settings_title"
             android:persistent="false"
             android:fragment="com.android.settings.inputmethod.SpellCheckersSettings" />
 
+        <com.android.settings.CustomDividerPreference/>       
+
         <!-- User dictionary preference title and fragment will be set programmatically. -->
-        <Preference
+        <com.android.settings.CustomPreference
             android:key="key_user_dictionary_settings"
             android:title="@string/user_dict_settings_title"
             android:summary="@string/user_dict_settings_summary"
             android:fragment="com.android.settings.inputmethod.UserDictionaryList"
             settings:controller="com.android.settings.language.UserDictionaryPreferenceController" />
     </PreferenceCategory>
+
+    <com.android.settings.CustomDividerPreference/>     
 
     <PreferenceCategory
         android:key="pointer_category"
@@ -135,5 +149,11 @@
             settings:forWork="true"
             settings:controller="com.android.settings.inputmethod.SpellCheckerForWorkPreferenceController" />
     </com.android.settings.widget.WorkOnlyCategory>
+
+
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:title=""
+        android:summary=""/>
 
 </PreferenceScreen>

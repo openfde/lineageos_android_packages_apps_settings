@@ -21,7 +21,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.android.settings.R;
 
-class CustomPreference(context: Context, attrs: AttributeSet) :Preference(context,attrs) {
+class CustomPreference :Preference {
+    constructor(context: Context, attrs: AttributeSet) : super(context,attrs)
+    constructor(context: Context) : super(context)
+
     init{
         layoutResource = R.layout.preference_square_corners
     }

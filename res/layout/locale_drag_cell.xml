@@ -19,10 +19,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:listPreferredItemHeight"
-    android:background="?android:colorBackground"
-    android:layout_marginTop="12dp"
-    android:layout_marginBottom="12dp"
+    android:minHeight="56dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
     android:layoutDirection="locale"
     android:textDirection="locale">
 
@@ -65,22 +64,27 @@
             app:layout_constraintBottom_toBottomOf="parent">
             <TextView
                 android:id="@+id/label"
+                android:textColor="#ff1A1A1A"
+                android:textSize="14sp"
+                android:fontFamily="@font/alibaba_puhui_65_medium_65_medium"
                 style="@style/LanguageCheckboxAndLabel"/>
 
             <TextView
                 android:id="@+id/l10nWarn"
                 style="@style/LanguageCheckboxAndLabel"
-                android:textAppearance="?android:attr/textAppearanceListItemSecondary"
-                android:textColor="?android:textColorSecondary"
                 android:layout_marginTop="4dp"
+                android:textColor="#801A1A1A"
+                android:textSize="14sp"
+                android:visibility="gone"
                 android:text="@string/locale_not_translated"/>
 
             <TextView
                 android:id="@+id/default_locale"
                 style="@style/LanguageCheckboxAndLabel"
                 android:textAppearance="?android:attr/textAppearanceListItemSecondary"
-                android:textColor="?android:textColorSecondary"
                 android:layout_marginTop="4dp"
+                android:textColor="#801A1A1A"
+                android:textSize="14sp"
                 android:text="@string/desc_current_default_language"/>
 
         </LinearLayout>
@@ -96,5 +100,11 @@
         android:importantForAccessibility="no"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
+
+    <View 
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" 
+        android:background="#ffF0F2F5"/>        
 
 </com.android.settings.localepicker.LocaleDragCell>

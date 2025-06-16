@@ -21,8 +21,12 @@
     android:title="@string/model_info"
     settings:keywords="@string/keywords_model_and_hardware">
 
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:title=""
+        android:summary=""/>
     <!-- Model -->
-    <Preference
+    <com.android.settings.CustomDeviceInfoPreference
         android:key="hardware_info_device_model"
         android:title="@string/model_info"
         android:summary="@string/summary_placeholder"
@@ -31,7 +35,7 @@
         settings:enableCopying="true"/>
 
     <!-- SerialNumber -->
-    <Preference
+    <com.android.settings.CustomDeviceInfoPreference
         android:key="hardware_info_device_serial"
         android:title="@string/status_serial_number"
         android:summary="@string/summary_placeholder"

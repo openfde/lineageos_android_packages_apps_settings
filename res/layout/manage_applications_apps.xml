@@ -28,6 +28,7 @@
         android:scrollbars="none"
         android:visibility="invisible"
         settings:fastScrollEnabled="true"
+        android:background="#fff"
         settings:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
         settings:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
         settings:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
@@ -57,11 +58,10 @@
         android:id="@+id/pinned_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:colorBackground"
+        android:background="#fff"
         settings:layout_constraintVertical_chainStyle="packed"
         settings:layout_constraintVertical_bias="0.0"
         settings:layout_constraintTop_toTopOf="parent"
         settings:layout_constraintBottom_toTopOf="@id/apps_list"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

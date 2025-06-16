@@ -20,6 +20,12 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:title="@string/gesture_preference_title">
 
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="-999"
+        android:title=""
+        android:summary=""/>
+
     <lineageos.preference.LineagePartsPreference
         android:key="touchscreen_gesture_settings"
         settings:requiresFeature="lineagehardware:FEATURE_TOUCHSCREEN_GESTURES" />
@@ -40,66 +46,72 @@
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.SwipeToNotificationPreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomTopPreference
         android:key="gesture_double_tap_power_input_summary"
         android:title="@string/double_tap_power_for_camera_title"
         android:fragment="com.android.settings.gestures.DoubleTapPowerSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.DoubleTapPowerPreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomDividerPreference />       
+
+    <com.android.settings.CustomPreference
         android:key="gesture_double_twist_input_summary"
         android:title="@string/double_twist_for_camera_mode_title"
         android:fragment="com.android.settings.gestures.DoubleTwistGestureSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.DoubleTwistPreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_system_navigation_input_summary"
         android:title="@string/system_navigation_title"
         android:fragment="com.android.settings.gestures.SystemNavigationGestureSettings"
         settings:controller="com.android.settings.gestures.SystemNavigationPreferenceController"
         settings:keywords="@string/keywords_system_navigation" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_one_handed"
         android:title="@string/one_handed_title"
         android:fragment="com.android.settings.gestures.OneHandedSettings"
         settings:controller="com.android.settings.gestures.OneHandedEnablePreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_tap_screen_input_summary"
         android:title="@string/ambient_display_tap_screen_title"
         android:fragment="com.android.settings.gestures.TapScreenGestureSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.TapScreenGesturePreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_double_tap_screen_input_summary"
         android:title="@string/ambient_display_title"
         android:fragment="com.android.settings.gestures.DoubleTapScreenSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.DoubleTapScreenPreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_pick_up_input_summary"
         android:title="@string/ambient_display_pickup_title"
         android:fragment="com.android.settings.gestures.PickupGestureSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.PickupGesturePreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomPreference
         android:key="gesture_screen_off_udfps_input_summary"
         android:title="@string/ambient_display_screen_off_udfps_title"
         android:fragment="com.android.settings.gestures.ScreenOffUdfpsSettings"
         settings:searchable="false"
         settings:controller="com.android.settings.gestures.ScreenOffUdfpsPreferenceController" />
 
-    <Preference
+    <com.android.settings.CustomDividerPreference /> 
+
+    <com.android.settings.CustomPreference
         android:key="gesture_power_menu_summary"
         android:title="@string/power_menu_setting_name"
         android:fragment="com.android.settings.gestures.PowerMenuSettings"
         settings:controller="com.android.settings.gestures.PowerMenuPreferenceController" />
+
+    <com.android.settings.CustomDividerPreference />     
 
     <com.android.settingslib.PrimarySwitchPreference
         android:key="gesture_prevent_ringing_summary"

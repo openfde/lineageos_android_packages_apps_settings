@@ -40,6 +40,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 
 /**
  * This is to show a preference regarding resetting Bluetooth and Wi-Fi.
@@ -62,7 +71,11 @@ class BluetoothWiFiResetPreferenceController(context: Context, preferenceKey: St
             dismissButton = AlertDialogButton(text = stringResource(R.string.cancel)),
             title = stringResource(R.string.reset_bluetooth_wifi_title),
         ) {
-            Text(stringResource(R.string.reset_bluetooth_wifi_desc))
+            Text(stringResource(R.string.reset_bluetooth_wifi_desc),
+                fontSize = 14.sp ,
+                fontWeight = FontWeight(500),
+                color = Color(0xFF1A1A1A),
+            )
         }
 
         RestrictedPreference(
