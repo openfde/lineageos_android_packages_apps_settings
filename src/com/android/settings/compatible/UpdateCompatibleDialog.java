@@ -262,22 +262,26 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 // .show();
                 // return;
                 // }
-                    LogTools.i("txtConfirm packageName " + packageName + " ,keyCode " + keyCode);
-                if (TYPE_SELECT.equals(inputType)) {
-                    Compatible compatible = list.get(position);
-                    String content = StringUtils.ToString(compatible.getMp()).trim();
-                    CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode, content);
-                } else if (TYPE_SWITCH.equals(inputType)) {
-                    boolean isChecked = switchComp.isChecked();
-                    CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode,
-                            String.valueOf(isChecked));
-                } else {
-                    String content = editText.getText().toString();
-                    if (!"".equals(content)) {
+                LogTools.i("txtConfirm packageName " + packageName + " ,keyCode " + keyCode);
+                try {
+                    if (TYPE_SELECT.equals(inputType)) {
+                        Compatible compatible = list.get(position);
+                        String content = StringUtils.ToString(compatible.getMp()).trim();
                         CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode, content);
+                    } else if (TYPE_SWITCH.equals(inputType)) {
+                        boolean isChecked = switchComp.isChecked();
+                        CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode,
+                                String.valueOf(isChecked));
                     } else {
-                        Toast.makeText(context, context.getString(R.string.fde_input_hint), Toast.LENGTH_SHORT).show();
+                        String content = editText.getText().toString();
+                        if (!"".equals(content)) {
+                            CompatibleConfig.insertUpdateValueData(context, appName, packageName, keyCode, content);
+                        } else {
+                            Toast.makeText(context, context.getString(R.string.fde_input_hint), Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
                 if (onRefreshListener != null) {
                     onRefreshListener.OnRefresh();
