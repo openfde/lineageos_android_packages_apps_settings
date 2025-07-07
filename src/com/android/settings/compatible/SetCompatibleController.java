@@ -22,7 +22,7 @@ import android.app.AlertDialog;
 import com.android.settings.R;
 import android.util.Log;
 
-public class SetCompatibleController implements OnItemClickListener {
+public class SetCompatibleController implements OnItemClickListener  , OnRefreshListener {
     private Context context;
     private View view;
     private RecyclerView recyclerView;
@@ -62,7 +62,7 @@ public class SetCompatibleController implements OnItemClickListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
-        compatibleListAdapter = new CompatibleListAdapter(context, packageName, list, this);
+        compatibleListAdapter = new CompatibleListAdapter(context, packageName, list, this,this);
         recyclerView.setAdapter(compatibleListAdapter);
 
         if (packageName == null) {
@@ -179,9 +179,16 @@ public class SetCompatibleController implements OnItemClickListener {
     public void onItemClick(int position, String type) {
         Map<String, Object> mp = list.get(position);
         UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName, appName,
-                mp);
+                mp,this,position);
         if (!updateComatibleDialog.isShowing()) {
             updateComatibleDialog.show();
         }
+    }
+
+    @Override
+    public void OnRefresh(int position) {
+        List<Map<String, Object>> tempList = CompatibleConfig.queryListData(context);
+        list.set(position, tempList.get(position)); 
+        compatibleListAdapter.notifyItemChanged(position);
     }
 }

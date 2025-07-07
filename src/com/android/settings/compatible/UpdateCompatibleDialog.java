@@ -77,26 +77,28 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
     String keyCode;
 
     int position = -1;
+    int keyIndex = -1;
 
     OnRefreshListener onRefreshListener;
 
-    public UpdateCompatibleDialog(@NonNull Context context, String packageName, String appName,
-            Map<String, Object> mp) {
-        super(context);
-        this.context = context;
-        this.packageName = packageName;
-        this.appName = appName;
-        this.mp = mp;
-    }
+    // public UpdateCompatibleDialog(@NonNull Context context, String packageName, String appName,
+    //         Map<String, Object> mp) {
+    //     super(context);
+    //     this.context = context;
+    //     this.packageName = packageName;
+    //     this.appName = appName;
+    //     this.mp = mp;
+    // }
 
     public UpdateCompatibleDialog(@NonNull Context context, String packageName, String appName,
-            Map<String, Object> mp, OnRefreshListener onRefreshListener) {
+            Map<String, Object> mp, OnRefreshListener onRefreshListener,int keyIndex) {
         super(context);
         this.context = context;
         this.packageName = packageName;
         this.appName = appName;
         this.mp = mp;
         this.onRefreshListener = onRefreshListener;
+        this.keyIndex = keyIndex;
     }
 
     @Override
@@ -262,7 +264,7 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 // .show();
                 // return;
                 // }
-                LogTools.i("txtConfirm packageName " + packageName + " ,keyCode " + keyCode);
+                LogTools.i("txtConfirm packageName " + packageName + " ,keyCode " + keyCode + ",keyIndex "+keyIndex);
                 try {
                     if (TYPE_SELECT.equals(inputType)) {
                         Compatible compatible = list.get(position);
@@ -283,8 +285,8 @@ public class UpdateCompatibleDialog extends Dialog implements OnItemClickListene
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
-                if (onRefreshListener != null) {
-                    onRefreshListener.OnRefresh();
+                if (onRefreshListener != null && keyIndex > 0) {
+                    onRefreshListener.OnRefresh(keyIndex);
                 }
                 dismiss();
             }

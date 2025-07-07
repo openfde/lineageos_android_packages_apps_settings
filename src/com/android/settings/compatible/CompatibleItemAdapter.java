@@ -22,16 +22,19 @@ import com.android.settings.utils.StringUtils;
 import java.util.List;
 import java.util.Map;
 
-public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAdapter.ViewHolder>
-        implements OnRefreshListener {
+public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAdapter.ViewHolder> {
     Context context;
     List<Map<String, Object>> list;
     Map<String, Object> mp;
+    OnRefreshListener onRefreshListener;
+    int keyIndex = -1;
 
-    public CompatibleItemAdapter(Context context, List<Map<String, Object>> list, Map<String, Object> mp) {
+    public CompatibleItemAdapter(Context context, List<Map<String, Object>> list, Map<String, Object> mp,OnRefreshListener onRefreshListener,int keyIndex) {
         this.context = context;
         this.list = list;
         this.mp = mp;
+        this.onRefreshListener = onRefreshListener;
+        this.keyIndex = keyIndex;
     }
 
     @NonNull
@@ -94,7 +97,7 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
             if (!"switch".equals(StringUtils.ToString(mp.get("INPUT_TYPE")))) {
                 UpdateCompatibleDialog updateComatibleDialog = new UpdateCompatibleDialog(context, packageName,
                         dialogName,
-                        mp, CompatibleItemAdapter.this);
+                        mp, onRefreshListener,keyIndex);
                 if (!updateComatibleDialog.isShowing()) {
                     updateComatibleDialog.show();
                 }
@@ -106,14 +109,6 @@ public class CompatibleItemAdapter extends RecyclerView.Adapter<CompatibleItemAd
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    @Override
-    public void OnRefresh() {
-        // getData();
-        String keyCode = StringUtils.ToString(mp.get("KEY_CODE"));
-        list = CompatibleConfig.queryValueListData(context, keyCode);
-        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

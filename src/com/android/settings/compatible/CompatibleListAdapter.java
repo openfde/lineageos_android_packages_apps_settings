@@ -25,20 +25,22 @@ import java.util.Map;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAdapter.ViewHolder> {
+public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAdapter.ViewHolder>  {
     Context context;
     List<Map<String, Object>> list;
+    OnRefreshListener onRefreshListener;
 
     String packageName;
 
     OnItemClickListener onItemClickListener;
 
     public CompatibleListAdapter(Context context, String packageName, List<Map<String, Object>> list,
-            OnItemClickListener onItemClickListener) {
+            OnItemClickListener onItemClickListener,OnRefreshListener onRefreshListener) {
         this.context = context;
         this.list = list;
         this.packageName = packageName;
         this.onItemClickListener = onItemClickListener;
+        this.onRefreshListener = onRefreshListener;
     }
 
     @NonNull
@@ -121,7 +123,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             }
 
             CompatibleItemAdapter compatibleItemAdapter = new CompatibleItemAdapter(context, listTemp,
-                    list.get(position));
+                    list.get(position),onRefreshListener,position);
             holder.recyclerView.setAdapter(compatibleItemAdapter);
         } else {
             holder.recyclerView.setVisibility(View.GONE);
@@ -129,6 +131,7 @@ public class CompatibleListAdapter extends RecyclerView.Adapter<CompatibleListAd
             holder.imgRight.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public int getItemCount() {
