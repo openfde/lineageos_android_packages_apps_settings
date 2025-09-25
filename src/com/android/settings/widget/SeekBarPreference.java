@@ -82,12 +82,13 @@ public class SeekBarPreference extends RestrictedPreference
                 com.android.internal.R.styleable.SeekBarPreference, defStyleAttr, defStyleRes);
         final int layoutResId = a.getResourceId(
                 com.android.internal.R.styleable.SeekBarPreference_layout,
-                R.layout.preference_widget_seekbar);
+                com.android.internal.R.layout.preference_widget_seekbar);
         a.recycle();
 
         setSelectable(false);
 
-        setLayoutResource( R.layout.preference_widget_seekbar);
+        // setLayoutResource( R.layout.preference_widget_seekbar);
+        setLayoutResource(layoutResId);
     }
 
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -133,8 +134,8 @@ public class SeekBarPreference extends RestrictedPreference
         view.itemView.setOnHoverListener(this);
        
         try {
-             mSeekBar = (SeekBar) view.findViewById(
-                R.id.seekbar);
+        mSeekBar = (SeekBar) view.findViewById(
+                com.android.internal.R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setMax(mMax);
         mSeekBar.setMin(mMin);
