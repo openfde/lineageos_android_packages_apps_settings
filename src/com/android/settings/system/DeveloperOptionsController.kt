@@ -67,7 +67,9 @@ class DeveloperOptionsController(context: Context, preferenceKey: String) :
             model = object : PreferenceModel {
                 override val title =
                     stringResource(com.android.settingslib.R.string.development_settings_title)
-                override val icon = @Composable {
+                override val summary: () -> String = {  mContext.getString(com.android.settingslib.R.string.development_settings_summary)
+}
+                    override val icon = @Composable {
                     SettingsIcon(ImageVector.vectorResource(R.drawable.ic_settings_development))
                 }
                 override val onClick = {

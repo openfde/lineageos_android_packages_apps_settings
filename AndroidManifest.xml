@@ -221,8 +221,8 @@
             android:exported="false"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|smallestScreenSize">
             <layout
-            android:minWidth="760dp"
-            android:minHeight="612dp" />
+            android:minWidth="1000dp"
+            android:minHeight="600dp" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />

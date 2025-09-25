@@ -20,4 +20,5 @@
     android:layout_width="match_parent"
     android:background="@drawable/card_square_white"
     android:layout_marginHorizontal="16dp"
-    android:layout_height="56dp" />
+    android:maxHeight="56dp"
+    android:layout_height="wrap_content" />
