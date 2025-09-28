@@ -65,6 +65,7 @@ import android.view.KeyEvent;
 import android.app.Instrumentation;
 import android.app.ActivityManager;
 import android.content.Context;
+import com.android.settings.Utils;
 
 /** Base activity for Settings pages */
 public class SettingsBaseActivity extends FragmentActivity implements CategoryHandler {
@@ -95,8 +96,9 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         final boolean isAnySetupWizard = WizardManagerHelper.isAnySetupWizard(getIntent());
-        setWindowDecorationStatus(Window.WINDOW_DECORATION_FORCE_HIDE);
+        // setWindowDecorationStatus(Window.WINDOW_DECORATION_FORCE_HIDE);
 
+        isMax = Utils.isFreeformMaximized(this);
         if (isAnySetupWizard) {
             TransitionHelper.applyForwardTransition(this);
             TransitionHelper.applyBackwardTransition(this);
@@ -142,9 +144,12 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
             txtMenuTitle =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.txtMenuTitle);
 
             imgMaximize.setOnClickListener(view -> {
+                boolean isMaximized = Utils.isFreeformMaximized(this);
                 Intent inte = new Intent("com.fde.fullscreen.ENABLE_OR_DISABLE");
-                inte.putExtra("mode", isMax ? 0 : 1);
+                inte.putExtra("mode", isMaximized ? 1 : 0);
                 sendBroadcast(inte);
+               
+                Log.w(TAG, "imgMaximize: isMaximized: "+isMaximized + " isMax: "+isMax );
                 isMax = !isMax ;
             });
             imgMinimize.setOnClickListener(view -> {
