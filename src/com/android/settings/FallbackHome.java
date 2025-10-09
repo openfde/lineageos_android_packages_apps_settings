@@ -38,6 +38,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.AnimationUtils;
+import android.os.SystemProperties;
 
 import java.util.Objects;
 
@@ -49,16 +50,18 @@ public class FallbackHome extends Activity {
     private WallpaperManager mWallManager;
 
     private final Runnable mProgressTimeoutRunnable = () -> {
-        View v = getLayoutInflater().inflate(
-                R.layout.fallback_home_finishing_boot, null /* root */);
-        setContentView(v);
-        v.setAlpha(0f);
-        v.animate()
-                .alpha(1f)
-                .setDuration(500)
-                .setInterpolator(AnimationUtils.loadInterpolator(
-                        this, android.R.interpolator.fast_out_slow_in))
-                .start();
+        if(!SystemProperties.getBoolean("persist.waydroid.multi_windows", false)){
+            View v = getLayoutInflater().inflate(
+                    R.layout.fallback_home_finishing_boot, null /* root */);
+            setContentView(v);
+            v.setAlpha(0f);
+            v.animate()
+                    .alpha(1f)
+                    .setDuration(500)
+                    .setInterpolator(AnimationUtils.loadInterpolator(
+                            this, android.R.interpolator.fast_out_slow_in))
+                    .start();
+        }
         getWindow().addFlags(LayoutParams.FLAG_KEEP_SCREEN_ON);
     };
 
