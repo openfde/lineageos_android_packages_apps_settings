@@ -208,7 +208,7 @@ object CompatibleConfig {
             values.put("IS_DEL", "0")
             values.put("CREATE_DATE", curTime);
             values.put("EDIT_DATE", curTime);
-            values.put("FIELDS1", CompUtils.getCurDate());
+            values.put("FIELDS1", "");
             values.put("FIELDS2", "");
             values.put("ACTIVITY_NAME", activityName);
             values.put("EDIT_DATE", curTime)
