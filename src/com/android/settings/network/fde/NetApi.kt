@@ -132,40 +132,60 @@ object NetApi {
      * 获取当前激活的接口
      */
     fun getActivedInterface(context: Context): String {
-        val net = Net.getInstance(context)
-        return net.getActivedInterface()
+        try{
+            val net = Net.getInstance(context)
+            return net.getActivedInterface()
+        }catch (e: Exception){
+            return ""
+        }
     }
 
     /**
      * 获取 IP 配置
      */
     fun getIpConfigure(context: Context, interfaceName: String): String {
-        val net = Net.getInstance(context)
-        return net.getIpConfigure(interfaceName)
+        try{
+            val net = Net.getInstance(context)
+            return net.getIpConfigure(interfaceName)
+        }catch (e: Exception){
+            return ""
+        }
     }
 
     /**
      * 获取 LAN 信息
      */
     fun getLans(context: Context): String {
-        val net = Net.getInstance(context)
-        return net.getLans()
+        try{
+            val net = Net.getInstance(context)
+            return net.getLans()
+        }catch (e: Exception){
+            return ""
+        }
     }
 
     /**
      * 获取 LAN 和 WLAN 信息
      */
     fun getLansAndWlans(context: Context): String {
-        val net = Net.getInstance(context)
-        return net.getLansAndWlans()
+        try{
+            val net = Net.getInstance(context)
+            return net.getLansAndWlans()
+        }catch (e: Exception){
+            return ""
+        }
     }
 
     /**
      * 获取 LAN 和 WLAN IP 配置
      */
     fun getLanAndWlanIpConfigurations(context: Context): String {
-        val net = Net.getInstance(context)
-        return net.getLanAndWlanIpConfigurations()
+        try{
+            val net = Net.getInstance(context)
+            return net.getLanAndWlanIpConfigurations()
+        }catch (e: Exception){
+            return ""
+        }
     }
 
     /**
