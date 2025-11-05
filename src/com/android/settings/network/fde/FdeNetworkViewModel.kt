@@ -12,6 +12,8 @@ import android.openfde.Net;
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus;
+import android.provider.Settings
+
 
 class FdeNetworkViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "FdeNetworkDashboardFragment"
@@ -204,6 +206,7 @@ class FdeNetworkViewModel(application: Application) : AndroidViewModel(applicati
                                     wifiInfo.status = WifiStatus.SAVED.status;
                                 }else if(arrInfo[3].contains("*")){
                                     wifiInfo.status = WifiStatus.CONNECTED.status;
+                                    Settings.Global.putString(context.contentResolver, "wifi_name", wifiInfo.wifiName)
                                 }else{
                                     wifiInfo.status = WifiStatus.DISCONNECT.status;
                                 }
