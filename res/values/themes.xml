@@ -166,8 +166,8 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">#00000000</item>
-        <item name="android:navigationBarColor">#00000000</item>
+        <item name="android:statusBarColor">?attr/android:windowBackground</item>
+        <item name="android:navigationBarColor">?attr/android:windowBackground</item>
     </style>
 
     <style name="FallbackHome.SetupWizard" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
@@ -175,8 +175,6 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">#00000000</item>
-        <item name="android:navigationBarColor">#00000000</item>
     </style>
 
     <style name="Theme.BluetoothPermission" parent="@style/Theme.AlertDialog">
