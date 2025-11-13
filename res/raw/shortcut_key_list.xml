@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <item >
+        <id>1</id>
+        <name> minimize</name>
+        <name_zh>最小化当前应用窗口</name_zh>
+        <summary>F9</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+    <item >
+        <id>2</id>
+        <name> Home</name>
+        <name_zh>返回桌面（HOME键）</name_zh>
+        <summary>F10</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+
+    <item >
+        <id>3</id>
+        <name> full screen / Exit</name>
+        <name_zh>应用全屏/取消全屏</name_zh>
+        <summary>F11</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+    <item >
+        <id>4</id>
+        <name> Screenshot</name>
+        <name_zh>全屏截图</name_zh>
+        <summary>Win + Ctrl + S</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+    <!-- <item >
+        <id>5</id>
+        <name> Recording/Stop</name>
+        <name_zh>录屏/停止录屏</name_zh>
+        <summary>Ctrl + Shift + R </summary>
+        <desc></desc>
+        <type></type>
+    </item> -->
+
+    <!-- <item >
+        <id>6</id>
+        <name> Select Home</name>
+        <name_zh>选择桌面</name_zh>
+        <summary>Win + Enter</summary>
+        <desc></desc>
+        <type></type>
+    </item> -->
+   
+    <item >
+        <id>7</id>
+        <name> Switch next language</name>
+        <name_zh>切换到下一种语言</name_zh>
+        <summary>Ctrl + 空格</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+    <item >
+        <id>8</id>
+        <name> Switch last language</name>
+        <name_zh>切换到上一种语言</name_zh>
+        <summary>Ctrl + Shift + 空格</summary>
+        <desc></desc>
+        <type></type>
+    </item>
+
+</items>

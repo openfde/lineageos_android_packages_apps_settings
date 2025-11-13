@@ -53,10 +53,19 @@
         android:key="Keyboard_settings"
         android:title="@string/keyboard_settings"
         android:icon="@drawable/ic_settings_keyboards"
-        android:order="-255"
+        android:order="-258"
         android:fragment="com.android.settings.inputmethod.KeyboardSettings"
         settings:controller="com.android.settings.inputmethod.KeyboardPreferenceController"/>
     
+    <com.android.settings.CustomDividerPreference
+        android:order="-257"/>       
+    
+    <com.android.settings.CustomPreferenceHasIcon
+        android:key="keyboard_shortcuts_helper"
+        android:title="@string/keyboard_shortcuts_helper"
+        android:icon="@drawable/ic_shortcut_key"
+        android:order="-256"
+        android:fragment="com.android.settings.inputmethod.KeyboardShortcutKeySettings"/>    
        
 
     <com.android.settings.CustomPreferenceHasIcon
