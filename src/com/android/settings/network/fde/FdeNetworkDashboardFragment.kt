@@ -42,6 +42,12 @@ import java.lang.reflect.Type;
 import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.provider.Settings
+
+
 // import android.net.INetd;
 
 
@@ -49,7 +55,10 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
     private var context: Context? = null;
     private val TAG = "FdeNetworkDashboardFragment"
 
+
+
     private lateinit var viewModel: FdeNetworkViewModel
+
     lateinit var  job: Job;
     var wifiStatus : Int = 0 ;
     var wifiSwitch : Int = 0 ;
@@ -180,7 +189,6 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
     fun initData(){
         viewModel.isWifiEnable(context!!);
         viewModel.getWiredData(context!!);
-
     }
 
     fun initListen(){
@@ -510,17 +518,21 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
         val method = event?.method;
         val message = event?.message ;
         Log.w(TAG,"1 onMessageEvent  method "+method+", message: "+message);
+        if("WIFI_STATE_CHANGED_ACTION".equals(method)){
+            //   viewModel.enableWifi(context!!, if ("1" == message) 1 else 0)
+        }else{
+            if(listSaved!=null && listSaved.size > 0){
+                listSaved.get(0).status = WifiStatus.DISCONNECT.status
+                adapteerSaved?.notifyItemChanged(0)
 
-        if(listSaved!=null && listSaved.size > 0){
-            listSaved.get(0).status = WifiStatus.DISCONNECT.status
-            adapteerSaved?.notifyItemChanged(0)
-
-            val index = listSaved.indexOfFirst { it.wifiName == message }
-            if(index != -1 ){
-                  listSaved.get(index).status = WifiStatus.CONNECTING.status ;
+                val index = listSaved.indexOfFirst { it.wifiName == message }
+                if(index != -1 ){
+                    listSaved.get(index).status = WifiStatus.CONNECTING.status ;
+                }
+                adapteerSaved?.notifyItemChanged(index)
             }
-            adapteerSaved?.notifyItemChanged(index)
         }
+        
     }
 
     override fun onStart() {
@@ -572,6 +584,5 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
     protected fun getIntent(): Intent? {
         return activity?.intent
     }
-
 
 }

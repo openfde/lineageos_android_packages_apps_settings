@@ -77,7 +77,9 @@ object NetApi {
      */
     fun getActivedWifi(context: Context): String {
         val net = Net.getInstance(context)
-        return net.getActivedWifi()
+        val curWifiName = net.getActivedWifi();
+        Settings.Global.putString(context.contentResolver, "wifi_name", curWifiName);
+        return curWifiName;
     }
 
     /**
