@@ -37,12 +37,20 @@
     <item >
         <id>4</id>
         <name> Screenshot</name>
-        <name_zh>全屏截图</name_zh>
-        <summary>Win + Ctrl + S</summary>
+        <name_zh>截屏</name_zh>
+        <summary>Ctrl + Alt + S</summary>
         <desc></desc>
         <type></type>
     </item>
 
+    <item >
+        <id>5</id>
+        <name> Area Screenshot</name>
+        <name_zh>区域截图</name_zh>
+        <summary>Ctrl + Alt + Shift + S</summary>
+        <desc></desc>
+        <type></type>
+    </item>
     <!-- <item >
         <id>5</id>
         <name> Recording/Stop</name>
