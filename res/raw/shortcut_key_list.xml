@@ -51,14 +51,14 @@
         <desc></desc>
         <type></type>
     </item>
-    <!-- <item >
-        <id>5</id>
+    <item >
+        <id>6</id>
         <name> Recording/Stop</name>
         <name_zh>录屏/停止录屏</name_zh>
         <summary>Ctrl + Shift + R </summary>
         <desc></desc>
         <type></type>
-    </item> -->
+    </item>
 
     <!-- <item >
         <id>6</id>
