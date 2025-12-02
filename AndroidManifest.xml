@@ -218,7 +218,7 @@
             android:theme="@style/Theme.Settings.Home.NoAnimation"
             android:taskAffinity=""
             android:launchMode="singleTask"
-            android:exported="false"
+            android:exported="true"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|smallestScreenSize">
             <layout
             android:minWidth="1000dp"
