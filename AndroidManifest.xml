@@ -2155,6 +2155,7 @@
         <activity android:name="Settings$PrivacyDashboardActivity"
                   android:label="@string/privacy_dashboard_title"
                   android:exported="true"
+                  android:documentLaunchMode="always"
                   android:icon="@drawable/ic_settings_privacy">
             <intent-filter>
                 <action android:name="android.settings.PRIVACY_SETTINGS" />

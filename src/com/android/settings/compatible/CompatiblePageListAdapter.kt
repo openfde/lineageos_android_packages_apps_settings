@@ -42,11 +42,7 @@ class CompatiblePageListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
 
-        if (item.activityName == null || "".equals(item.activityName)) {
-            holder.txtTitle.text = item.keyCode;
-        } else {
-            holder.txtTitle.text = item.activityName
-        }
+        
 
         if ("".equals(packageName)) {
             holder.rootView.setPadding(48, 0, 16, 0);
@@ -60,7 +56,7 @@ class CompatiblePageListAdapter(
             holder.txtInput.setOnClickListener({
                 showCustomDialog(holder.txtInput,item)
             })
-
+            holder.txtTitle.text = item.activityName?.takeIf { it.isNotBlank() } ?: context.getText(R.string.fde_input_hint);
         } else if (CompatiblePkgListAdapter.TYPE_SELECT.equals(compatibleList.inputType)) {
             holder.layoutSwitch.visibility = View.GONE
             holder.txtSpinner.visibility = View.VISIBLE
@@ -69,12 +65,14 @@ class CompatiblePageListAdapter(
             holder.txtSpinner.setOnClickListener({
                 showPopupWindow(context, holder.txtSpinner, item)
             })
+            holder.txtTitle.text = item.activityName?.takeIf { it.isNotBlank() } ?: context.getText(R.string.fde_switch);
         } else {
             holder.layoutSwitch.visibility = View.VISIBLE
             holder.txtSpinner.visibility = View.GONE
             holder.txtInput.visibility = View.GONE
             // holder.switchComp.isChecked = item.value == "true"
             holder.switchComp.isChecked = "true".equals(item.value)
+            holder.txtTitle.text = item.activityName?.takeIf { it.isNotBlank() } ?: context.getText(R.string.fde_switch);
             holder.switchComp.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
                 when {
                     item.editDate.isNullOrBlank() -> {
