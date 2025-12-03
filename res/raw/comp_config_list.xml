@@ -136,4 +136,24 @@
             ]</optionjson>
     </compatible>
 
+
+    <compatible date="2024-12-03" isdel="0">
+        <keycode>enableMagicWindow</keycode>
+        <keydesc>
+            {
+            "en":"Magic Window",
+            "ch":"平行视界"
+            }
+        </keydesc>
+        <defaultvalue>0</defaultvalue>
+        <inputtype>switch</inputtype>
+        <notes>
+            {
+            "en":"Magic Window：Parallel display of application interfaces.",
+            "ch":"平行视界：并行显示应用的界面。"
+            }
+        </notes>
+        <optionjson>[]</optionjson>
+    </compatible>
+
 </compatibles>
