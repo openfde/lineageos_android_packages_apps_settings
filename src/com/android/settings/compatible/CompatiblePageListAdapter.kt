@@ -54,7 +54,7 @@ class CompatiblePageListAdapter(
             holder.txtInput.visibility = View.VISIBLE
             holder.txtInput.text = item.value ?: ""
             holder.txtInput.setOnClickListener({
-                showCustomDialog(holder.txtInput,item)
+                showCustomDialog(holder.txtInput,item,compatibleList.keyDesc, holder.txtInput.text.toString())
             })
             holder.txtTitle.text = item.activityName?.takeIf { it.isNotBlank() } ?: context.getText(R.string.fde_input_hint);
         } else if (CompatiblePkgListAdapter.TYPE_SELECT.equals(compatibleList.inputType)) {
@@ -150,7 +150,7 @@ class CompatiblePageListAdapter(
         popupWindow.showAsDropDown(view)
     }
 
-    private fun showCustomDialog(view: TextView,item: CompatibleValue) {
+    private fun showCustomDialog(view: TextView,item: CompatibleValue, keyDesc: String,newValue: String) {
         val builder = AlertDialog.Builder(context)
         val customView = LayoutInflater.from(context)
             .inflate(R.layout.dialog_custom_layout, null)
@@ -159,12 +159,14 @@ class CompatiblePageListAdapter(
         val dialog = builder.create()
         dialog.show()
         val editText = customView.findViewById<EditText>(R.id.editText) ?: throw IllegalArgumentException("EditText not found")
-        val txtCancel = customView.findViewById<TextView>(R.id.txtCancel) ?: throw IllegalArgumentException("TextViewTextView not found")
+        val txtAppName = customView.findViewById<TextView>(R.id.txtAppName) ?: throw IllegalArgumentException("TextView not found")
+        val txtCancel = customView.findViewById<TextView>(R.id.txtCancel) ?: throw IllegalArgumentException("TextView not found")
         val txtConfirm = customView.findViewById<TextView>(R.id.txtConfirm) ?: throw IllegalArgumentException("TextView not found")
         txtCancel?.setOnClickListener {
             dialog.dismiss()
         }
-        editText?.setText(item.value);
+        txtAppName?.setText(CompUtils.parseEnChJson(context,keyDesc));
+        editText?.setText(newValue);
         txtConfirm?.setOnClickListener {
             val inputText = editText?.text.toString()
             when {
