@@ -102,7 +102,7 @@ class CompatiblePkgListAdapter(
                     holder.txtInput.visibility = View.VISIBLE
                     holder.txtInput.text = item.value ?: ""
                     holder.txtInput.setOnClickListener({
-                        showCustomDialog(holder.txtInput, item)
+                        showCustomDialog(holder.txtInput, item,compatibleList.keyDesc, holder.txtInput.text.toString())
                     })
                 } else if (TYPE_SELECT.equals(compatibleList.inputType)) {
                     holder.layoutSwitch.visibility = View.GONE
@@ -174,7 +174,7 @@ class CompatiblePkgListAdapter(
         popupWindow.showAsDropDown(view)
     }
 
-    private fun showCustomDialog(view: TextView, item: CompatibleValue) {
+    private fun showCustomDialog(view: TextView, item: CompatibleValue, keyDesc: String,newValue: String) {
         val builder = AlertDialog.Builder(context)
         val customView = LayoutInflater.from(context)
             .inflate(R.layout.dialog_custom_layout, null)
@@ -183,12 +183,14 @@ class CompatiblePkgListAdapter(
         val dialog = builder.create()
         dialog.show()
         val editText = customView.findViewById<EditText>(R.id.editText) ?: throw IllegalArgumentException("EditText not found")
-        val txtCancel = customView.findViewById<TextView>(R.id.txtCancel) ?: throw IllegalArgumentException("TextViewTextView not found")
+        val txtAppName = customView.findViewById<TextView>(R.id.txtAppName) ?: throw IllegalArgumentException("TextView not found")
+        val txtCancel = customView.findViewById<TextView>(R.id.txtCancel) ?: throw IllegalArgumentException("TextView not found")
         val txtConfirm = customView.findViewById<TextView>(R.id.txtConfirm) ?: throw IllegalArgumentException("TextView not found")
         txtCancel?.setOnClickListener {
             dialog.dismiss()
         }
-        editText?.setText(item.value);
+        editText?.setText(newValue);
+        txtAppName?.setText(CompUtils.parseEnChJson(context,keyDesc));
         txtConfirm?.setOnClickListener {
             val inputText = editText?.text.toString()
             CompatibleConfig.updateValueData(
