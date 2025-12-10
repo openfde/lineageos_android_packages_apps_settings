@@ -47,7 +47,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import android.provider.Settings;
 /**
  * Accessibility settings for adjusting the system features which are related to the reading. For
  * example, bold text, high contrast text, display size, font size and so on.
@@ -59,6 +59,7 @@ public class TextReadingPreferenceFragment extends DashboardFragment {
     private static final String SETUP_WIZARD_PACKAGE = "setupwizard";
     static final String FONT_SIZE_KEY = "font_size";
     static final String DISPLAY_SIZE_KEY = "display_size";
+    static final String DOCK_SIZE_KEY = "dock_size";
     static final String BOLD_TEXT_KEY = "toggle_force_bold_text";
     static final String HIGH_TEXT_CONTRAST_KEY = "toggle_high_text_contrast_preference";
     static final String RESET_KEY = "reset";
@@ -156,9 +157,10 @@ public class TextReadingPreferenceFragment extends DashboardFragment {
         final List<AbstractPreferenceController> controllers = new ArrayList<>();
         final FontSizeData fontSizeData = new FontSizeData(context);
         final DisplaySizeData displaySizeData = createDisplaySizeData(context);
+        final DockSizeData dockSizeData =  new DockSizeData(context);
 
         mPreviewController = new TextReadingPreviewController(context, PREVIEW_KEY, fontSizeData,
-                displaySizeData);
+                displaySizeData,dockSizeData);
         mPreviewController.setEntryPoint(mEntryPoint);
         controllers.add(mPreviewController);
 
@@ -200,8 +202,25 @@ public class TextReadingPreferenceFragment extends DashboardFragment {
                 return null;
             }
         };
+
         displaySizeController.setInteractionListener(mPreviewController);
         controllers.add(displaySizeController);
+
+        final PreviewSizeSeekBarController dockSizeController = new PreviewSizeSeekBarController(
+                context, DOCK_SIZE_KEY, dockSizeData) {
+            @Override
+            ComponentName getTileComponentName() {
+                return null;
+            }
+
+            @Override
+            CharSequence getTileTooltipContent() {
+                return null;
+            }
+        };
+
+        dockSizeController.setInteractionListener(mPreviewController);
+        controllers.add(dockSizeController);
 
         mFontWeightAdjustmentController =
                 new FontWeightAdjustmentPreferenceController(context, BOLD_TEXT_KEY);
@@ -306,6 +325,8 @@ public class TextReadingPreferenceFragment extends DashboardFragment {
         } else {
             mResetStateListeners.forEach(ResetStateListener::resetState);
         }
+
+      //  Settings.System.putFloat( getContext().getContentResolver(), DockSizeData.DOCK_SCALE,DockSizeData.FONT_SCALE_DEF_VALUE);
 
         Toast.makeText(getPrefContext(), R.string.accessibility_text_reading_reset_message,
                 Toast.LENGTH_SHORT).show();
