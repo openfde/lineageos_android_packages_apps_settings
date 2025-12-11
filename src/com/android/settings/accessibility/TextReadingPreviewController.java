@@ -54,17 +54,21 @@ class TextReadingPreviewController extends BasePreferenceController implements
     private static final String PREVIEW_KEY = "preview";
     private static final String FONT_SIZE_KEY = "font_size";
     private static final String DISPLAY_SIZE_KEY = "display_size";
+    private static final String DOCK_SIZE_KEY = "dock_size";
     private static final long MIN_COMMIT_INTERVAL_MS = 800;
     private static final long CHANGE_BY_SEEKBAR_DELAY_MS = 100;
     private static final long CHANGE_BY_BUTTON_DELAY_MS = 300;
     private final FontSizeData mFontSizeData;
     private final DisplaySizeData mDisplaySizeData;
+    private final DockSizeData mDockSizeData;
     private int mLastFontProgress;
     private int mLastDisplayProgress;
+    private int mLastDockProgress;
     private long mLastCommitTime;
     private TextReadingPreviewPreference mPreviewPreference;
     private LabeledSeekBarPreference mFontSizePreference;
     private LabeledSeekBarPreference mDisplaySizePreference;
+    private LabeledSeekBarPreference mDockSizePreference;
 
     @EntryPoint
     private int mEntryPoint;
@@ -72,15 +76,17 @@ class TextReadingPreviewController extends BasePreferenceController implements
     private final Choreographer.FrameCallback mCommit = f -> {
         tryCommitFontSizeConfig();
         tryCommitDisplaySizeConfig();
+        tryCommitDockSizeConfig();
 
         mLastCommitTime = SystemClock.elapsedRealtime();
     };
 
     TextReadingPreviewController(Context context, String preferenceKey,
-            @NonNull FontSizeData fontSizeData, @NonNull DisplaySizeData displaySizeData) {
+            @NonNull FontSizeData fontSizeData, @NonNull DisplaySizeData displaySizeData,@NonNull DockSizeData dockSizeData) {
         super(context, preferenceKey);
         mFontSizeData = fontSizeData;
         mDisplaySizeData = displaySizeData;
+        mDockSizeData = dockSizeData;
     }
 
     @Override
@@ -96,6 +102,7 @@ class TextReadingPreviewController extends BasePreferenceController implements
 
         mFontSizePreference = screen.findPreference(FONT_SIZE_KEY);
         mDisplaySizePreference = screen.findPreference(DISPLAY_SIZE_KEY);
+        mDockSizePreference = screen.findPreference(DOCK_SIZE_KEY);
         Objects.requireNonNull(mFontSizePreference,
                 /* message= */ "Font size preference is null, the preview controller "
                         + "couldn't get the info");
@@ -103,8 +110,13 @@ class TextReadingPreviewController extends BasePreferenceController implements
                 /* message= */ "Display size preference is null, the preview controller"
                         + " couldn't get the info");
 
+        Objects.requireNonNull(mDockSizePreference,
+                /* message= */ "Dock size preference is null, the preview controller"
+                        + " couldn't get the info");                
+
         mLastFontProgress = mFontSizeData.getInitialIndex();
         mLastDisplayProgress = mDisplaySizeData.getInitialIndex();
+        mLastDockProgress = mDockSizeData.getInitialIndex();
 
         final Configuration origConfig = mContext.getResources().getConfiguration();
         final boolean isLayoutRtl =
@@ -222,6 +234,24 @@ class TextReadingPreviewController extends BasePreferenceController implements
                     SettingsStatsLog.ACCESSIBILITY_TEXT_READING_OPTIONS_CHANGED,
                     AccessibilityStatsLogUtils.convertToItemKeyName(mFontSizePreference.getKey()),
                     fontProgress,
+                    AccessibilityStatsLogUtils.convertToEntryPoint(mEntryPoint));
+        }
+    }
+
+     private void tryCommitDockSizeConfig() {
+        final int dockProgress = mDockSizePreference.getProgress();
+        if (dockProgress != mLastDockProgress) {
+            mDockSizeData.commit(dockProgress);
+            mLastDockProgress = dockProgress;
+
+            if (Log.isLoggable(TAG, Log.DEBUG)) {
+                Log.d(TAG, "Dock size: " + dockProgress);
+            }
+
+            SettingsStatsLog.write(
+                    SettingsStatsLog.ACCESSIBILITY_TEXT_READING_OPTIONS_CHANGED,
+                    AccessibilityStatsLogUtils.convertToItemKeyName(mDockSizePreference.getKey()),
+                    dockProgress,
                     AccessibilityStatsLogUtils.convertToEntryPoint(mEntryPoint));
         }
     }

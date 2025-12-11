@@ -4986,7 +4986,7 @@
     <string name="dream_home_controls_toggle_summary" msgid="4102519907917430579">"在屏保上显示家居控制按钮"</string>
     <string name="dream_more_settings_category" msgid="3119192146760773748">"更多设置"</string>
     <string name="dream_setup_title" msgid="2458303874255396142">"选择屏保"</string>
-    <string name="dream_setup_description" msgid="7508547154038580296">"选择平板电脑插入基座时屏幕上显示的内容。使用屏保时，设备可能会比较耗电。"</string>
+    <string name="dream_setup_description" msgid="7508547154038580296">"选择电脑插入基座时屏幕上显示的内容。使用屏保时，设备可能会比较耗电。"</string>
     <string name="customize_button_title" msgid="1110284655990203359">"自定义"</string>
     <string name="customize_button_description" msgid="7440248477266126231">"自定义“<xliff:g id="SCREENSAVER_NAME">%1$s</xliff:g>”"</string>
     <string name="reboot_dialog_enable_freeform_support" msgid="6412591361284929149">"您必须重新启动设备，才能启用任意形式的支持。"</string>
@@ -5191,4 +5191,6 @@
     <string name="alternative_dns">备选DNS</string>
 
     <string name="fde_version">OpenFDE 版本</string>
+    <string name="dock_size" msgid="570613010306330622">"程序坞大小"</string>
+    <string name="short_summary_dock_size" msgid="8444689613442419978">"放大或缩小程序坞"</string>
 </resources>
