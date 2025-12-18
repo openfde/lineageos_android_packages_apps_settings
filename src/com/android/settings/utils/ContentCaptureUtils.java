@@ -27,6 +27,10 @@ import android.view.contentcapture.ContentCaptureManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import android.os.SystemProperties;
+import com.android.settings.R;
 
 public final class ContentCaptureUtils {
 
@@ -63,5 +67,92 @@ public final class ContentCaptureUtils {
 
     private ContentCaptureUtils() {
         throw new UnsupportedOperationException("contains only static methods");
+    }
+
+    public static float getRatioHeight(){
+       try{
+         String h = SystemProperties.get("openfde.display_height");
+         BigDecimal bdResult = new BigDecimal(h).divide(new BigDecimal(1080), 3, RoundingMode.HALF_UP); 
+         return bdResult.floatValue();
+       }catch(Exception e){
+         Log.e(TAG, "getRatioHeight error: " + e);      
+       }
+        return 1.0f;
+    }
+
+    public static String getFontSizeLabel(Context context, int value){
+        String label = "";
+        switch(value){
+           case 0:
+              label = context.getString(R.string.show_smallest);
+              break;
+           case 1:
+              label = context.getString(R.string.show_smaller);
+              break;
+           case 2:
+              label = context.getString(R.string.show_small);
+              break;
+           case 3:
+              label = context.getString(R.string.show_recommend);
+              break;
+           case 4:
+              label = context.getString(R.string.show_big);
+              break;
+           default:
+              label = context.getString(R.string.show_recommend);
+              break;          
+        }
+        return label;
+    }
+
+    public static String getDisplaySizeLabel(Context context, int value){
+        String label = "";
+        switch(value){
+           case 0:
+              label = context.getString(R.string.show_smallest);
+              break;
+           case 1:
+              label = context.getString(R.string.show_smaller);
+              break;
+           case 2:
+              label = context.getString(R.string.show_small);
+              break;
+           case 3:
+              label = context.getString(R.string.show_center_small);
+              break;
+           case 4:
+              label = context.getString(R.string.show_recommend);
+              break;
+           default:
+              label = context.getString(R.string.show_recommend);
+              break;          
+        }
+        return label;
+    }
+
+
+    public static String getDockSizeLabel(Context context, int value){
+        String label = "";
+        switch(value){
+           case 0:
+              label = context.getString(R.string.show_smallest);
+              break;
+           case 1:
+              label = context.getString(R.string.show_smaller);
+              break;
+           case 2:
+              label = context.getString(R.string.show_recommend);
+              break;
+           case 3:
+              label = context.getString(R.string.show_bigger);
+              break;
+           case 4:
+              label = context.getString(R.string.show_big);
+              break;
+           default:
+              label = context.getString(R.string.show_recommend);
+              break;          
+        }
+        return label;
     }
 }

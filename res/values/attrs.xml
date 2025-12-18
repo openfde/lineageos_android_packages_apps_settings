@@ -166,6 +166,7 @@
         <attr name="iconEnd" format="reference" />
         <attr name="iconStartContentDescription" format="reference" />
         <attr name="iconEndContentDescription" format="reference" />
+        <attr name="best" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="TintDrawable">

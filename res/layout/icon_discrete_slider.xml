@@ -42,11 +42,12 @@
             android:tintMode="src_in" />
     </FrameLayout>
 
-    <SeekBar
+    <com.android.settings.widget.FdeSeekBar
         android:id="@*android:id/seekbar"
         style="@android:style/Widget.Material.SeekBar.Discrete"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
+        android:minHeight="32dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:paddingEnd="12dp"

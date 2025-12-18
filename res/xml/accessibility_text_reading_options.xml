@@ -30,6 +30,7 @@
         android:summary="@string/short_summary_font_size"
         android:title="@string/title_font_size"
         settings:iconEnd="@drawable/ic_add_24dp"
+        settings:best = "3"
         settings:iconEndContentDescription="@string/font_size_make_larger_desc"
         settings:iconStart="@drawable/ic_remove_24dp"
         settings:iconStartContentDescription="@string/font_size_make_smaller_desc"
@@ -42,6 +43,7 @@
         settings:iconEnd="@drawable/ic_add_24dp"
         settings:iconEndContentDescription="@string/screen_zoom_make_larger_desc"
         settings:iconStart="@drawable/ic_remove_24dp"
+        settings:best = "4"
         settings:iconStartContentDescription="@string/screen_zoom_make_smaller_desc"
         settings:keywords="@string/keywords_display_size" />
 
@@ -50,6 +52,7 @@
         android:summary="@string/short_summary_dock_size"
         android:title="@string/dock_size"
         settings:iconEnd="@drawable/ic_add_24dp"
+        settings:best = "2"
         settings:iconEndContentDescription="@string/screen_zoom_make_larger_desc"
         settings:iconStart="@drawable/ic_remove_24dp"
         settings:iconStartContentDescription="@string/screen_zoom_make_smaller_desc"
