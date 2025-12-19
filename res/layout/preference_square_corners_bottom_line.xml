@@ -21,13 +21,15 @@
     android:id="@+id/main"
 
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
+    android:minHeight="56dp"
     android:layout_marginHorizontal="16dp">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
         android:layout_gravity="center"
         android:background="#fff"
         android:gravity="center"

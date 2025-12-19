@@ -30,9 +30,14 @@ import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.internal.util.Preconditions;
+import com.android.settings.widget.FdeSeekBar;
 import com.android.settings.R;
 import com.android.settings.Utils;
-
+import android.util.DisplayMetrics;
+import com.android.settings.utils.ContentCaptureUtils;
+import android.graphics.Typeface;
+import android.graphics.Color;
+import android.util.TypedValue;
 /**
  * A labeled {@link SeekBarPreference} with left and right text label, icon label, or both.
  *
@@ -58,18 +63,30 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
     private final int mTickMarkId;
     private final int mIconStartId;
     private final int mIconEndId;
+    private final int mBest;
     private final int mIconStartContentDescriptionId;
     private final int mIconEndContentDescriptionId;
     private OnPreferenceChangeListener mStopListener;
     private SeekBar.OnSeekBarChangeListener mSeekBarChangeListener;
 
-    private SeekBar mSeekBar;
+    private FdeSeekBar mSeekBar;
+    private String key ;
+    private static final String FONT_SIZE = "font_size";
+    private static final String DISPLAY_SIZE = "display_size";
+    private static final String DOCK_SIZE = "dock_size";
+    TextView summaryView ;
 
     public LabeledSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr,
             int defStyleRes) {
 
+
+
+
+
         super(context, attrs, defStyleAttr, defStyleRes);
         setLayoutResource(R.layout.preference_labeled_slider);
+
+        key = attrs.getAttributeValue("http://schemas.android.com/apk/res/android","key");
 
         final TypedArray styledAttrs = context.obtainStyledAttributes(attrs,
                 R.styleable.LabeledSeekBarPreference);
@@ -79,6 +96,8 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
                 R.styleable.LabeledSeekBarPreference_textEnd, /* defValue= */ 0);
         mTickMarkId = styledAttrs.getResourceId(
                 R.styleable.LabeledSeekBarPreference_tickMark, /* defValue= */ 0);
+        mBest = styledAttrs.getInteger(
+                R.styleable.LabeledSeekBarPreference_best, /* defValue= */ 0);        
         mIconStartId = styledAttrs.getResourceId(
                 R.styleable.LabeledSeekBarPreference_iconStart, /* defValue= */ 0);
         mIconEndId = styledAttrs.getResourceId(
@@ -114,7 +133,7 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        final TextView summaryView = (TextView) holder.findViewById(android.R.id.summary);
+        summaryView = (TextView) holder.findViewById(android.R.id.summary);
         boolean isSummaryVisible = false;
         if (summaryView != null) {
             isSummaryVisible = (summaryView.getVisibility() == View.VISIBLE);
@@ -139,10 +158,38 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
         final boolean isValidTextResIdExist = mTextStartId > 0 || mTextEndId > 0;
         labelFrame.setVisibility(isValidTextResIdExist ? View.VISIBLE : View.GONE);
 
-        mSeekBar = (SeekBar) holder.findViewById(com.android.internal.R.id.seekbar);
+        mSeekBar = (FdeSeekBar) holder.findViewById(com.android.internal.R.id.seekbar);
         if (mTickMarkId != 0) {
             final Drawable tickMark = getContext().getDrawable(mTickMarkId);
             mSeekBar.setTickMark(tickMark);
+        }
+
+        // DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
+        // int width = metrics.widthPixels - (int)(180 * ContentCaptureUtils.getRatioHeight()) + 30;
+        
+        float pixelSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 46, getContext().getResources().getDisplayMetrics());
+        int left = 0;//(int)pixelSize; //46  * (int)(ContentCaptureUtils.getRatioHeight());
+        if(FONT_SIZE.equals(key)){
+            summaryView.setTypeface(Typeface.DEFAULT_BOLD);
+            summaryView.setTextColor(Color.BLACK);
+            summaryView.setPadding(left,12,0,0);
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
+            // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
+        }else if(DISPLAY_SIZE.equals(key)){
+            summaryView.setTypeface(Typeface.DEFAULT_BOLD);
+            summaryView.setTextColor(Color.BLACK);
+            summaryView.setPadding(left,12,0,0);
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            // summaryView.setText(ContentCaptureUtils.getDisplaySizeLabel(getContext(), mSeekBar.getProgress()));
+            // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getDisplaySizeLabel(getContext(), mSeekBar.getProgress()));
+        }else if(DOCK_SIZE.equals(key)){
+            summaryView.setTypeface(Typeface.DEFAULT_BOLD);
+            summaryView.setTextColor(Color.BLACK);
+            summaryView.setPadding(left,12,0,0);
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            // summaryView.setText(ContentCaptureUtils.getDockSizeLabel(getContext(), mSeekBar.getProgress()));
+            // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getDockSizeLabel(getContext(), mSeekBar.getProgress()));
         }
 
         final ViewGroup iconStartFrame = (ViewGroup) holder.findViewById(R.id.icon_start_frame);

@@ -13096,4 +13096,12 @@
   
     <string name="dock_size" msgid="570613010306330622">"Dock size"</string>
     <string name="short_summary_dock_size" msgid="8444689613442419978">"Make Dock bigger or smaller"</string>
+
+    <string name="show_smallest">"smallest"</string>
+    <string name="show_smaller">"smaller"</string>
+    <string name="show_small">"small"</string>
+    <string name="show_center_small">"center"</string>
+    <string name="show_recommend">"recommend"</string>
+    <string name="show_bigger">"bigger"</string>
+    <string name="show_big">"big"</string>
 </resources>
