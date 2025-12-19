@@ -24,25 +24,31 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.provider.Settings;
 
-import com.android.settingslib.R;
+import com.android.settings.R;
 import com.android.window.flags.Flags;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.android.settings.utils.ContentCaptureUtils;
 
 /**
  * Data class for storing the configurations related to the font size.
  */
 final class FontSizeData extends PreviewSizeData<Float> {
     private static final float FONT_SCALE_DEF_VALUE = 1.0f;
+    private static final float FONT_SCALE_DEF_LARGE_VALUE = 1.2f;
 
     FontSizeData(Context context) {
         super(context);
         final Resources resources = getContext().getResources();
         final ContentResolver resolver = getContext().getContentResolver();
-        final List<String> strEntryValues =
-                Arrays.asList(resources.getStringArray(R.array.entryvalues_font_size));
+        List<String> strEntryValues = null;
+        if(ContentCaptureUtils.getRatioHeight() > 1){
+            strEntryValues = Arrays.asList(resources.getStringArray(R.array.large_font_size));
+        }else{
+            strEntryValues = Arrays.asList(resources.getStringArray(R.array.small_font_size));
+        }       
         setDefaultValue(getFontScaleDefValue(resolver));
         final float currentScale =
                 Settings.System.getFloat(resolver, Settings.System.FONT_SCALE, getDefaultValue());
@@ -80,8 +86,15 @@ final class FontSizeData extends PreviewSizeData<Float> {
     }
 
     private float getFontScaleDefValue(ContentResolver resolver) {
-        return Flags.configurableFontScaleDefault() ? Settings.System.getFloat(resolver,
+         if(ContentCaptureUtils.getRatioHeight() > 1){
+            return Flags.configurableFontScaleDefault() ? Settings.System.getFloat(resolver,
+                Settings.System.DEFAULT_DEVICE_FONT_SCALE, FONT_SCALE_DEF_LARGE_VALUE)
+                : FONT_SCALE_DEF_LARGE_VALUE;
+        }else{
+            return Flags.configurableFontScaleDefault() ? Settings.System.getFloat(resolver,
                 Settings.System.DEFAULT_DEVICE_FONT_SCALE, FONT_SCALE_DEF_VALUE)
                 : FONT_SCALE_DEF_VALUE;
+        }   
+        
     }
 }
