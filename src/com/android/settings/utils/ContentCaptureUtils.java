@@ -156,16 +156,8 @@ public final class ContentCaptureUtils {
         return label;
     }
 
-    public static String getShowLabel(Context context, int value){
-         if(value == 2){
-            return context.getString(R.string.show_recommend);
-         }else{
-            return "";
-         }
-    }
-
-    public static String getSmallDeviceFontShowLabel(Context context, int value){
-         if(value == 1){
+    public static String getShowLabel(Context context, int value,int def){
+         if(value == def){
             return context.getString(R.string.show_recommend);
          }else{
             return "";

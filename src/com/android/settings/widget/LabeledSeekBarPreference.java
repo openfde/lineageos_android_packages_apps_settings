@@ -76,6 +76,9 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
     private static final String DOCK_SIZE = "dock_size";
     TextView summaryView ;
 
+    private static final int DEF_SMALL_DEVICE = 1;
+    private static final int DEF_LARGE_DEVICE = 2;
+
     public LabeledSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr,
             int defStyleRes) {
 
@@ -175,17 +178,16 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
             summaryView.setPadding(left,12,0,0);
             //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
             if(ContentCaptureUtils.getRatioHeight() > 1){
-                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress()));
+                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE));
             }else{
-                summaryView.setText(ContentCaptureUtils.getSmallDeviceFontShowLabel(getContext(), mSeekBar.getProgress()));
+                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_SMALL_DEVICE));
             }
-            
         }else if( DISPLAY_SIZE.equals(key) || DOCK_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
             summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
             //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
-            summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress()));
+            summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE));
         }
         
         final ViewGroup iconStartFrame = (ViewGroup) holder.findViewById(R.id.icon_start_frame);
