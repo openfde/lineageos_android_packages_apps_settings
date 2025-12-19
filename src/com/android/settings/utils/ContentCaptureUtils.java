@@ -155,4 +155,12 @@ public final class ContentCaptureUtils {
         }
         return label;
     }
+
+    public static String getShowLabel(Context context, int value,int def){
+         if(value == def){
+            return context.getString(R.string.show_recommend);
+         }else{
+            return "";
+         }
+    }
 }
