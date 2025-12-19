@@ -163,4 +163,12 @@ public final class ContentCaptureUtils {
             return "";
          }
     }
+
+    public static String getSmallDeviceFontShowLabel(Context context, int value){
+         if(value == 1){
+            return context.getString(R.string.show_recommend);
+         }else{
+            return "";
+         }
+    }
 }

@@ -169,7 +169,18 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
         
         float pixelSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 46, getContext().getResources().getDisplayMetrics());
         int left = 0;//(int)pixelSize; //46  * (int)(ContentCaptureUtils.getRatioHeight());
-        if(FONT_SIZE.equals(key) || DISPLAY_SIZE.equals(key) || DOCK_SIZE.equals(key)){
+        if(FONT_SIZE.equals(key) ){
+            summaryView.setTypeface(Typeface.DEFAULT_BOLD);
+            summaryView.setTextColor(Color.BLACK);
+            summaryView.setPadding(left,12,0,0);
+            //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
+            if(ContentCaptureUtils.getRatioHeight() > 1){
+                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress()));
+            }else{
+                summaryView.setText(ContentCaptureUtils.getSmallDeviceFontShowLabel(getContext(), mSeekBar.getProgress()));
+            }
+            
+        }else if( DISPLAY_SIZE.equals(key) || DOCK_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
             summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);

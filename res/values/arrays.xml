@@ -1527,9 +1527,7 @@
 
     <string-array name="small_font_size" translatable="false">
         <item>0.8</item>
-        <item>0.9</item>
         <item>1.0</item>
-        <item>1.1</item>
         <item>1.2</item>
     </string-array>
 
