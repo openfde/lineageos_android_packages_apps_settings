@@ -41,6 +41,9 @@
             settings:controller="com.android.settings.deviceinfo.DeviceNamePreferenceController"
             settings:enableCopying="true"/>
 
+        <!-- <com.android.settings.CustomDividerPreference
+            android:order="2"/>       -->
+
         <!-- Account name -->
         <!-- <Preference
             android:key="branded_account"

@@ -168,24 +168,27 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
         // int width = metrics.widthPixels - (int)(180 * ContentCaptureUtils.getRatioHeight()) + 30;
         
         float pixelSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 46, getContext().getResources().getDisplayMetrics());
-        int left =(int)pixelSize; //46  * (int)(ContentCaptureUtils.getRatioHeight());
+        int left = 0;//(int)pixelSize; //46  * (int)(ContentCaptureUtils.getRatioHeight());
         if(FONT_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
             summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
-            summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
             // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
         }else if(DISPLAY_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
             summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
-            summaryView.setText(ContentCaptureUtils.getDisplaySizeLabel(getContext(), mSeekBar.getProgress()));
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            // summaryView.setText(ContentCaptureUtils.getDisplaySizeLabel(getContext(), mSeekBar.getProgress()));
             // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getDisplaySizeLabel(getContext(), mSeekBar.getProgress()));
         }else if(DOCK_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
             summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
-            summaryView.setText(ContentCaptureUtils.getDockSizeLabel(getContext(), mSeekBar.getProgress()));
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            // summaryView.setText(ContentCaptureUtils.getDockSizeLabel(getContext(), mSeekBar.getProgress()));
             // mSeekBar.updateText((int)(width/2),ContentCaptureUtils.getDockSizeLabel(getContext(), mSeekBar.getProgress()));
         }
 

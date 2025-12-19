@@ -148,4 +148,10 @@
         </Preference>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:layout="@layout/preference_square_title"
+        android:order="28"
+        android:title=""
+        android:summary=""/>
+
 </PreferenceScreen>
