@@ -37,5 +37,6 @@
         android:ellipsize="end"
         android:gravity="center_horizontal|top"
         android:singleLine="true"
-        android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Caption" />
+        android:textSize="14sp"
+        android:fontFamily="@font/alibaba_puhui_55_regular_55_regular" />
 </LinearLayout>
