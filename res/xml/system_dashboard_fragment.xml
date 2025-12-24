@@ -127,13 +127,13 @@
     <com.android.settings.CustomDividerPreference
         android:order="-46"/> 
 
-    <com.android.settings.CustomPreferenceHasIcon
+    <!-- <com.android.settings.CustomPreferenceHasIcon
         android:key="system_multiuser"
         android:title="@string/user_settings_title"
         android:icon="@drawable/ic_settings_multiuser"
         android:order="-45"
         android:fragment="com.android.settings.users.UserSettings"
-        settings:controller="com.android.settings.users.MultiUserPreferenceController"/>
+        settings:controller="com.android.settings.users.MultiUserPreferenceController"/> -->
 
     <com.android.settings.CustomDividerPreference
         android:order="-44"/>     
