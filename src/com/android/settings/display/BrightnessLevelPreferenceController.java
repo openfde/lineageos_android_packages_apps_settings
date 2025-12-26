@@ -31,12 +31,14 @@ import android.hardware.display.DisplayManager.DisplayListener;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.provider.Settings.System;
 import android.text.TextUtils;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
+import com.android.internal.display.BrightnessSynchronizer;
 import com.android.settings.core.PreferenceControllerMixin;
 import com.android.settings.core.SettingsBaseActivity;
 import com.android.settingslib.core.AbstractPreferenceController;
@@ -160,10 +162,10 @@ public class BrightnessLevelPreferenceController extends AbstractPreferenceContr
         int value = 0;
         final BrightnessInfo info = mContext.getDisplay().getBrightnessInfo();
         if (info != null) {
-            value = convertLinearToGammaFloat(info.brightness, info.brightnessMinimum,
-                    info.brightnessMaximum);
+            value = BrightnessSynchronizer.brightnessFloatToInt(info.brightness)/*convertLinearToGammaFloat(info.brightness, info.brightnessMinimum,
+                    info.brightnessMaximum)*/;
         }
-        return getPercentage(value, GAMMA_SPACE_MIN, GAMMA_SPACE_MAX);
+        return getPercentage(value, PowerManager.BRIGHTNESS_OFF + 1, PowerManager.BRIGHTNESS_ON);
     }
 
     private double getPercentage(double value, int min, int max) {
