@@ -163,4 +163,12 @@ public final class ContentCaptureUtils {
             return "";
          }
     }
+
+    public static boolean isRecommend(Context context,  String label){
+         if(context.getString(R.string.show_recommend).equals(label)){
+            return true ;
+         }else{
+            return false ;
+         }
+    }
 }
