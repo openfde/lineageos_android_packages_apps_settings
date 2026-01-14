@@ -231,7 +231,7 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2026-01-14" isdel="0">
+    <compatible date="2026-01-15" isdel="0">
         <keycode>activityLunchSize</keycode>
         <keydesc>
             {
