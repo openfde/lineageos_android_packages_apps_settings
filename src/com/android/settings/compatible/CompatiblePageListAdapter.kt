@@ -61,7 +61,12 @@ class CompatiblePageListAdapter(
             holder.layoutSwitch.visibility = View.GONE
             holder.txtSpinner.visibility = View.VISIBLE
             holder.txtInput.visibility = View.GONE
-            holder.txtSpinner.text = item.value ?: context.getText(R.string.fde_input_hint)
+            var json :String = item.value ?: context.getText(R.string.fde_input_hint).toString();
+            if (json.contains("width")) {
+                val size :CompUtils.Size = CompUtils.jsonToSize(json);
+                json = "${size.width ?: 0}x${size.height ?: 0}"
+            }
+            holder.txtSpinner.text = json
             holder.txtSpinner.setOnClickListener({
                 showPopupWindow(context, holder.txtSpinner, item)
             })
@@ -112,12 +117,12 @@ class CompatiblePageListAdapter(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val listOptions =
-            CompUtils.parseJson(compatibleList.optionJson) as Array<String>
+            CompUtils.parseJson(context,compatibleList.optionJson) as Array<String>
         val listView = popupView.findViewById<ListView>(R.id.listView)
             ?: throw IllegalArgumentException("ListView not found")
         val adapter = ArrayAdapter(
             context,
-            android.R.layout.simple_list_item_1,
+            R.layout.simple_list_item,
             listOptions
         )
         listView.adapter = adapter
@@ -147,7 +152,7 @@ class CompatiblePageListAdapter(
                 }      
         }
         popupWindow.isOutsideTouchable = true
-        popupWindow.showAsDropDown(view)
+        popupWindow.showAsDropDown(view,80,-100)
     }
 
     private fun showCustomDialog(view: TextView,item: CompatibleValue, keyDesc: String,newValue: String) {

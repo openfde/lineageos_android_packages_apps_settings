@@ -5166,6 +5166,7 @@
     <string name="fde_net_config" >"配置项"</string>
 
     <string name="fde_compatible_set">兼容性设置</string>
+    <string name="fde_compatible_clean">关闭兼容项</string>
     <string name="fde_compatible_summary">应用兼容性设置</string>
     <string name="fde_input_hint">请输入值</string>
     <string name="fde_input_appname_hint">请输入应用名称</string>

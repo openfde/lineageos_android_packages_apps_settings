@@ -13063,6 +13063,7 @@
      <string name="fde_net_config" >"Config"</string>
 
      <string name="fde_compatible_set">Compatible Set</string>
+     <string name="fde_compatible_clean">clean</string>
      <string name="fde_compatible_summary">App Compatible Set</string>
      <string name="fde_input_hint">please input data</string>
      <string name="fde_input_appname_hint">please input App Name</string>

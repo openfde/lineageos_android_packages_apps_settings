@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.content.ContentValues
-
+import com.android.settings.R;
 
 object CompatibleConfig {
     const val COMPATIBLE_STR = "com.android.compatibleprovider"
@@ -186,9 +186,16 @@ object CompatibleConfig {
 
     fun insertValueData(
         context: Context, keyCode: String, packageName: String, activityName: String,
-        newValue: String
+        value: String
     ): Int {
         try {
+            var newValue = value;
+            if(newValue.equals(context.getString(R.string.fde_compatible_clean))){
+                newValue = "";
+            }
+            if (newValue.contains("x")) {
+                 newValue = CompUtils.sizeStringToJson(newValue);   
+            }
             if (activityName == null || "".equals(activityName)) {
                 CompUtils.setSystemProperty(packageName + "_" + keyCode, newValue)
             } else {
@@ -228,9 +235,16 @@ object CompatibleConfig {
 
     fun updateValueData(
         context: Context, keyCode: String, packageName: String, acitivityName: String,
-        newValue: String
+        value: String
     ): Int {
         try {
+            var newValue = value;
+            if(newValue.equals(context.getString(R.string.fde_compatible_clean))){
+                newValue = "";
+            }
+            if (newValue.contains("x")) {
+                 newValue = CompUtils.sizeStringToJson(newValue);   
+            }
             if (acitivityName == null || "".equals(acitivityName)) {
                 CompUtils.setSystemProperty(packageName + "_" + keyCode, newValue)
             } else {
