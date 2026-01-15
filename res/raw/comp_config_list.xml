@@ -159,7 +159,7 @@
         <keycode>forcedPortraitMode</keycode>
         <keydesc>
             {
-            "en":"Forced portrait mode",
+            "en":"Disable window resizing",
             "ch":"禁止窗口大小调整"
             }
         </keydesc>
@@ -167,8 +167,8 @@
         <inputtype>page</inputtype>
         <notes>
             {
-            "en":"Force portrait mode display: Resolves the issue of repeated crashes after dragging and scaling some windows in certain applications.",
-            "ch":"禁止窗口大小调整：解决部分应用部分窗口拖拽缩放后反复闪退问题。"
+            "en":"Disable window resizing: Some applications do not support dynamic resizing",
+            "ch":"禁止窗口大小调整：部分应用不支持动态调整大小"
             }
         </notes>
         <optionjson>[]</optionjson>
