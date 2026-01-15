@@ -155,12 +155,12 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2025-12-04" isdel="0">
+    <compatible date="2026-01-14" isdel="0">
         <keycode>forcedPortraitMode</keycode>
         <keydesc>
             {
             "en":"Forced portrait mode",
-            "ch":"强制竖屏显示"
+            "ch":"禁止窗口大小调整"
             }
         </keydesc>
         <defaultvalue>0</defaultvalue>
@@ -168,7 +168,7 @@
         <notes>
             {
             "en":"Force portrait mode display: Resolves the issue of repeated crashes after dragging and scaling some windows in certain applications.",
-            "ch":"强制竖屏显示：解决部分应用部分窗口拖拽缩放后反复闪退问题。"
+            "ch":"禁止窗口大小调整：解决部分应用部分窗口拖拽缩放后反复闪退问题。"
             }
         </notes>
         <optionjson>[]</optionjson>
