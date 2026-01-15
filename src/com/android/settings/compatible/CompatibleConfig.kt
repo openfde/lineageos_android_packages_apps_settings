@@ -190,7 +190,7 @@ object CompatibleConfig {
     ): Int {
         try {
             var newValue = value;
-            if(newValue.equals(context.getString(R.string.fde_compatible_clean))){
+            if(newValue.equals(context.getString(R.string.fde_compatible_unset))){
                 newValue = "";
             }
             if (newValue.contains("x")) {
@@ -239,7 +239,7 @@ object CompatibleConfig {
     ): Int {
         try {
             var newValue = value;
-            if(newValue.equals(context.getString(R.string.fde_compatible_clean))){
+            if(newValue.equals(context.getString(R.string.fde_compatible_unset))){
                 newValue = "";
             }
             if (newValue.contains("x")) {

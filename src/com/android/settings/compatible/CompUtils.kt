@@ -194,7 +194,7 @@ object CompUtils {
                     list.add(json)
                 }
             }
-            list.add(context.getString(R.string.fde_compatible_clean))
+            list.add(context.getString(R.string.fde_compatible_unset))
             return list.toTypedArray()
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
