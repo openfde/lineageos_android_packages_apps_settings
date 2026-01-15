@@ -49,7 +49,7 @@
         </com.android.settings.CustomBottomPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <!-- <PreferenceCategory
         android:key="conversation_category"
         android:layout="@layout/preference_square_title"
         android:title="@string/conversation_notifs_category">
@@ -73,7 +73,7 @@
             settings:controller="com.android.settings.notification.BubbleSummaryNotificationPreferenceController"
             android:fragment="com.android.settings.notification.BubbleNotificationSettings"
         />
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 
     <PreferenceCategory
         android:key="configure_notifications_lock"
