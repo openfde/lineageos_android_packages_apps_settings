@@ -224,11 +224,52 @@
         <inputtype>switch</inputtype>
         <notes>
             {
-            "en":"Magic Window：Parallel display of application interfaces.",
-            "ch":"平行视界：并行显示应用的界面。"
+            "en":"Magic Window：Parallel display of application interfaces. This feature will disable window maximization.",
+            "ch":"平行视界：并行显示应用的界面。此功能会禁窗口最大化。"
             }
         </notes>
         <optionjson>[]</optionjson>
+    </compatible>
+
+    <compatible date="2026-01-15" isdel="0">
+        <keycode>activityLunchSize</keycode>
+        <keydesc>
+            {
+            "en":"Fix activity size",
+            "ch":"固定应用启动大小"
+            }
+        </keydesc>
+        <defaultvalue>0</defaultvalue>
+        <inputtype>select</inputtype>
+        <notes>
+            {
+            "en":"Fix app lunch size",
+            "ch":"固定应用启动大小"
+            }
+        </notes>
+        <optionjson>[{
+            "width": "1920",
+            "height": "1080"
+            }, {
+            "width": "1728",
+            "height": "972"
+            }, {
+            "width": "1536",
+            "height": "864"
+            }, {
+            "width": "412",
+            "height": "713"
+            },{
+            "width": "650",
+            "height": "850"
+            }, {
+            "width": "540",
+            "height": "960"
+            }, {
+            "width": "1080",
+            "height": "1920"
+            }
+            ]</optionjson>
     </compatible>
 
 </compatibles>
