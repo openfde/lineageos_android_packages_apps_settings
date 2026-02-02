@@ -67,6 +67,8 @@
         android:order="-256"
         android:fragment="com.android.settings.inputmethod.KeyboardShortcutKeySettings"/>    
        
+    <com.android.settings.CustomDividerPreference
+        android:order="-255"/>    
 
     <com.android.settings.CustomPreferenceHasIcon
         android:key="trackpad_settings"
@@ -98,9 +100,9 @@
         android:order="-240"
         android:fragment="com.android.settings.datetime.DateTimeSettings"
         settings:controller="com.android.settings.datetime.DateTimePreferenceController"/>
-
+<!-- 
     <com.android.settings.CustomDividerPreference
-        android:order="-255"/> 
+        android:order="-255"/>  -->
     <!-- System updates -->
     <!-- <com.android.settings.CustomPreference
         android:key="additional_system_update_settings"
@@ -124,18 +126,19 @@
         <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"/>
     </com.android.settings.CustomPreferenceHasIcon> -->
 
-    <com.android.settings.CustomDividerPreference
-        android:order="-46"/> 
+    <!-- <com.android.settings.CustomDividerPreference
+        android:order="-46"/>  -->
 
-    <com.android.settings.CustomPreferenceHasIcon
+    <!-- <com.android.settings.CustomPreferenceHasIcon
         android:key="system_multiuser"
         android:title="@string/user_settings_title"
         android:icon="@drawable/ic_settings_multiuser"
         android:order="-45"
         android:fragment="com.android.settings.users.UserSettings"
-        settings:controller="com.android.settings.users.MultiUserPreferenceController"/>
+        settings:controller="com.android.settings.users.MultiUserPreferenceController"/> -->
 
     <com.android.settings.CustomDividerPreference
+        android:key="developer_line"
         android:order="-44"/>     
 
     <com.android.settings.spa.preference.ComposePreference
