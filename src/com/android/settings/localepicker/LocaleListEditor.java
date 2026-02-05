@@ -232,15 +232,15 @@ public class LocaleListEditor extends RestrictedSettingsFragment implements View
             if (resultCode == Activity.RESULT_OK) {
                 mAdapter.doTheUpdate();
                 if (!localeInfo.isTranslated()) {
-                    Bundle args = new Bundle();
-                    args.putInt(LocaleDialogFragment.ARG_DIALOG_TYPE,
-                            LocaleDialogFragment.DIALOG_NOT_AVAILABLE_LOCALE);
-                    args.putSerializable(LocaleDialogFragment.ARG_TARGET_LOCALE, localeInfo);
-                    LocaleDialogFragment localeDialogFragment = LocaleDialogFragment.newInstance();
-                    localeDialogFragment.setArguments(args);
-                    localeDialogFragment.show(mFragmentManager, TAG_DIALOG_NOT_AVAILABLE);
-                    mMetricsFeatureProvider.action(getContext(),
-                            SettingsEnums.ACTION_NOT_SUPPORTED_SYSTEM_LANGUAGE);
+                    // Bundle args = new Bundle();
+                    // args.putInt(LocaleDialogFragment.ARG_DIALOG_TYPE,
+                    //         LocaleDialogFragment.DIALOG_NOT_AVAILABLE_LOCALE);
+                    // args.putSerializable(LocaleDialogFragment.ARG_TARGET_LOCALE, localeInfo);
+                    // LocaleDialogFragment localeDialogFragment = LocaleDialogFragment.newInstance();
+                    // localeDialogFragment.setArguments(args);
+                    // localeDialogFragment.show(mFragmentManager, TAG_DIALOG_NOT_AVAILABLE);
+                    // mMetricsFeatureProvider.action(getContext(),
+                    //         SettingsEnums.ACTION_NOT_SUPPORTED_SYSTEM_LANGUAGE);
                 }
             } else {
                 mAdapter.notifyListChanged(localeInfo);

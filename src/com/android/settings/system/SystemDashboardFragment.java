@@ -27,6 +27,13 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 import android.util.Log;
+import android.database.ContentObserver;
+import android.net.Uri;
+import static android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import com.android.settingslib.development.DevelopmentSettingsEnabler;
 
 @SearchIndexable
 public class SystemDashboardFragment extends DashboardFragment {
@@ -42,7 +49,37 @@ public class SystemDashboardFragment extends DashboardFragment {
         if (getVisiblePreferenceCount(screen) == screen.getInitialExpandedChildrenCount() + 1) {
             screen.setInitialExpandedChildrenCount(Integer.MAX_VALUE);
         }
+
+         getContext().getContentResolver().registerContentObserver(Settings.Global.getUriFor(DEVELOPMENT_SETTINGS_ENABLED), false, mDeveloperSettingsObserver);
+         String developmentEnabledState = Settings.Global.getString(getContext().getContentResolver(), DEVELOPMENT_SETTINGS_ENABLED);
+         Preference developerLine = findPreference("developer_line");
+         developerLine.setVisible("1".equals(developmentEnabledState));   
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getContext().getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
+    }
+
+
+    private final Uri mDevelopEnabled = Settings.Global.getUriFor(DEVELOPMENT_SETTINGS_ENABLED);
+    private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(new Handler(
+            Looper.getMainLooper())) {
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            try{
+                 String developmentEnabledState = Settings.Global.getString(getContext().getContentResolver(), DEVELOPMENT_SETTINGS_ENABLED);
+                 Preference developerLine = findPreference("developer_line");
+                 developerLine.setVisible("1".equals(developmentEnabledState));
+            }catch(Exception e){
+                Log.e(TAG, " mDeveloperSettingsObserver e  "+e.toString() );
+            }
+
+        }
+    };
 
     @Override
     public int getMetricsCategory() {
