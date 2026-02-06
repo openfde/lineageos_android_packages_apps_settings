@@ -389,7 +389,7 @@ public class SettingsActivity extends SettingsBaseActivity
     }
 
     private void setActionBarStatus() {
-        final boolean isActionBarButtonEnabled = isActionBarButtonEnabled(getIntent());
+        final boolean isActionBarButtonEnabled = false;// isActionBarButtonEnabled(getIntent());
 
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
