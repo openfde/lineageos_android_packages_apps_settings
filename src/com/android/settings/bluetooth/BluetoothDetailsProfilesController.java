@@ -490,7 +490,7 @@ public class BluetoothDetailsProfilesController extends BluetoothDetailsControll
                 a2dp.setHighQualityAudioEnabled(mCachedDevice.getDevice(), enable);
                 return true;
             });
-            mProfilesContainer.addPreference(highQualityAudioPref);
+            // mProfilesContainer.addPreference(highQualityAudioPref);
         }
     }
 
@@ -577,7 +577,7 @@ public class BluetoothDetailsProfilesController extends BluetoothDetailsControll
             TwoStatePreference pref = mProfilesContainer.findPreference(profile.toString());
             if (pref == null) {
                 pref = createProfilePreference(mProfilesContainer.getContext(), profile);
-                mProfilesContainer.addPreference(pref);
+                // mProfilesContainer.addPreference(pref);
                 maybeAddHighQualityAudioPref(profile);
             }
             refreshProfilePreference(pref, profile);
@@ -598,7 +598,7 @@ public class BluetoothDetailsProfilesController extends BluetoothDetailsControll
             preference.setKey(KEY_BOTTOM_PREFERENCE);
             preference.setOrder(ORDINAL);
             preference.setSelectable(false);
-            mProfilesContainer.addPreference(preference);
+            // mProfilesContainer.addPreference(preference);
         }
 
         if (Flags.enableBluetoothProfileToggleVisibilityChecker()) {
