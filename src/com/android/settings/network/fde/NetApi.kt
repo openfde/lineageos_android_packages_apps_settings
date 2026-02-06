@@ -8,7 +8,7 @@ import android.provider.Settings
 import java.net.InetAddress
 import java.net.UnknownHostException
 import android.openfde.Net;
-
+import android.util.Log;
 
 object NetApi {
 
@@ -18,6 +18,7 @@ object NetApi {
     fun isWifiEnable(context: Context): Int {
         val net = Net.getInstance(context)
         val status = net.isWifiEnable()
+        Log.w("NetApi","isWifiEnable status: $status")
         Settings.Global.putInt(context.contentResolver, "wifi_status", status)
         return status
     }
@@ -28,6 +29,7 @@ object NetApi {
     fun enableWifi(context: Context, enable: Int): Int {
         val net = Net.getInstance(context)
         val status = net.enableWifi(enable)
+        Log.w("NetApi","isWifiEnable status: $status")
         Settings.Global.putInt(context.contentResolver, "wifi_status", enable)
         return status
     }
@@ -172,7 +174,9 @@ object NetApi {
     fun getLansAndWlans(context: Context): String {
         try{
             val net = Net.getInstance(context)
-            return net.getLansAndWlans()
+            val netinfo = net.getLansAndWlans()
+            Log.w("NetApi","getLansAndWlans netinfo: $netinfo")
+            return netinfo
         }catch (e: Exception){
             return ""
         }
@@ -184,7 +188,14 @@ object NetApi {
     fun getLanAndWlanIpConfigurations(context: Context): String {
         try{
             val net = Net.getInstance(context)
-            return net.getLanAndWlanIpConfigurations()
+            val netinfo = net.getLanAndWlanIpConfigurations()
+            Log.w("NetApi","getLanAndWlanIpConfigurations netinfo: $netinfo")
+            if(netinfo.isNotEmpty()){
+                Settings.Global.putInt(context.contentResolver, "wlan_status", 1)
+            }else{
+                Settings.Global.putInt(context.contentResolver, "wlan_status", 0)
+            }
+            return netinfo
         }catch (e: Exception){
             return ""
         }

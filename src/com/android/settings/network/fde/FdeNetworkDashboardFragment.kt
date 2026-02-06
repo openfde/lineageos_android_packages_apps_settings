@@ -437,8 +437,10 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
                     if (map.containsKey("status")) {
                         if("link".equals(map["status"])){
                             txtWiredStatus?.setText(getString(R.string.fde_has_connected));
+                            Settings.Global.putInt(context?.contentResolver, "wlan_status", 1)
                         }else{
                             txtWiredStatus?.setText(getString(R.string.fde_has_disconnected));
+                            Settings.Global.putInt(context?.contentResolver, "wlan_status", 0)
                             //unlink auto not has ipconfig
                         }
                     }

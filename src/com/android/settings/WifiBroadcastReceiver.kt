@@ -28,6 +28,7 @@ class WifiBroadcastReceiver : BroadcastReceiver() {
                 if(status == 1){
                     val wifiName = NetApi.getActivedWifi(context!!);
                 }else{
+                    NetApi.getLanAndWlanIpConfigurations(context!!);
                     Settings.Global.putString(context.contentResolver, "wifi_name", "");
                 }
                 val inte = Intent(Wifi_ACTION)
