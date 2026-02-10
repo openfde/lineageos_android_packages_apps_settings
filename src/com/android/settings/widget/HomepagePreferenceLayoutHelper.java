@@ -71,7 +71,7 @@ public class HomepagePreferenceLayoutHelper {
     void onBindViewHolder(PreferenceViewHolder holder) {
         mIcon = holder.findViewById(R.id.icon_frame);
         mText = holder.findViewById(R.id.text_frame);
-        setIconVisible(mIconVisible);
+        setIconVisible(true);
         setIconPaddingStart(mIconPaddingStart);
         setTextPaddingStart(mTextPaddingStart);
     }

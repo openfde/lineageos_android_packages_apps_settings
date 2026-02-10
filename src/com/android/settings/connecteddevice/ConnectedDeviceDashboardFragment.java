@@ -98,8 +98,8 @@ public class ConnectedDeviceDashboardFragment extends DashboardFragment {
                         nearbyEnabled
                                 ? Uri.parse(getString(R.string.config_nearby_devices_slice_uri))
                                 : null);
-        use(DiscoverableFooterPreferenceController.class)
-                .setAlwaysDiscoverable(isAlwaysDiscoverable(callingAppPackageName, action));
+        // use(DiscoverableFooterPreferenceController.class)
+        //         .setAlwaysDiscoverable(isAlwaysDiscoverable(callingAppPackageName, action));
 
         // Show hearing devices survey if user is categorized as one of interested category
         final String category = HearingAidStatsLogUtils.getUserCategory(context);
@@ -137,13 +137,13 @@ public class ConnectedDeviceDashboardFragment extends DashboardFragment {
         return controllers;
     }
 
-    @VisibleForTesting
-    boolean isAlwaysDiscoverable(String callingAppPackageName, String action) {
-        return TextUtils.equals(SLICE_ACTION, action)
-                ? false
-                : TextUtils.equals(Utils.SETTINGS_PACKAGE_NAME, callingAppPackageName)
-                        || TextUtils.equals(Utils.SYSTEMUI_PACKAGE_NAME, callingAppPackageName);
-    }
+    // @VisibleForTesting
+    // boolean isAlwaysDiscoverable(String callingAppPackageName, String action) {
+    //     return TextUtils.equals(SLICE_ACTION, action)
+    //             ? false
+    //             : TextUtils.equals(Utils.SETTINGS_PACKAGE_NAME, callingAppPackageName)
+    //                     || TextUtils.equals(Utils.SYSTEMUI_PACKAGE_NAME, callingAppPackageName);
+    // }
 
     /** For Search. */
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
