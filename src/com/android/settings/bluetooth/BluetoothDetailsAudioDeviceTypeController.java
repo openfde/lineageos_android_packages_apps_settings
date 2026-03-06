@@ -143,7 +143,7 @@ public class BluetoothDetailsAudioDeviceTypeController extends BluetoothDetailsC
                 KEY_BT_AUDIO_DEVICE_TYPE);
         if (mAudioDeviceTypePreference == null) {
             createAudioDeviceTypePreference(mProfilesContainer.getContext());
-            mProfilesContainer.addPreference(mAudioDeviceTypePreference);
+            // mProfilesContainer.addPreference(mAudioDeviceTypePreference);
         }
     }
 

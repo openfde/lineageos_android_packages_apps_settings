@@ -79,7 +79,7 @@
         android:fragment="com.android.settings.inputmethod.TrackpadSettings"
         settings:controller="com.android.settings.inputmethod.TrackpadSettingsController"/>
     
-    <com.android.settings.CustomDividerPreference
+    <!-- <com.android.settings.CustomDividerPreference
         android:order="-252"/>    
 
     <com.android.settings.CustomPreferenceHasIcon
@@ -88,7 +88,7 @@
         android:icon="@drawable/ic_settings_gestures"
         android:order="-250"
         android:fragment="com.android.settings.gestures.GestureSettings"
-        settings:controller="com.android.settings.gestures.GesturesSettingPreferenceController"/>
+        settings:controller="com.android.settings.gestures.GesturesSettingPreferenceController"/> -->
 
     <com.android.settings.CustomDividerPreference
         android:order="-249"/>    

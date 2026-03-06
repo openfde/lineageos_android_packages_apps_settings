@@ -66,6 +66,9 @@ import android.app.Instrumentation;
 import android.app.ActivityManager;
 import android.content.Context;
 import com.android.settings.Utils;
+import android.openfde.AppTaskControllerProxy;
+import android.openfde.AppTaskStatusListener;
+import java.lang.ref.WeakReference;
 
 /** Base activity for Settings pages */
 public class SettingsBaseActivity extends FragmentActivity implements CategoryHandler {
@@ -86,7 +89,7 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
     private Toolbar mToolbar;
     private TextView txtMenuTitle;
     private ImageView imgLeft,imgRight, imgFullscreen,imgMinimize,imgMaximize,imgClose;
-    private  boolean isMax = false;
+    AppTaskControllerProxy appTaskController ;
 
     @Override
     public CategoryMixin getCategoryMixin() {
@@ -98,7 +101,6 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         final boolean isAnySetupWizard = WizardManagerHelper.isAnySetupWizard(getIntent());
         // setWindowDecorationStatus(Window.WINDOW_DECORATION_FORCE_HIDE);
 
-        isMax = Utils.isFreeformMaximized(this);
         if (isAnySetupWizard) {
             TransitionHelper.applyForwardTransition(this);
             TransitionHelper.applyBackwardTransition(this);
@@ -143,33 +145,39 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
             imgClose =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.imgClose);
             txtMenuTitle =  findViewById(com.android.settingslib.collapsingtoolbar.R.id.txtMenuTitle);
 
-            imgMaximize.setOnClickListener(view -> {
-                boolean isMaximized = Utils.isFreeformMaximized(this);
-                Intent inte = new Intent("com.fde.fullscreen.ENABLE_OR_DISABLE");
-                inte.putExtra("mode", isMaximized ? 1 : 0);
-                sendBroadcast(inte);
-               
-                Log.w(TAG, "imgMaximize: isMaximized: "+isMaximized + " isMax: "+isMax );
-                isMax = !isMax ;
-            });
-            imgMinimize.setOnClickListener(view -> {
-                simulateKeyPress(KeyEvent.KEYCODE_F9);
-            });
-            imgFullscreen.setOnClickListener(view -> {
-                simulateKeyPress(KeyEvent.KEYCODE_F11);
-            });
-            imgClose.setOnClickListener(view -> {
-                try{
-                    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                    List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
-                    tasks.get(0).finishAndRemoveTask();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+
+            appTaskController = AppTaskControllerProxy.create();
+                    appTaskController.initCustomCaption(new WeakReference<>(this),false, new AppTaskStatusListener() {
+                        @Override
+                        public void onStatusChanged(int windowingMode, boolean isSystemBarVisible) {
+                            if(imgMaximize !=null){
+                                // imgMaximize.setImageResource(windowingMode == 5 ? com.android.settingslib.collapsingtoolbar.R.drawable.window_normal_button : com.android.settingslib.collapsingtoolbar.R.drawable.window_maximize_button);
+                            }
+                            if(imgFullscreen !=null){
+                                // imgFullscreen.setImageResource(isSystemBarVisible ? com.android.settingslib.collapsingtoolbar.R.drawable.window_full_screen_button :com.android.settingslib.collapsingtoolbar.R.drawable.window_exit_full_screen_button);
+                            }    
+                        }
             });
 
+            if(imgMaximize !=null){
+                imgMaximize.setOnClickListener(view -> {
+                    appTaskController.maximizeOrNot();
+                });
+                imgMinimize.setOnClickListener(view -> {
+                    appTaskController.minimize();
+                });
+                imgFullscreen.setOnClickListener(view -> {
+                    appTaskController.enterOrExitFullscreen();
+                });
+                imgClose.setOnClickListener(view -> {
+                    appTaskController.closeTask();
+                });
 
-
+                imgLeft.setOnClickListener(view -> {
+                        onBackPressed();
+                });
+            }
+            
             mAppBarLayout = findViewById(R.id.app_bar);
             if (mCollapsingToolbarLayout != null) {
                 mCollapsingToolbarLayout.setLineSpacingMultiplier(TOOLBAR_LINE_SPACING_MULTIPLIER);
