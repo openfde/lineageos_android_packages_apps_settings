@@ -59,10 +59,9 @@
 
         <Preference
             android:fragment="com.android.settings.connecteddevice.PreviouslyConnectedDeviceDashboardFragment"
-            android:icon="@drawable/ic_chevron_right_24dp"
             android:key="previously_connected_devices_see_all"
             android:order="10"
-            settings:layout="@layout/preference_rounded_corners"
+            settings:layout="@layout/preference_rounded_corners_center"
             android:title="@string/previous_connected_see_all"
             settings:searchable="false" />
     </PreferenceCategory>
@@ -76,10 +75,9 @@
         <Preference
             android:fragment=
                 "com.android.settings.connecteddevice.fastpair.FastPairDeviceDashboardFragment"
-            android:icon="@drawable/ic_chevron_right_24dp"
             android:key="fast_pair_devices_see_all"
             android:order="10"
-            settings:layout="@layout/preference_rounded_corners"
+            settings:layout="@layout/preference_rounded_corners_center"
             android:title="@string/connected_device_fast_pair_device_see_all"
             settings:searchable="false" />
     </PreferenceCategory>
