@@ -210,10 +210,13 @@
             settings:searchable="true"
             settings:controller="com.android.settings.accessibility.FlashNotificationsPreferenceController" />
 
+        <com.android.settings.CustomDividerPreference />     
+
         <Preference
             android:key="hearing_aid_preference"
             android:icon="@drawable/ic_hearing_aid"
             android:persistent="false"
+            settings:layout="@layout/preference_square_corners_has_icon"
             android:summary="@string/accessibility_hearingaid_not_connected_summary"
             android:title="@string/accessibility_hearingaid_title"
             settings:keywords="@string/keywords_hearing_aids"
