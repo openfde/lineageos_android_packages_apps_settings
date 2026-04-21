@@ -212,7 +212,7 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2024-12-03" isdel="0">
+    <compatible date="2026-04-21" isdel="0">
         <keycode>enableMagicWindow</keycode>
         <keydesc>
             {
@@ -221,11 +221,11 @@
             }
         </keydesc>
         <defaultvalue>0</defaultvalue>
-        <inputtype>switch</inputtype>
+        <inputtype>input</inputtype>
         <notes>
             {
-            "en":"Magic Window：Parallel display of application interfaces.",
-            "ch":"平行视界：并行显示应用的界面。"
+            "en":"Magic Window: Displays pages of the app in parallel. The entered value represents the proportion of the secondary window relative to the entire window, ranging from 0 (inclusive) to less than 0.8. When set to 0, this function is disabled.",
+            "ch":"平行视界：并行显示应用的页面，填入数值为副窗口占整个窗口的比例，范围为大于等于0到小于0.8，为0时关闭平行视界功能"
             }
         </notes>
         <optionjson>[]</optionjson>
