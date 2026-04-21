@@ -84,8 +84,6 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
 
 
 
-
-
         super(context, attrs, defStyleAttr, defStyleRes);
         setLayoutResource(R.layout.preference_labeled_slider);
 
@@ -174,20 +172,26 @@ public class LabeledSeekBarPreference extends SeekBarPreference {
         int left = 0;//(int)pixelSize; //46  * (int)(ContentCaptureUtils.getRatioHeight());
         if(FONT_SIZE.equals(key) ){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
-            summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
-            //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
+            summaryView.setText(getContext().getString(R.string.show_recommend));
+            String label = "";
             if(ContentCaptureUtils.getRatioHeight() > 1){
-                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE));
+                label = ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE);
+                // summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE));
             }else{
-                summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_SMALL_DEVICE));
+                label = ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_SMALL_DEVICE);
+                // summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_SMALL_DEVICE));
             }
+            boolean isRecommend = ContentCaptureUtils.isRecommend(getContext(), label);
+            summaryView.setTextColor(isRecommend ? Color.BLACK : Color.GRAY);
         }else if( DISPLAY_SIZE.equals(key) || DOCK_SIZE.equals(key)){
             summaryView.setTypeface(Typeface.DEFAULT_BOLD);
-            summaryView.setTextColor(Color.BLACK);
             summaryView.setPadding(left,12,0,0);
+            summaryView.setText(getContext().getString(R.string.show_recommend));
             //summaryView.setText(ContentCaptureUtils.getFontSizeLabel(getContext(), mSeekBar.getProgress()));
-            summaryView.setText(ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE));
+            String label = ContentCaptureUtils.getShowLabel(getContext(), mSeekBar.getProgress(),DEF_LARGE_DEVICE);
+            boolean isRecommend = ContentCaptureUtils.isRecommend(getContext(), label);
+            summaryView.setTextColor(isRecommend ? Color.BLACK : Color.GRAY);
         }
         
         final ViewGroup iconStartFrame = (ViewGroup) holder.findViewById(R.id.icon_start_frame);

@@ -51,7 +51,7 @@
         <com.android.settings.CustomDividerPreference/>       
 
         <!-- User dictionary preference title and fragment will be set programmatically. -->
-        <com.android.settings.CustomPreference
+        <com.android.settings.CustomBottomPreference
             android:key="key_user_dictionary_settings"
             android:title="@string/user_dict_settings_title"
             android:summary="@string/user_dict_settings_summary"
@@ -61,7 +61,7 @@
 
     <com.android.settings.CustomDividerPreference/>   
 
-    <PreferenceCategory
+    <!-- <PreferenceCategory
         android:key="pointer_category"
         android:layout="@layout/preference_category_no_label">
         <com.android.settings.PointerSpeedPreference
@@ -75,7 +75,7 @@
             android:summary="@string/touchscreen_hovering_summary"
             android:defaultValue="false"
             settings:requiresFeature="lineagehardware:FEATURE_TOUCH_HOVERING" />
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 
     <SwitchPreferenceCompat
         android:key="vibrate_input_devices"

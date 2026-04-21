@@ -26,8 +26,8 @@ class SetCompatibleFragment : InstrumentedFragment(),CompatibleListAdapter.OnIte
     private val TAG = "SetCompatibleFragment"
 
     private var recyclerView: RecyclerView? = null;
-    private var txtAppName: TextView? = null;
-    private var imgAppIcon: ImageView? = null;
+    // private var txtAppName: TextView? = null;
+    // private var imgAppIcon: ImageView? = null;
     private var adapter: CompatibleListAdapter? = null;
     private var list: List<CompatibleList>? = null;
     private var context: Context? = null;
@@ -47,36 +47,36 @@ class SetCompatibleFragment : InstrumentedFragment(),CompatibleListAdapter.OnIte
         context = requireContext();
         val rootView = inflater.inflate(R.layout.fde_compatible_all_list_view, container, false)
         recyclerView = rootView.findViewById(R.id.recyclerView)
-        txtAppName = rootView.findViewById(R.id.txtAppName)
-        imgAppIcon = rootView.findViewById(R.id.imgAppIcon)
+        // txtAppName = rootView.findViewById(R.id.txtAppName)
+        // imgAppIcon = rootView.findViewById(R.id.imgAppIcon)
         keyCode = activity?.intent?.getStringExtra("keyCode")
         packageName = activity?.intent?.getStringExtra("packageName")
         activityName = activity?.intent?.getStringExtra("activityName")
-
+        activity?.setTitle(getString(R.string.fde_compatible_set));
         if(packageName == null){
             packageName = "";
-            txtAppName?.visibility = View.GONE
-            imgAppIcon?.visibility = View.GONE
+            // txtAppName?.visibility = View.GONE
+            // imgAppIcon?.visibility = View.GONE
         }else{
             try{
                 val appInfo = activity?.packageManager?.getApplicationInfo(packageName!!, 0)
                 if (appInfo != null) {
                     val appName = activity?.packageManager?.let { appInfo.loadLabel(it).toString() }
                     val appIcon: Drawable? = appInfo.loadIcon(activity?.packageManager)
-                    imgAppIcon?.setImageDrawable(appIcon)
-                    txtAppName?.text = appName
+                    // imgAppIcon?.setImageDrawable(appIcon)
+                    // txtAppName?.text = appName
+                    activity?.setTitle(appName);
                 }
             }catch(e: Exception){
                 e.printStackTrace()
             }
-            txtAppName?.visibility = View.VISIBLE
-            imgAppIcon?.visibility = View.VISIBLE
+            
+            // txtAppName?.visibility = View.VISIBLE
+            // imgAppIcon?.visibility = View.VISIBLE
         }
 
         Log.w(TAG,"packageName "+packageName + ",keyCode : "+keyCode + ",activityName: "+activityName)
-    
-       
-        activity?.setTitle(getString(R.string.fde_compatible_set));
+        // 
 
         context?.let {it ->
             recyclerView?.layoutManager = LinearLayoutManager(it);

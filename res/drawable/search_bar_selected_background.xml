@@ -14,7 +14,28 @@
      limitations under the License.
 -->
 
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="?android:attr/colorControlHighlight">
-    <item android:drawable="@color/search_bar_background"/>
-</ripple>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- State 1: Hovered (API Level 14 and above) -->
+  <item android:state_hovered="true">
+    <shape>
+<solid android:color="#0F000000" /> <!-- Hovered background color -->
+<corners android:radius="5dp" /> <!-- Rounded corners (optional) -->
+    </shape>
+  </item>
+ 
+<!-- State 2: Pressed -->
+  <item android:state_pressed="true">
+    <shape>
+<solid android:color="#1A000000" /> <!-- Pressed background color -->
+      <corners android:radius="5dp" />
+    </shape>
+  </item>
+
+<!-- State 3: Default state (must be placed last) -->
+  <item android:state_hovered="false" android:state_pressed="false">
+    <shape>
+<solid android:color="#0d000000" /> <!-- Default background color -->
+      <corners android:radius="5dp" />
+    </shape>
+  </item>
+</selector>

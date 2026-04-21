@@ -21,28 +21,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:layout_marginTop="16dp"
-    android:layout_marginHorizontal="@dimen/search_bar_margin">
+    android:layout_marginTop="@dimen/dream_item_title_margin_top"
+    android:layout_marginHorizontal="@dimen/search_bar_padding_end_two_pane">
     
-    <Toolbar
+    <LinearLayout
         android:id="@+id/search_action_bar_two_pane"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_bar_height"
+        android:clickable="true"
         android:paddingStart="@dimen/search_bar_padding_start_two_pane"
         android:paddingEnd="@dimen/search_bar_padding_end_two_pane"
-        android:background="#0d000000"
-        android:touchscreenBlocksFocus="false"
-        android:nextFocusForward="@+id/homepage_container"
-        android:contentInsetStartWithNavigation="@dimen/search_bar_content_inset"
-        android:navigationIcon="@drawable/ic_homepage_search">
+        android:background="@drawable/search_bar_selected_background">
 
         <TextView
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="@dimen/chartview_text_padding"
             android:id="@+id/search_bar_title"
             style="@style/TextAppearance.SearchBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/search_bar_title_padding_start_regular_two_pane"
-            android:layout_gravity="start"
+            android:textSize="@dimen/contrast_button_text_size"
+            android:textColor="#4d000000"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center"
+            android:gravity="start|center"
             android:text="@string/search_settings"/>
-    </Toolbar>
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

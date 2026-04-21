@@ -343,6 +343,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
         // Update search title padding
         View searchTitle = findViewById(R.id.search_bar_title);
+
         if (searchTitle != null) {
             int paddingStart = getResources().getDimensionPixelSize(
                     mIsRegularLayout
@@ -373,16 +374,18 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void initSearchBarView() {
-        final Toolbar toolbar = findViewById(R.id.search_action_bar);
-        FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
-                .initSearchToolbar(this /* activity */, toolbar, SettingsEnums.SETTINGS_HOMEPAGE);
+        // final Toolbar toolbar = findViewById(R.id.search_action_bar);
+        // FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
+        //         .initSearchToolbar(this /* activity */, toolbar, SettingsEnums.SETTINGS_HOMEPAGE);
 
         if (mIsEmbeddingActivityEnabled) {
-            final Toolbar toolbarTwoPaneVersion = findViewById(R.id.search_action_bar_two_pane);
+            final View toolbarTwoPaneVersion = findViewById(R.id.search_action_bar_two_pane);
             FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
                     .initSearchToolbar(this /* activity */, toolbarTwoPaneVersion,
                             SettingsEnums.SETTINGS_HOMEPAGE);
-        }
+            View searchText = findViewById(R.id.search_bar_title);
+                         
+        }       
     }
 
     private void initAvatarView() {
@@ -394,7 +397,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
             // if (mIsEmbeddingActivityEnabled) {
             //     avatarTwoPaneView.setVisibility(View.VISIBLE);
-            //     getLifecycle().addObserver(new AvatarViewMixin(this, avatarTwoPaneView));
+                // getLifecycle().addObserver(new AvatarViewMixin(this, avatarTwoPaneView));
             // }
         }
     }

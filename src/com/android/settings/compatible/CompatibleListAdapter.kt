@@ -165,6 +165,6 @@ class CompatibleListAdapter(
         )
         popupView.findViewById<TextView>(R.id.txtContent)?.text = content;
         popupWindow.isOutsideTouchable = true
-        popupWindow.showAsDropDown(view)
+        popupWindow.showAsDropDown(view,16,-40)
     }
 }

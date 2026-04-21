@@ -13063,14 +13063,15 @@
      <string name="fde_net_config" >"Config"</string>
 
      <string name="fde_compatible_set">Compatible Set</string>
+     <string name="fde_compatible_unset">Disable</string>
      <string name="fde_compatible_summary">App Compatible Set</string>
-     <string name="fde_input_hint">please input data</string>
-     <string name="fde_input_appname_hint">please input App Name</string>
-     <string name="fde_app_name_title">appName</string>
-     <string name="fde_data_value">value</string>
-     <string name="fde_switch">switch</string>
+     <string name="fde_input_hint">Please input data</string>
+     <string name="fde_input_appname_hint">Please input App Name</string>
+     <string name="fde_app_name_title">AppName</string>
+     <string name="fde_data_value">Value</string>
+     <string name="fde_switch">Switch</string>
      <string name="fde_tips">Warning</string>
-     <string name="fde_clean_tips">is all clean ?</string>
+     <string name="fde_clean_tips">Is all clean ?</string>
      <string name="fde_reset_tips">Restore the default configuration?</string>
      <string name="fde_sync_config_from_gitee">Do you want to synchronize the latest configuration from Server?</string>
      <string name="set_gps_info">Set GPS info</string>
@@ -13097,11 +13098,11 @@
     <string name="dock_size" msgid="570613010306330622">"Dock size"</string>
     <string name="short_summary_dock_size" msgid="8444689613442419978">"Make Dock bigger or smaller"</string>
 
-    <string name="show_smallest">"smallest"</string>
-    <string name="show_smaller">"smaller"</string>
-    <string name="show_small">"small"</string>
-    <string name="show_center_small">"center"</string>
-    <string name="show_recommend">"recommend"</string>
-    <string name="show_bigger">"bigger"</string>
-    <string name="show_big">"big"</string>
+    <string name="show_smallest">"Smallest"</string>
+    <string name="show_smaller">"Smaller"</string>
+    <string name="show_small">"Small"</string>
+    <string name="show_center_small">"Center"</string>
+    <string name="show_recommend">"Recommend"</string>
+    <string name="show_bigger">"Bigger"</string>
+    <string name="show_big">"Big"</string>
 </resources>

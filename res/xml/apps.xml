@@ -35,9 +35,9 @@
         settings:layout="@layout/preference_rounded_top_corners"
         android:fragment="com.android.settings.applications.manageapplications.ManageApplications"
         settings:keywords="@string/keywords_applications_settings"/>
-
+<!-- 
     <com.android.settings.CustomDividerPreference
-        android:order="-998"/>         
+        android:order="-998"/>          -->
 
     <PreferenceCategory
         android:key="recent_apps_category"

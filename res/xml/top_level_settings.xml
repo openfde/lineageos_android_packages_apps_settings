@@ -40,15 +40,15 @@
         settings:highlightableMenuKey="@string/menu_key_communal"
         settings:controller="com.android.settings.communal.CommunalPreferenceController"/>
 
-    <!-- <com.android.settings.widget.HomepagePreference
+    <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.connecteddevice.ConnectedDeviceDashboardFragment"
-        android:icon="@drawable/ic_devices_other"
+        android:icon="@drawable/ic_settings_bluetooth_new"
         android:key="top_level_connected_devices"
         android:order="-140"
         android:title="@string/connected_devices_dashboard_title"
         android:summary="@string/connected_devices_dashboard_default_summary"
         settings:highlightableMenuKey="@string/menu_key_connected_devices"
-        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/> -->
+        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.applications.AppDashboardFragment"
