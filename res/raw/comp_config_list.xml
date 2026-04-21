@@ -212,7 +212,7 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2026-04-21" isdel="0">
+    <compatible date="2026-04-21" isdel="1">
         <keycode>enableMagicWindow</keycode>
         <keydesc>
             {
@@ -269,6 +269,26 @@
             "width": "1080",
             "height": "1920"
             }
+            ]</optionjson>
+    </compatible>
+
+    <compatible date="2026-04-21" isdel="0">
+        <keycode>configMagicWindow</keycode>
+        <keydesc>
+            {
+            "en":"Magic Window",
+            "ch":"平行视界"
+            }
+        </keydesc>
+        <defaultvalue>1</defaultvalue>
+        <inputtype>select</inputtype>
+        <notes>
+            {
+            "en":"Magic Window: Displays pages of the app in parallel. The entered value represents the ratio of the main window width to the secondary window width.",
+            "ch":"平行视界：并行显示应用的页面，填入数值为主窗口宽度对比副窗口宽度"
+            }
+        </notes>
+        <optionjson>[{"1:1"},{"4:5"},{"2:3"},{"1:2"},{"2:1"},{"3:2"},{"5:4"}
             ]</optionjson>
     </compatible>
 
