@@ -212,7 +212,7 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2024-12-03" isdel="0">
+    <compatible date="2026-04-21" isdel="0">
         <keycode>enableMagicWindow</keycode>
         <keydesc>
             {
