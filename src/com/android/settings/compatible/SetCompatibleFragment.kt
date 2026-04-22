@@ -90,7 +90,7 @@ class SetCompatibleFragment : InstrumentedFragment(),CompatibleListAdapter.OnIte
                 }else{
                     // val key = keyCode?:"" ;
                     list = SettingsDb.getInstance(it).compatibleListDao().queryCompatibleListBykeyCode(keyCode?:"" )
-                }    
+                }  
                 withContext(Dispatchers.Main) {
                     adapter?.setData(list!!)
                 }

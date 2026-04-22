@@ -41,6 +41,7 @@ object CompUtils {
 
     fun parseList(context: Context?, inputStream: InputStream?) {
         try {
+            context?.let {SettingsDb.getInstance(it).compatibleListDao().deleteAll()}
             val factory = DocumentBuilderFactory.newInstance()
             val builder = factory.newDocumentBuilder()
             val document: Document = builder.parse(inputStream)
@@ -70,20 +71,21 @@ object CompUtils {
                 .queryCompatibleBykeyCode(keyCode)
 
                     if (item == null) {
-                        Log.w(TAG,"keycode " + keyCode + " ,keydesc " + keyDesc)
+                        Log.d(TAG,"keycode " + keyCode + " ,keydesc " + keyDesc + " ,isDel " + isDel + " ,date " + date);
                         item = CompatibleList();
                         item.keyCode = keyCode ;
                         item.keyDesc = keyDesc;
                         item.notes = notes;
                         item.isDel = isDel;
                         item.editDate = date;
+                        item.createDate = getCurDateTime();
                         item.defaultValue = defaultValue;
                         item.inputType = inputType;
                         item.optionJson = optionJson;
                         SettingsDb.getInstance(it).compatibleListDao().insert(item)
-                        Log.w(TAG,"insert success !" );
+                        Log.d(TAG,"insert success !" );
                     } else {
-                        Log.i(TAG,"item    is not  null " + date);
+                        Log.w(TAG,"item    is not  null " + date +",isDel "+isDel);
                         if (!date.equals(item.editDate)) {
                             item.keyDesc = keyDesc;
                             item.notes = notes;
