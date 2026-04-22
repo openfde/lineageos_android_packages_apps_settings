@@ -212,7 +212,7 @@
         <optionjson>[]</optionjson>
     </compatible>
 
-    <compatible date="2024-12-03" isdel="0">
+    <compatible date="2026-04-22" isdel="1">
         <keycode>enableMagicWindow</keycode>
         <keydesc>
             {
@@ -221,11 +221,11 @@
             }
         </keydesc>
         <defaultvalue>0</defaultvalue>
-        <inputtype>switch</inputtype>
+        <inputtype>input</inputtype>
         <notes>
             {
-            "en":"Magic Window：Parallel display of application interfaces. This feature will disable window maximization.",
-            "ch":"平行视界：并行显示应用的界面。此功能会禁窗口最大化。"
+            "en":"Magic Window: Displays pages of the app in parallel. The entered value represents the proportion of the secondary window relative to the entire window, ranging from 0 (inclusive) to less than 0.8. When set to 0, this function is disabled.",
+            "ch":"平行视界：并行显示应用的页面，填入数值为副窗口占整个窗口的比例，范围为大于等于0到小于0.8，为0时关闭平行视界功能"
             }
         </notes>
         <optionjson>[]</optionjson>
@@ -269,6 +269,33 @@
             "width": "1080",
             "height": "1920"
             }
+            ]</optionjson>
+    </compatible>
+
+    <compatible date="2026-04-23" isdel="0">
+        <keycode>configMagicWindow</keycode>
+        <keydesc>
+            {
+            "en":"Magic Window",
+            "ch":"平行视界"
+            }
+        </keydesc>
+        <defaultvalue>1</defaultvalue>
+        <inputtype>select</inputtype>
+        <notes>
+            {
+            "en":"Magic Window: Displays pages of the app in parallel. The entered value represents the ratio of the main window width to the secondary window width.",
+            "ch":"平行视界：并行显示应用的页面，填入数值为主窗口宽度对比副窗口宽度"
+            }
+        </notes>
+	<optionjson>[
+	    {"ratio": "1:1"},
+            {"ratio": "4:5"},
+            {"ratio": "2:3"},
+            {"ratio": "1:2"},
+            {"ratio": "2:1"},
+            {"ratio": "3:2"},
+            {"ratio": "5:4"}
             ]</optionjson>
     </compatible>
 
