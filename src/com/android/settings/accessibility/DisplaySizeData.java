@@ -24,7 +24,9 @@ import com.android.settingslib.display.DisplayDensityUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
-
+import android.util.Log;
+import android.os.SystemProperties;
+import com.android.settings.R;
 /**
  * Data class for storing the configurations related to the display size.
  */
@@ -35,18 +37,32 @@ class DisplaySizeData extends PreviewSizeData<Integer> {
         super(context);
 
         mDensity = new DisplayDensityUtils(getContext());
-        final int initialIndex = mDensity.getCurrentIndexForDefaultDisplay();
+        int initialIndex = mDensity.getCurrentIndexForDefaultDisplay();
+        final Resources resources = getContext().getResources();
+        int fdeDpi = resources.getDisplayMetrics().densityDpi;
         if (initialIndex < 0) {
             // Failed to obtain default density, which means we failed to
             // connect to the window manager service. Just use the current
             // density and don't let the user change anything.
-            final Resources resources = getContext().getResources();
             final int densityDpi = resources.getDisplayMetrics().densityDpi;
-            setDefaultValue(densityDpi);
+            fdeDpi = SystemProperties.getInt("FDE_DPI_DEFAULT",
+                densityDpi);
+            setDefaultValue(fdeDpi);
             setInitialIndex(0);
-            setValues(Collections.singletonList(densityDpi));
+            setValues(Collections.singletonList(fdeDpi));
         } else {
+            fdeDpi = SystemProperties.getInt("FDE_DPI_DEFAULT",
+                mDensity.getDefaultDensityForDefaultDisplay());
+
             setDefaultValue(mDensity.getDefaultDensityForDefaultDisplay());
+//            int[] result = Arrays.stream(resources.getStringArray(R.array.display_size))
+//            .mapToDouble(Double::parseDouble)
+//            .map(d -> d * defaultDensityDpi)
+//            .mapToInt(d -> (int) Math.round(d))
+//            .toArray();
+            if(initialIndex > 4){
+                initialIndex = 2;
+            }
             setInitialIndex(initialIndex);
             setValues(Arrays.stream(mDensity.getDefaultDisplayDensityValues()).boxed()
                     .collect(Collectors.toList()));
@@ -56,10 +72,10 @@ class DisplaySizeData extends PreviewSizeData<Integer> {
     @Override
     void commit(int currentProgress) {
         final int densityDpi = getValues().get(currentProgress);
-        if (densityDpi == getDefaultValue()) {
-            mDensity.clearForcedDisplayDensity();
-        } else {
+//        if (densityDpi == getDefaultValue()) {
+//            mDensity.clearForcedDisplayDensity();
+//        } else {
             mDensity.setForcedDisplayDensity(currentProgress);
-        }
+//        }
     }
 }

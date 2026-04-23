@@ -152,6 +152,7 @@
             android:hardwareAccelerated="true"
             android:requiredForAllUsers="true"
             android:supportsRtl="true"
+            android:debuggable="true"
             android:backupAgent="com.android.settings.backup.SettingsBackupHelper"
             android:usesCleartextTraffic="true"
             android:defaultToDeviceProtectedStorage="true"

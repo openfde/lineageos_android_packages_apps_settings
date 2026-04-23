@@ -1539,4 +1539,12 @@
         <item>1.4</item>
     </string-array>    
 
+    <string-array name="display_size" translatable="false">
+        <item>0.9</item>
+        <item>0.95</item>
+        <item>1.0</item>
+        <item>1.05</item>
+        <item>1.1</item>
+    </string-array>
+
 </resources>
