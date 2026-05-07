@@ -105,7 +105,7 @@ public class FallbackHome extends Activity {
         }
         getWindow().getDecorView().setSystemUiVisibility(flags);
 
-        registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_USER_UNLOCKED));
+//        registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_USER_UNLOCKED));
         maybeFinish();
     }
 
@@ -125,7 +125,7 @@ public class FallbackHome extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
+//        unregisterReceiver(mReceiver);
         if (mWallManager != null) {
             mWallManager.removeOnColorsChangedListener(mColorsChangedListener);
         }
@@ -172,7 +172,7 @@ public class FallbackHome extends Activity {
             final ResolveInfo homeInfo = getPackageManager().resolveActivity(homeIntent, 0);
             if (Objects.equals(getPackageName(), homeInfo.activityInfo.packageName)) {
                 Log.w(TAG, "User unlocked but no home; let's hope someone enables one soon?");
-                mHandler.sendEmptyMessageDelayed(0, 500);
+                mHandler.sendEmptyMessageDelayed(0, 100);
             } else {
                 Log.w(TAG, "User unlocked and real home found; let's go!");
                 getSystemService(PowerManager.class).userActivity(
@@ -196,7 +196,7 @@ public class FallbackHome extends Activity {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            maybeFinish();
+//            maybeFinish();
         }
     };
 }
