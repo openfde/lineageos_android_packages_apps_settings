@@ -196,7 +196,7 @@ public class FallbackHome extends Activity {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-//            maybeFinish();
+            maybeFinish();
         }
     };
 }
