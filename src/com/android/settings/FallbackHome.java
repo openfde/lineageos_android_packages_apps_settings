@@ -166,20 +166,20 @@ public class FallbackHome extends Activity {
     }
 
     private void maybeFinish() {
-        if (getSystemService(UserManager.class).isUserUnlocked()) {
+//        if (getSystemService(UserManager.class).isUserUnlocked()) {
             final Intent homeIntent = new Intent(Intent.ACTION_MAIN)
                     .addCategory(Intent.CATEGORY_HOME);
             final ResolveInfo homeInfo = getPackageManager().resolveActivity(homeIntent, 0);
             if (Objects.equals(getPackageName(), homeInfo.activityInfo.packageName)) {
-                Log.d(TAG, "User unlocked but no home; let's hope someone enables one soon?");
+                Log.w(TAG, "User unlocked but no home; let's hope someone enables one soon?");
                 mHandler.sendEmptyMessageDelayed(0, 500);
             } else {
-                Log.d(TAG, "User unlocked and real home found; let's go!");
+                Log.w(TAG, "User unlocked and real home found; let's go!");
                 getSystemService(PowerManager.class).userActivity(
                         SystemClock.uptimeMillis(), false);
                 finish();
             }
-        }
+//        }
     }
 
     // Set the system ui flags to light status bar if the wallpaper supports dark text to match
