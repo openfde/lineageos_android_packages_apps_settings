@@ -3447,11 +3447,11 @@
                   android:theme="@style/FallbackHome"
                   android:permission="android.permission.DEVICE_POWER"
                   android:configChanges="keyboardHidden">
-            <intent-filter android:priority="-1000">
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+<!--            <intent-filter android:priority="-1000">-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.HOME" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity
