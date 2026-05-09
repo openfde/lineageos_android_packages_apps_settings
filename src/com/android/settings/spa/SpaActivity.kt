@@ -28,14 +28,49 @@ import com.android.settingslib.spa.framework.common.SettingsPage
 import com.android.settingslib.spa.framework.util.SESSION_BROWSE
 import com.android.settingslib.spa.framework.util.appendSpaParams
 import com.google.android.setupcompat.util.WizardManagerHelper
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.net.Uri;
+
 
 class SpaActivity : BrowseActivity() {
     override fun isPageEnabled(page: SettingsPage) =
         super.isPageEnabled(page) && !isSuwAndPageBlocked(page.sppName)
 
+    var  isTop = false ;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(HideNonSystemOverlayMixin(this))
+
+        contentResolver.registerContentObserver(
+                Settings.System.getUriFor("BACK_KEY_TIME"),
+                true,
+                object : ContentObserver(Handler()) {
+                    override fun onChange(selfChange: Boolean, uri: Uri?) {
+                        Log.w("bella", "SpaActivity onChange  $selfChange")
+                        runOnUiThread {
+                           if(isTop){
+                               onBackPressedDispatcher.onBackPressed()
+                           }
+                        }
+                    }
+                }
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isTop = true;
+        android.provider.Settings.System.putString(getContentResolver(), "sub_title", getTitle().toString());
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isTop = false;
     }
 
     companion object {

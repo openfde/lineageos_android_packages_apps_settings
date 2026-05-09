@@ -78,10 +78,13 @@ import com.android.settingslib.core.instrumentation.SharedPreferencesLogger;
 import com.android.settingslib.drawer.DashboardCategory;
 
 import com.google.android.setupcompat.util.WizardManagerHelper;
-
+import android.database.ContentObserver;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.net.Uri;
 
 public class SettingsActivity extends SettingsBaseActivity
         implements PreferenceManager.OnPreferenceTreeClickListener,
@@ -89,8 +92,7 @@ public class SettingsActivity extends SettingsBaseActivity
         ButtonBarHandler, FragmentManager.OnBackStackChangedListener {
 
     private static final String LOG_TAG = "SettingsActivity";
-
-    // Constants for state save/restore
+    private boolean isTop;// Constants for state save/restore
     private static final String SAVE_KEY_CATEGORIES = ":settings:categories";
 
     /**
@@ -286,6 +288,23 @@ public class SettingsActivity extends SettingsBaseActivity
         super.onCreate(savedState);
         Log.d(LOG_TAG, "Starting onCreate");
         createUiFromIntent(savedState, intent);
+
+
+        getContentResolver().registerContentObserver(
+                android.provider.Settings.System.getUriFor("BACK_KEY_TIME"),
+                true, new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange, Uri uri) {
+                        Log.d(LOG_TAG, "onCreate.... "+selfChange  + "  ,getNextButton: "+getNextButton());
+//                        FragmentManager fragmentManager = getSupportFragmentManager();
+
+                        if(isTop){
+//                            boolean isOnlyOneActivityInTask = isOnlyOneActivityInTask();
+//                            Log.d("SubSettings", "onCreate.... " +fragmentManager.getBackStackEntryCount() + ",isOnlyOneActivityInTask "+isOnlyOneActivityInTask);
+                            onBackPressed();
+                        }
+                    }
+                });
     }
 
     protected void createUiFromIntent(Bundle savedState, Intent intent) {
@@ -392,10 +411,17 @@ public class SettingsActivity extends SettingsBaseActivity
         final boolean isActionBarButtonEnabled = isActionBarButtonEnabled(getIntent());
 
         final ActionBar actionBar = getActionBar();
+        Log.d(LOG_TAG, "setActionBarStatus.... "+actionBar.getTitle() + ",isActionBarButtonEnabled  "+isActionBarButtonEnabled);
+        android.provider.Settings.System.putString(getContentResolver(), "sub_title", actionBar.getTitle().toString());
+
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(isActionBarButtonEnabled);
             actionBar.setHomeButtonEnabled(isActionBarButtonEnabled);
             actionBar.setDisplayShowTitleEnabled(true);
+            setTitle(actionBar.getTitle().toString());
+            actionBar.setTitle(actionBar.getTitle().toString());
+        }else {
+            Log.d(LOG_TAG, "actionBar is null.... ");
         }
     }
 
@@ -564,23 +590,26 @@ public class SettingsActivity extends SettingsBaseActivity
         Log.d(LOG_TAG, "Done setting title");
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        if(txtTitle !=null){
-            txtTitle.setVisibility(View.VISIBLE);
-            txtTitle.setText(title.toString());
-        }
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        super.setTitle(getText(titleId));
-        if(txtTitle !=null){
-            txtTitle.setVisibility(View.VISIBLE);
-            txtTitle.setText(getText(titleId));
-        }
-    }
+//    @Override
+//    public void setTitle(CharSequence title) {
+//        super.setTitle(title);
+//        Log.d(LOG_TAG, "setTitle.... "+title);
+//        if(txtTitle !=null){
+//            txtTitle.setVisibility(View.GONE);
+//            txtTitle.setText(title.toString());
+//        }else{
+//            Log.d(LOG_TAG, "txtTitle is null  ");
+//        }
+//    }
+//
+//    @Override
+//    public void setTitle(int titleId) {
+//        super.setTitle(getText(titleId));
+//        if(txtTitle !=null){
+//            txtTitle.setVisibility(View.GONE);
+//            txtTitle.setText(getText(titleId));
+//        }
+//    }
 
     @Override
     public void onBackStackChanged() {
@@ -589,7 +618,6 @@ public class SettingsActivity extends SettingsBaseActivity
 
     private void setTitleFromBackStack() {
         final int count = getSupportFragmentManager().getBackStackEntryCount();
-
         if (count == 0) {
             if (mInitialTitleResId > 0) {
                 setTitle(mInitialTitleResId);
@@ -636,6 +664,7 @@ public class SettingsActivity extends SettingsBaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        isTop = true;
         setActionBarStatus();
 
         registerReceiver(mBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -646,6 +675,7 @@ public class SettingsActivity extends SettingsBaseActivity
     @Override
     protected void onPause() {
         super.onPause();
+        isTop = false;
         unregisterReceiver(mBatteryInfoReceiver);
     }
 

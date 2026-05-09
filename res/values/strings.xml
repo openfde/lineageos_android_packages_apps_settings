@@ -7353,7 +7353,7 @@
     <string name="network_dashboard_summary_no_mobile">Wi\u2011Fi, hotspot</string>
 
     <!-- Title for setting tile leading to Connected devices settings [CHAR LIMIT=40]-->
-    <string name="connected_devices_dashboard_title">Connected devices</string>
+    <string name="connected_devices_dashboard_title">Bluetooth</string>
     <!-- Summary for Connected devices settings, explaining default settings under it [CHAR LIMIT=NONE]-->
     <string name="connected_devices_dashboard_default_summary">Bluetooth, pairing</string>
     <!-- Summary for Connected devices settings, explaning a few important settings under it [CHAR LIMIT=NONE]-->

@@ -76,7 +76,9 @@ public class TopLevelWallpaperPreferenceController extends BasePreferenceControl
     }
 
     public ComponentName getComponentName() {
-        return new ComponentName(mWallpaperPackage, getComponentClassString());
+        String getClassString = getComponentClassString();
+        Log.w(TAG,"mWallpaperPackage "+mWallpaperPackage  + " , getClassString "+getClassString);
+        return new ComponentName(mWallpaperPackage, getClassString);
     }
 
     public String getComponentClassString() {
@@ -102,12 +104,14 @@ public class TopLevelWallpaperPreferenceController extends BasePreferenceControl
     @Override
     public boolean handlePreferenceTreeClick(Preference preference) {
         if (getPreferenceKey().equals(preference.getKey())) {
+            Log.w(TAG,"mWallpaperPackage  "+mWallpaperPackage  + ", mWallpaperClass: "+mWallpaperClass);
             final Intent intent = new Intent().setComponent(
                     getComponentName()).putExtra(mWallpaperLaunchExtra, LAUNCHED_SETTINGS);
             if (areStylesAvailable() && !ActivityEmbeddingUtils.isEmbeddingActivityEnabled(
                     mContext)) {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             }
+            android.provider.Settings.System.putString(mContext.getContentResolver(), "sub_title", getTitle().toString());
             preference.getContext().startActivity(intent);
             return true;
         }

@@ -282,32 +282,6 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         ((ViewGroup) findViewById(R.id.content_frame)).addView(view, params);
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        if (mCollapsingToolbarLayout != null) {
-            mCollapsingToolbarLayout.setTitle(title);
-            // mCollapsingToolbarLayout.setVisibility(View.INVISIBLE);
-           
-        }
-        if(txtMenuTitle !=null){
-            txtMenuTitle.setText(title.toString());
-        }
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        super.setTitle(getText(titleId));
-        if (mCollapsingToolbarLayout != null) {
-            mCollapsingToolbarLayout.setTitle(getText(titleId));
-            // mCollapsingToolbarLayout.setVisibility(View.INVISIBLE);
-           
-        }
-
-        if(txtMenuTitle !=null){
-            txtMenuTitle.setText(getText(titleId));
-        }
-    }
 
     /**
      * SubSetting page should show a toolbar by default. If the page wouldn't show a toolbar,

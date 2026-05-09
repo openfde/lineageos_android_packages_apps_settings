@@ -17,12 +17,24 @@
 package com.android.settings;
 
 import android.util.Log;
-
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.net.Uri;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import android.app.ActivityManager;
 /**
  * Stub class for showing sub-settings; we can't use the main Settings class
  * since for our app it is a special singleTask class.
  */
 public class SubSettings extends SettingsActivity {
+    private boolean isTop;
 
     @Override
     public boolean onNavigateUp() {
@@ -35,4 +47,36 @@ public class SubSettings extends SettingsActivity {
         Log.d("SubSettings", "Launching fragment " + fragmentName);
         return true;
     }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    private boolean isOnlyOneActivityInTask() {
+        try {
+            final ActivityManager.RunningTaskInfo taskInfo =
+                    getSystemService(ActivityManager.class)
+                            .getRunningTasks(1).get(0);
+            return taskInfo.numActivities == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isTop = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isTop = false;
+    }
+
 }

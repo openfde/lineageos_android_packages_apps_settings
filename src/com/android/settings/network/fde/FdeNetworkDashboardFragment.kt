@@ -537,8 +537,7 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.w(TAG,"11111 onStart .....")
-        startScanAnimation(); 
+        startScanAnimation();
         job = GlobalScope.launch {
             repeat(200) { i -> 
                 if(wifiSwitch == WifiSwitch.OPENED.status){
@@ -557,7 +556,6 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
                     }
                 }
  
-                Log.w(TAG,"11111 launch ..... "+i)
                 delay(4 * 1000)
             }
           
@@ -566,7 +564,6 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
 
     override fun onStop() {
         super.onStop()
-        Log.w(TAG,"11111 onStop .....")
         stopScanAnimation();
         job.cancel()
     }
