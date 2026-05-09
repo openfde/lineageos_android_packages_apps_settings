@@ -72,6 +72,16 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.net.Uri;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import android.os.Bundle;
+
 public class NotificationHistoryActivity extends CollapsingToolbarBaseActivity {
 
     private static String TAG = "NotifHistory";
@@ -255,6 +265,16 @@ public class NotificationHistoryActivity extends CollapsingToolbarBaseActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
         }
+
+        getContentResolver().registerContentObserver(
+              Settings.System.getUriFor("BACK_KEY_TIME"),
+              true, new ContentObserver(new Handler()) {
+                    @Override
+                   public void onChange(boolean selfChange, Uri uri) {
+                            onBackPressed();
+                       }
+                });
+
     }
 
     @Override

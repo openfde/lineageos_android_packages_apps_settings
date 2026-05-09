@@ -338,6 +338,8 @@ public abstract class BasePreferenceController extends AbstractPreferenceControl
      */
     @Override
     public boolean handlePreferenceTreeClick(Preference preference) {
+        Log.w(TAG,"handlePreferenceTreeClick getFragment: "+preference.getFragment()  + ", getKey: "+preference.getKey() + ",title "+preference.getTitle().toString() +",getPreferenceKey() "+getPreferenceKey());
+        android.provider.Settings.System.putString(mContext.getContentResolver(), "sub_title",preference.getTitle().toString() );
         if (!TextUtils.equals(preference.getKey(), getPreferenceKey())) {
             return super.handlePreferenceTreeClick(preference);
         }

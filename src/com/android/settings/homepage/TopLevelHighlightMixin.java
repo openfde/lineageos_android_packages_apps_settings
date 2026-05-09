@@ -115,7 +115,6 @@ public class TopLevelHighlightMixin implements Parcelable, DialogInterface.OnSho
             mCurrentKey = getHighlightPrefKeyFromArguments(topLevelSettings.getArguments());
         }
 
-        Log.d(TAG, "onCreateAdapter, pref key: " + mCurrentKey);
 
         // Remove the animator to avoid a RecyclerView crash.
         RecyclerView recyclerView = topLevelSettings.getListView();
@@ -124,6 +123,7 @@ public class TopLevelHighlightMixin implements Parcelable, DialogInterface.OnSho
         mTopLevelAdapter = new HighlightableTopLevelPreferenceAdapter(
                 (SettingsHomepageActivity) topLevelSettings.getActivity(), preferenceScreen,
                 recyclerView, mCurrentKey, scrollNeeded);
+        setHighlightPreferenceKey("top_level_network");
         return mTopLevelAdapter;
     }
 
@@ -134,7 +134,6 @@ public class TopLevelHighlightMixin implements Parcelable, DialogInterface.OnSho
         ensureDialogDismissed();
 
         mCurrentKey = getHighlightPrefKeyFromArguments(arguments);
-        Log.d(TAG, "reloadHighlightMenuKey, pref key: " + mCurrentKey);
         mTopLevelAdapter.highlightPreference(mCurrentKey, /* scrollNeeded= */ true);
     }
 

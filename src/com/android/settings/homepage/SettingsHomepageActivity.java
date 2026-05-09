@@ -83,6 +83,11 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.Looper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /** Settings homepage activity */
 public class SettingsHomepageActivity extends FragmentActivity implements
@@ -196,6 +201,18 @@ public class SettingsHomepageActivity extends FragmentActivity implements
             finish();
         }
 
+        getContentResolver().registerContentObserver(
+                android.provider.Settings.System.getUriFor("BACK_KEY_TIME"),
+                true, new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange, Uri uri) {
+                        Log.w(TAG, "BACK_KEY_TIME: " +  selfChange);
+//                        onBackPressed();
+                    }
+                });
+
+
+
         mIsEmbeddingActivityEnabled = ActivityEmbeddingUtils.isEmbeddingActivityEnabled(this);
         Log.w(TAG, "mIsEmbeddingActivityEnabled: " +  mIsEmbeddingActivityEnabled);
 
@@ -277,6 +294,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     void initSplitPairRules() {
         new ActivityEmbeddingRulesController(getApplicationContext()).initRules();
     }
+
 
     @Override
     protected void onStart() {
@@ -469,6 +487,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
             fragmentCreator.init(showFragment);
             fragmentTransaction.show(showFragment);
         }
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         return showFragment;
     }
