@@ -22,7 +22,7 @@
     android:layout_height="wrap_content"
     android:minHeight="@dimen/homepage_preference_min_height"
     android:gravity="center_vertical"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@drawable/button_bg"
     android:clipToPadding="false"
     android:baselineAligned="false">
 
@@ -34,6 +34,7 @@
         android:gravity="end|center_vertical"
         android:orientation="horizontal"
         android:paddingTop="4dp"
+        android:paddingLeft="2dp"
         android:paddingBottom="4dp">
 
         <androidx.preference.internal.PreferenceImageView

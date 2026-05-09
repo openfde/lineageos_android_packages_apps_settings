@@ -21,7 +21,7 @@
             <solid
                 android:color="@android:color/white" />
             <corners
-                android:radius="@dimen/homepage_preference_corner_radius" />
+                android:radius="6dp" />
         </shape>
     </item>
 </ripple>

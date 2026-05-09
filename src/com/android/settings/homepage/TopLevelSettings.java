@@ -78,8 +78,9 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
 
-    ArrayDeque<String> stackKey = new ArrayDeque<>();
+    ArrayDeque<String> stackFragment = new ArrayDeque<>();
     ArrayDeque<String> stackTitle = new ArrayDeque<>();
+    ArrayDeque<String> stackKey = new ArrayDeque<>();
 
     private ActivityEmbeddingController mActivityEmbeddingController;
 
@@ -132,13 +133,15 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        Log.w(TAG, "onPreferenceTreeClick key: "+preference.getFragment() + ",stackKey.peek() "+stackKey.peek());
+        Log.w(TAG, "onPreferenceTreeClick key: "+preference.getFragment() + ",key "+preference.getKey());
         if(preference.getFragment() == null){
-            stackKey.push(getString(R.string.style_and_wallpaper_settings_title));
+            stackFragment.push(getString(R.string.style_and_wallpaper_settings_title));
             stackTitle.push(getString(R.string.style_and_wallpaper_settings_title));
+            stackKey.push("top_level_wallpaper");
         }else {
-            if(!preference.getFragment().equals(stackKey.peek())){
-                stackKey.push(preference.getFragment());
+            if(!preference.getFragment().equals(stackFragment.peek())){
+                stackFragment.push(preference.getFragment());
+                stackKey.push(preference.getKey());
                 stackTitle.push(preference.getTitle().toString());
             }
         }
@@ -184,7 +187,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                 new OnBackPressedCallback(true /* enabled by default */) {
                     @Override
                     public void handleOnBackPressed() {
-                        Log.w(TAG,"handleOnBackPressed...........");
+                        setHighlightPreferenceKey("top_level_display");
                         new SubSettingLauncher(getActivity())
                                 .setDestination("com.android.settings.DisplaySettings")
                                 .setSourceMetricsCategory(getMetricsCategory())
@@ -212,10 +215,13 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                 true, new ContentObserver(new Handler()) {
                     @Override
                     public void onChange(boolean selfChange, Uri uri) {
-                        int len = stackKey.size();
+                        String keyTime =   android.provider.Settings.System.getString(
+                                getContentResolver(),
+                                "KEY_TIME");
+
+                        int len = stackFragment.size();
 
                         String subTitle =  android.provider.Settings.System.getString(getContentResolver(),"sub_title");
-                        Log.w(TAG, "KEY_TIME:subTitle  " +  subTitle + ",len "+len  + ",stackKey.peek()  "+stackKey.peek() + ",size:  "+stackKey.size());
 
                         if(len == 0){
                             return;
@@ -223,9 +229,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
                         if(stackTitle.contains(subTitle)){
                             //左侧标题
-                            stackKey.pop();
+                            stackFragment.pop();
                             stackTitle.pop();
-                            String key = stackKey.peek();
+                            stackKey.pop();
+                            String key = stackFragment.peek();
                             if(key == null){
                                 if(getActivity() != null){
                                     getActivity().finish();
@@ -242,7 +249,9 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                                 intent.setComponent(new ComponentName("com.android.wallpaper", "com.android.customization.picker.CustomizationPickerActivity"));
                                 intent.putExtra(getString(R.string.config_wallpaper_picker_launch_extra), "app_launched_settings");
                                 getActivity().startActivity(intent);
+                                setHighlightPreferenceKey("top_level_wallpaper");
                             }else {
+                                setHighlightPreferenceKey(stackKey.peek());
                                 new SubSettingLauncher(getActivity())
                                         .setDestination(key)
                                         .setSourceMetricsCategory(getMetricsCategory())
@@ -411,14 +420,14 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     /** Show/hide the highlight on the menu entry for the search page presence */
     public void setMenuHighlightShowed(boolean show) {
         if (mHighlightMixin != null) {
-            // mHighlightMixin.setMenuHighlightShowed(show);
+             mHighlightMixin.setMenuHighlightShowed(show);
         }
     }
 
     /** Highlight and scroll to a preference with specified menu key */
     public void setHighlightMenuKey(String menuKey, boolean scrollNeeded) {
         if (mHighlightMixin != null) {
-            // mHighlightMixin.setHighlightMenuKey(menuKey, scrollNeeded);
+             mHighlightMixin.setHighlightMenuKey(menuKey, scrollNeeded);
         }
     }
 
@@ -430,16 +439,13 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
-        // if (!mIsEmbeddingActivityEnabled || !(getActivity() instanceof SettingsHomepageActivity)) {
-        //     return super.onCreateAdapter(preferenceScreen);
-        // }
-        // return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
-
-        stackKey.push("com.android.settings.network.fde.FdeNetworkDashboardFragment");
+        stackFragment.push("com.android.settings.network.fde.FdeNetworkDashboardFragment");
         stackTitle.push(getString(R.string.network_dashboard_title));
-
-        Log.w(TAG,"onCreateAdapter "+mIsEmbeddingActivityEnabled);
-        return super.onCreateAdapter(preferenceScreen);
+        stackKey.push("top_level_network");
+         if (!mIsEmbeddingActivityEnabled || !(getActivity() instanceof SettingsHomepageActivity)) {
+             return super.onCreateAdapter(preferenceScreen);
+         }
+         return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
     }
 
     @Override
@@ -449,7 +455,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     void reloadHighlightMenuKey() {
         if (mHighlightMixin != null) {
-            // mHighlightMixin.reloadHighlightMenuKey(getArguments());
+             mHighlightMixin.reloadHighlightMenuKey(getArguments());
         }
     }
 

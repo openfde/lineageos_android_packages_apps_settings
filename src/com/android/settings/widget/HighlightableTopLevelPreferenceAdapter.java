@@ -119,6 +119,7 @@ public class HighlightableTopLevelPreferenceAdapter extends PreferenceGroupAdapt
         }
 
         final int previousPosition = mHighlightPosition;
+        Log.d(TAG, "setHighlightPreferenceKey, mHighlightKey: " + mHighlightKey + ",previousPosition "+previousPosition);
         if (TextUtils.isEmpty(mHighlightKey)) {
             // De-highlight previous preference.
             mHighlightPosition = RecyclerView.NO_POSITION;
@@ -229,24 +230,26 @@ public class HighlightableTopLevelPreferenceAdapter extends PreferenceGroupAdapt
 
     private void addHighlightBackground(PreferenceViewHolder holder) {
         final View v = holder.itemView;
-        v.setBackgroundResource(RES_HIGHLIGHTED_BACKGROUND);
+        v.setSelected(true);
+//        v.setBackgroundResource(RES_HIGHLIGHTED_BACKGROUND);
         ((TextView) v.findViewById(android.R.id.title)).setTextColor(mTitleColorHighlight);
         ((TextView) v.findViewById(android.R.id.summary)).setTextColor(mSummaryColorHighlight);
-        final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
-        if (drawable != null) {
-            drawable.setTint(mIconColorHighlight);
-        }
+//        final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
+//        if (drawable != null) {
+//            drawable.setTint(mIconColorHighlight);
+//        }
     }
 
     private void removeHighlightBackground(PreferenceViewHolder holder) {
         final View v = holder.itemView;
-        v.setBackgroundResource(RES_NORMAL_BACKGROUND);
+        v.setSelected(false);
+//        v.setBackgroundResource(RES_NORMAL_BACKGROUND);
         ((TextView) v.findViewById(android.R.id.title)).setTextColor(mTitleColorNormal);
         ((TextView) v.findViewById(android.R.id.summary)).setTextColor(mSummaryColorNormal);
-        final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
-        if (drawable != null) {
-            drawable.setTint(mIconColorNormal);
-        }
+//        final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
+//        if (drawable != null) {
+//            drawable.setTint(mIconColorNormal);
+//        }
     }
 
     private boolean isHighlightNeeded() {
