@@ -241,8 +241,7 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
 
         spinnerConfigInterface?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // val selectedItem = spinnerItems[position]
-                // Log.w(TAG,"selectedItem "+selectedItem)
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
