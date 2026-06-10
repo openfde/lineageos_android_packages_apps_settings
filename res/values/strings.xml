@@ -13097,6 +13097,8 @@
   
     <string name="dock_size" msgid="570613010306330622">"Dock size"</string>
     <string name="short_summary_dock_size" msgid="8444689613442419978">"Make Dock bigger or smaller"</string>
+    <string name="format_error">" Format error"</string>
+    <string name="save_success">Saved successfully</string>
 
     <string name="show_smallest">"Smallest"</string>
     <string name="show_smaller">"Smaller"</string>

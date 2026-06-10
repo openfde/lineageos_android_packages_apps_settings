@@ -5193,6 +5193,8 @@
     <string name="fde_version">OpenFDE 版本</string>
     <string name="dock_size" msgid="570613010306330622">"程序坞大小"</string>
     <string name="short_summary_dock_size" msgid="8444689613442419978">"放大或缩小程序坞"</string>
+    <string name="format_error">格式错误</string>
+    <string name="save_success">保存成功</string>
 
     <string name="show_smallest">"更小"</string>
     <string name="show_smaller">"较小"</string>
