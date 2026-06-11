@@ -46,7 +46,7 @@ import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.provider.Settings
-
+import android.widget.Toast;
 
 // import android.net.INetd;
 
@@ -261,14 +261,45 @@ class FdeNetworkDashboardFragment : InstrumentedFragment() {
             }
         }
 
+        fun isValidIpv4(ip: String?): Boolean {
+            if (ip.isNullOrBlank()) {
+                return false
+            }
+
+            val regex =
+                Regex("^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$")
+
+            return regex.matches(ip)
+        }  
+
+
         btnSave?.setOnClickListener({
             if(spinnerIpSettings?.selectedItemId?.toInt() == 0){
                 //DHCP
                 viewModel.setDHCP(context!!,spinnerConfigInterface?.selectedItem.toString());
             }else{
-                val subnetMask = NetApi.getMask(editSubnetMask?.text.toString());
-                viewModel.setStaticIp(context!!,spinnerConfigInterface?.selectedItem.toString(),editIpAddress?.text.toString(),subnetMask,
-                editDefaultGateway?.text.toString(),editPreferredDns?.text.toString(),editAlternativeDns?.text.toString());
+                val subnetMask = editSubnetMask?.text.toString().trim();
+                val ipAddress = editIpAddress?.text.toString().trim();
+                val defaultGateway = editDefaultGateway?.text.toString().trim();
+                val dns1 = editPreferredDns?.text.toString().trim();
+                val dns2 = editAlternativeDns?.text.toString().trim();
+
+                if (!isValidIpv4(ipAddress)) {
+                    Toast.makeText(context, getString(R.string.ip_address) + getString(R.string.format_error), Toast.LENGTH_SHORT).show()
+                }else if (!isValidIpv4(defaultGateway)) {
+                    Toast.makeText(context, getString(R.string.default_gateway) + getString(R.string.format_error), Toast.LENGTH_SHORT).show()
+                }else if (!isValidIpv4(subnetMask)) {
+                    Toast.makeText(context, getString(R.string.subnet_mask) + getString(R.string.format_error), Toast.LENGTH_SHORT).show()
+                }else  if (!isValidIpv4(dns1)) {
+                    Toast.makeText(context, getString(R.string.preferred_dns) + getString(R.string.format_error), Toast.LENGTH_SHORT).show()
+                }else if (dns2.isNotEmpty() && !isValidIpv4(dns2)) {
+                    Toast.makeText(context, getString(R.string.alternative_dns) + getString(R.string.format_error), Toast.LENGTH_SHORT).show()
+                }else{
+                    val mask = NetApi.getMask(subnetMask);
+                    viewModel.setStaticIp(context!!,spinnerConfigInterface?.selectedItem.toString(),ipAddress,mask,
+                    defaultGateway,dns1,dns2);
+                    Toast.makeText(context, getString(R.string.save_success) , Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
