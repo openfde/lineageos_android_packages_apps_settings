@@ -299,4 +299,23 @@
             ]</optionjson>
     </compatible>
 
+    <compatible date="2026-07-22" isdel="0">
+        <keycode>forcedSoftDecode</keycode>
+        <keydesc>
+            {
+            "en":"Forced soft decode",
+            "ch":"强制使用软解码"
+            }
+        </keydesc>
+        <defaultvalue>0</defaultvalue>
+        <inputtype>page</inputtype>
+        <notes>
+            {
+            "en":"Forced soft decode: Resolves the issue of video display abnormality when using hard decoding in some applications.",
+            "ch":"强制软解码：解决部分应用中使用硬解码时视频显示异常的问题。"
+            }
+        </notes>
+        <optionjson>[]</optionjson>
+    </compatible>
+
 </compatibles>
